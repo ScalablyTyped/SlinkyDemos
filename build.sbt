@@ -40,7 +40,7 @@ lazy val `react-slick` =
   project
     .configure(baseSettings, bundlerSettings, browserProject)
     .settings(
-      webpackDevServerPort := 8005,
+      webpackDevServerPort := 8002,
       libraryDependencies ++= Seq(
         SlinkyTyped.R.`react-dom`,
         SlinkyTyped.R.`react-slick`
@@ -56,7 +56,7 @@ lazy val `react-big-calendar` =
   project
     .configure(baseSettings, bundlerSettings, browserProject, withCssLoading)
     .settings(
-      webpackDevServerPort := 8007,
+      webpackDevServerPort := 8003,
       libraryDependencies ++= Seq(
         SlinkyTyped.M.moment,
         SlinkyTyped.R.`react-dom`,
@@ -72,7 +72,7 @@ lazy val `react-big-calendar` =
 lazy val `semantic-ui-react` = project
   .configure(baseSettings, bundlerSettings, browserProject)
   .settings(
-    webpackDevServerPort := 8009,
+    webpackDevServerPort := 8004,
     libraryDependencies ++= Seq(
       SlinkyTyped.R.`redux-devtools-extension`,
       SlinkyTyped.R.`react-dom`,
@@ -132,7 +132,7 @@ lazy val `antd-slinky` =
   project
     .configure(baseSettings, bundlerSettings, browserProject, withCssLoading)
     .settings(
-      webpackDevServerPort := 8018,
+      webpackDevServerPort := 8016,
       libraryDependencies ++= Seq(
         SlinkyTyped.R.`react-dom`,
         SlinkyTyped.A.antd,
@@ -147,7 +147,7 @@ lazy val `react-router-dom-slinky` =
   project
     .configure(baseSettings, bundlerSettings, browserProject)
     .settings(
-      webpackDevServerPort := 8020,
+      webpackDevServerPort := 8007,
       libraryDependencies ++= Seq(SlinkyTyped.R.`react-router-dom`),
       Compile / npmDependencies ++= Seq(
         "react" -> "16.9",

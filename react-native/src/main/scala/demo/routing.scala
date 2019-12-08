@@ -2,15 +2,15 @@ package demo
 
 import demo.Knowledge.Force
 import org.scalablytyped.runtime.StringDictionary
-import typings.react.reactMod.{FC, ReactElement}
-import typings.reactDashNative.{reactDashNativeComponents => RN}
-import typings.reactDashNativeDashVectorDashIcons.{reactDashNativeDashVectorDashIconsComponents => Icons}
-import typings.reactDashNavigation._
-import typings.reactDashNavigation.reactDashNavigationMod._
-import typings.std.Object
+import typingsSlinky.react.reactMod.{FC, ReactElement}
+import typingsSlinky.reactDashNative.{reactDashNativeComponents => RN}
+import typingsSlinky.reactDashNativeDashVectorDashIcons.{reactDashNativeDashVectorDashIconsComponents => Icons}
+import typingsSlinky.reactDashNavigation._
+import typingsSlinky.reactDashNavigation.reactDashNavigationMod._
+import typingsSlinky.std.Object
 
 object routing {
-  import typings.react.dsl._
+  import typingsSlinky.react.dsl._
 
   val DrawerContents: FC[DrawerItemsProps] = define.fc[DrawerItemsProps](
     p =>

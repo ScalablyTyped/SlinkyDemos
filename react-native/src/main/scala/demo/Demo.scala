@@ -1,11 +1,11 @@
 package demo
 
 import org.scalablytyped.runtime.TopLevel
-import typings.expoDashFont.{expoDashFontMod => Font}
-import typings.react.dsl._
-import typings.react.reactMod.{Component, ReactNode}
-import typings.reactDashNative.{reactDashNativeComponents => RN}
-import typings.reactDashNativeDashGestureDashHandler.reactDashNativeDashGestureDashHandlerRequire
+import typingsSlinky.expoDashFont.{expoDashFontMod => Font}
+import typingsSlinky.react.dsl._
+import typingsSlinky.react.reactMod.{Component, ReactNode}
+import typingsSlinky.reactDashNative.{reactDashNativeComponents => RN}
+import typingsSlinky.reactDashNativeDashGestureDashHandler.reactDashNativeDashGestureDashHandlerRequire
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js

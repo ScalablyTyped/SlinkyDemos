@@ -1,15 +1,15 @@
 package demo
 
-import typings.atMaterialDashUiCore.stylesCreateMuiThemeMod.Theme
-import typings.atMaterialDashUiCore.stylesWithStylesMod.CSSProperties
-import typings.atMaterialDashUiCore.textFieldTextFieldMod.StandardTextFieldProps
-import typings.atMaterialDashUiCore.{atMaterialDashUiCoreComponents => Mui, atMaterialDashUiCoreStrings => MuiStrings}
-import typings.atMaterialDashUiIcons.{atMaterialDashUiIconsComponents => MuiIcons}
-import typings.react.Anon_Children
-import typings.react.dsl._
-import typings.react.reactMod.{FC, ReactElement, ReactNode, useState}
-import typings.reactDashDom.reactDashDomMod.render
-import typings.std.window
+import typingsSlinky.atMaterialDashUiCore.stylesCreateMuiThemeMod.Theme
+import typingsSlinky.atMaterialDashUiCore.stylesWithStylesMod.CSSProperties
+import typingsSlinky.atMaterialDashUiCore.textFieldTextFieldMod.StandardTextFieldProps
+import typingsSlinky.atMaterialDashUiCore.{atMaterialDashUiCoreComponents => Mui, atMaterialDashUiCoreStrings => MuiStrings}
+import typingsSlinky.atMaterialDashUiIcons.{atMaterialDashUiIconsComponents => MuiIcons}
+import typingsSlinky.react.Anon_Children
+import typingsSlinky.react.dsl._
+import typingsSlinky.react.reactMod.{FC, ReactElement, ReactNode, useState}
+import typingsSlinky.reactDashDom.reactDashDomMod.render
+import typingsSlinky.std.window
 
 import scala.scalajs.js
 import scala.scalajs.js.|

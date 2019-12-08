@@ -1,18 +1,18 @@
 package demo
 
 import demo.Knowledge.Force
-import typings.react.dsl._
-import typings.react.reactMod.{FC, ReactNode}
-import typings.reactDashNative.reactDashNativeMod.StatusBar
-import typings.reactDashNative.{reactDashNativeComponents => RN}
-import typings.reactDashNativeDashVectorDashIcons.{reactDashNativeDashVectorDashIconsComponents => Icons}
-import typings.reactDashNavigation.reactDashNavigationMod.{
+import typingsSlinky.react.dsl._
+import typingsSlinky.react.reactMod.{FC, ReactNode}
+import typingsSlinky.reactDashNative.reactDashNativeMod.StatusBar
+import typingsSlinky.reactDashNative.{reactDashNativeComponents => RN}
+import typingsSlinky.reactDashNativeDashVectorDashIcons.{reactDashNativeDashVectorDashIconsComponents => Icons}
+import typingsSlinky.reactDashNavigation.reactDashNavigationMod.{
   NavigationComponent,
   NavigationRoute,
   NavigationScreenProp,
   NavigationScreenProps
 }
-import typings.std.console
+import typingsSlinky.std.console
 
 import scala.scalajs.js
 

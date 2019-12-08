@@ -1,8 +1,8 @@
 package demo
 
-import typings.reactDashNative.Anon_Height
-import typings.reactDashNative.reactDashNativeMod.{TextStyle, ViewStyle}
-import typings.reactDashNative.reactDashNativeStrings.{bold, center}
+import typingsSlinky.reactDashNative.Anon_Height
+import typingsSlinky.reactDashNative.reactDashNativeMod.{TextStyle, ViewStyle}
+import typingsSlinky.reactDashNative.reactDashNativeStrings.{bold, center}
 
 object styles {
   @inline def red500 = "#f44336"

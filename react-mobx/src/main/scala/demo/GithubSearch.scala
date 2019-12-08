@@ -1,22 +1,24 @@
 package demo
 
-import typings.axios.axiosMod.{AxiosError, AxiosRequestConfig, AxiosResponse, default => Axios}
-import typings.csstype.csstypeStrings
-import typings.materialDashUi.{materialDashUiComponents => Mui}
-import typings.mobx.libTypesObservablevalueMod.IObservableValue
-import typings.mobx.{mobxMod => MobX}
-import typings.mobxDashReact.mobxDashReactMod.observer
-import typings.react.reactMod._
-import typings.std.{console, window}
+import slinky.core.annotations.react
+import slinky.core.{FunctionalComponent, ObservingFC, TagMod}
+import slinky.web.html._
+import typingsSlinky.axios.axiosMod.{AxiosError, AxiosRequestConfig, AxiosResponse, default => Axios}
+import typingsSlinky.csstype.csstypeStrings
+import typingsSlinky.materialDashUi.{components => Mui}
+import typingsSlinky.mobx.libTypesObservablevalueMod.IObservableValue
+import typingsSlinky.mobx.{mobxMod => MobX}
+import typingsSlinky.react.reactMod._
+import typingsSlinky.std.{console, window}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js
 import scala.util.{Failure, Success}
 
+@react
 object GithubSearch {
-  import typings.react.dsl._
 
-  class Props(val store: Store) extends js.Object
+  case class Props(store: Store)
 
   trait Repository extends js.Object {
     val description:      String
@@ -30,14 +32,14 @@ object GithubSearch {
     val items: js.Array[Repository]
   }
 
-  class Store() extends js.Object {
+  class Store {
     val search: IObservableValue[String] =
       MobX.observable.box("ScalablyTyped")
 
     val result: IObservableValue[js.UndefOr[js.Array[Repository]]] =
       MobX.observable.box(js.undefined)
 
-    def searchForRepos: js.Function0[Unit] =
+    val searchForRepos: js.Function0[Unit] =
       MobX.action(
         "searchForRepos",
         () =>
@@ -63,72 +65,58 @@ object GithubSearch {
       )
   }
 
+  def gotoRepo(repo: Repository): () => Unit = () => window.location.href = repo.html_url
+
   /* this is a simple functional component to display a github repo in a table row */
-  private val RepoRow = define.fc[Repository](
+  val RepoRow = FunctionalComponent[Repository](
     repo =>
-      Mui.TableRow.noprops(
-        Mui.TableRowColumn.noprops(repo.name),
-        Mui.TableRowColumn.noprops(repo.forks_count),
-        Mui.TableRowColumn.noprops(repo.stargazers_count),
-        Mui.TableRowColumn.noprops(
-          Mui.FlatButton.props(
-            Mui.FlatButtonProps(
-              disabled = false,
-              onClick  = _ => window.location.href = repo.html_url
-            ),
+      Mui.TableRow()(
+        Mui.TableRowColumn()(repo.name),
+        Mui.TableRowColumn()(repo.forks_count),
+        Mui.TableRowColumn()(repo.stargazers_count),
+        Mui.TableRowColumn()(
+          Mui.FlatButton()(onClick := gotoRepo(repo), disabled := false)(
             "Go to project"
           )
         )
       )
   )
 
-  private class C extends Component[Props, js.Any, js.Any] {
-    override def render(): ReactNode =
-      div.noprops(
-        Mui.Paper.props(
-          Mui.PaperProps(
-            style = new CSSProperties {
-              height         = "100px"
-              display        = csstypeStrings.flex
-              alignItems     = csstypeStrings.center
-              justifyContent = csstypeStrings.center
-            },
-            rounded = true
-          )
+  val component: FunctionalComponent[Props] = ObservingFC[Props] {
+    case Props(store) =>
+      div(
+        Mui.Paper(
+          style = new CSSProperties {
+            height         = "100px"
+            display        = csstypeStrings.flex
+            alignItems     = csstypeStrings.center
+            justifyContent = csstypeStrings.center
+          },
+          rounded = true
+        )(),
+        Mui.TextField(onChange = (_, newValue) => store.search.set(newValue))(
+          name := "search",
+          value := store.search.get
         ),
-        Mui.TextField.props(
-          Mui.TextFieldProps(
-            name     = "search",
-            value    = props.store.search.get,
-            onChange = (_, newValue) => props.store.search.set(newValue)
-          )
-        ),
-        Mui.FlatButton.props(
-          Mui.FlatButtonProps(onClick = _ => props.store.searchForRepos()),
-          "Search"
-        ),
-        props.store.result
+        Mui.FlatButton()(onClick := store.searchForRepos)("Search"),
+        store.result
           .get()
-          .fold[ReactNode](div.noprops("No result yet"))(
+          .fold[TagMod[Any]](div("No result yet"))(
             repos =>
-              Mui.Table.noprops(
-                Mui.TableHeader.noprops(
-                  Mui.TableRow.noprops(
-                    Mui.TableRowColumn.noprops("name"),
-                    Mui.TableRowColumn.noprops("forks_count"),
-                    Mui.TableRowColumn.noprops("stargazers_count"),
-                    Mui.TableRowColumn.noprops("link")
+              Mui.Table()(
+                Mui.TableHeader()(
+                  Mui.TableRow()(
+                    Mui.TableRowColumn()("name"),
+                    Mui.TableRowColumn()("forks_count"),
+                    Mui.TableRowColumn()("stargazers_count"),
+                    Mui.TableRowColumn()("link")
                   )
                 ),
-                Mui.TableBody.noprops(
-                  repos.map(repo => RepoRow.withKey(repo.name).props(repo))
+                Mui.TableBody()(
+                  repos.map(repo => RepoRow(repo).withKey(repo.name)): _*
                 )
               )
           )
       )
   }
-
-  /* this applies a decorator. Sadly, we're missing good syntax for this so far */
-  val Component: ComponentClass[Props, js.Any] =
-    observer(js.constructorOf[C].asInstanceOf[ComponentClass[Props, js.Any]])
 }

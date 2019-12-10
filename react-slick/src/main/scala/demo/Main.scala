@@ -41,7 +41,7 @@ object Main {
           autoplay      = true,
           autoplaySpeed = 1000,
           slidesToShow  = 2
-        )(images: _*)
+        )(images.to(Seq): _*)
       )
     }
 

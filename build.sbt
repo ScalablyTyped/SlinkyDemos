@@ -1,6 +1,8 @@
 import java.nio.file.Files
 import java.nio.file.StandardCopyOption.REPLACE_EXISTING
 
+import org.scalajs.core.tools.linker.ModuleKind
+
 import scala.sys.process.Process
 
 /**
@@ -19,87 +21,88 @@ lazy val dist = TaskKey[File]("dist")
 
 lazy val `react-mobx` =
   project
-    .configure(baseSettings, bundlerSettings, browserProject)
+    .enablePlugins(ScalablyTypedConverterPlugin)
+    .configure(baseSettings, scalajsBundler, browserProject, slinkyReact)
     .settings(
       webpackDevServerPort := 8001,
-      libraryDependencies ++= Seq(
-        SlinkyTyped.A.axios,
-        SlinkyTyped.M.`material-ui`,
-        SlinkyTyped.M.mobx,
-        SlinkyTyped.M.`mobx-react`,
-        SlinkyTyped.R.`react-dom`
-      ),
+      Compile / tsoIgnore ++= List("material-ui/svg-icons"),
+      Compile / tsoMinimize := Selection.AllExcept("axios", "material-ui", "mobx-react", "mobx"),
       Compile / npmDependencies ++= Seq(
+        "axios" -> "0.19.0",
         "material-ui" -> "0.20.1",
-        "react" -> "16.9",
-        "react-dom" -> "16.9"
+        "mobx" -> "5.15.0",
+        "mobx-react" -> "6.1.4",
+        "@types/material-ui" -> "0.21.7"
       )
     )
 
 lazy val `react-slick` =
   project
-    .configure(baseSettings, bundlerSettings, browserProject)
+    .enablePlugins(ScalablyTypedConverterPlugin)
+    .configure(baseSettings, scalajsBundler, browserProject, slinkyReact)
     .settings(
       webpackDevServerPort := 8002,
-      libraryDependencies ++= Seq(
-        SlinkyTyped.R.`react-dom`,
-        SlinkyTyped.R.`react-slick`
-      ),
+      Compile / tsoIgnore += "csstype",
+      Compile / tsoMinimize := Selection.All(),
       Compile / npmDependencies ++= Seq(
-        "react" -> "16.9",
-        "react-dom" -> "16.9",
-        "react-slick" -> "0.23"
+        "react-slick" -> "0.23",
+        "@types/react-slick" -> "0.23.4"
       )
     )
 
 lazy val `react-big-calendar` =
   project
-    .configure(baseSettings, bundlerSettings, browserProject, withCssLoading)
+    .enablePlugins(ScalablyTypedConverterPlugin)
+    .configure(baseSettings, scalajsBundler, browserProject, withCssLoading, slinkyReact)
     .settings(
       webpackDevServerPort := 8003,
-      libraryDependencies ++= Seq(
-        SlinkyTyped.M.moment,
-        SlinkyTyped.R.`react-dom`,
-        SlinkyTyped.R.`react-big-calendar`
-      ),
+      Compile / tsoIgnore += "csstype",
+      Compile / tsoMinimize := Selection.AllExcept("moment", "react-big-calendar"),
       Compile / npmDependencies ++= Seq(
-        "react" -> "16.9",
-        "react-dom" -> "16.9",
-        "react-big-calendar" -> "0.22"
+        "moment" -> "2.24.0",
+        "react-big-calendar" -> "0.22",
+        "@types/react-big-calendar" -> "0.22.3"
       )
     )
 
 lazy val `semantic-ui-react` = project
-  .configure(baseSettings, bundlerSettings, browserProject)
+  .enablePlugins(ScalablyTypedConverterPlugin)
+  .configure(baseSettings, scalajsBundler, browserProject, slinkyReact)
   .settings(
     webpackDevServerPort := 8004,
-    libraryDependencies ++= Seq(
-      SlinkyTyped.R.`redux-devtools-extension`,
-      SlinkyTyped.R.`react-dom`,
-      SlinkyTyped.R.`react-redux`,
-      SlinkyTyped.S.`semantic-ui-react`,
+    Compile / tsoIgnore += "csstype",
+    Compile / tsoMinimize := Selection.AllExcept(
+      "react-redux",
+      "redux",
+      "redux-devtools-extension"
     ),
     Compile / npmDependencies ++= Seq(
-      "react-dom" -> "16.9",
-      "react" -> "16.9",
       "react-redux" -> "7.1",
-    ),
+      "redux-devtools-extension" -> "2.13.8",
+      "semantic-ui-react" -> "0.88.1",
+      "@types/react-redux" -> "7.1.5"
+    )
   )
 
-
+/** Note: This can't use scalajs-bundler (at least I don't know how),
+  *  so we run yarn ourselves with an external package.json.
+  **/
 lazy val `storybook-react` = project
-  .configure(baseSettings, application)
+  .enablePlugins(ScalablyTypedConverterExternalNpmPlugin)
+  .configure(baseSettings)
   .settings(
-    libraryDependencies ++= Seq(
-      SlinkyTyped.N.node,
-      SlinkyTyped.R.react,
-      SlinkyTyped.S.storybook__react,
-    ),
+    /* ScalablyTypedConverterExternalNpmPlugin requires that we define how to install node dependencies and where they are */
+    externalNpm := {
+      Process("yarn", baseDirectory.value).!
+      baseDirectory.value
+    },
+    Compile / tsoFlavour := Flavour.Slinky,
+    Compile / tsoIgnore += "csstype",
+    Compile / tsoMinimize := Selection.AllExcept("@storybook/react", "node", "history"),
     /** This is not suitable for development, but effective for demo.
-      * Run `yarn` and `yarn storybook` commands yourself, and run `~storybook-react/fastOptJS` from sbt
+      * Run `yarn storybook` commands yourself, and run `~storybook-react/fastOptJS` from sbt
       */
     run := {
-      Process("yarn", baseDirectory.value).!
       (Compile / fastOptJS).value
       Process("yarn storybook", baseDirectory.value).!
     },
@@ -110,91 +113,61 @@ lazy val `storybook-react` = project
       distFolder
     }
   )
-//
-//lazy val `material-ui` =
-//  project
-//    .configure(baseSettings, bundlerSettings, browserProject)
-//    .settings(
-//      webpackDevServerPort := 8016,
-//      libraryDependencies ++= Seq(
-//        SlinkyTyped.M.`material-ui__core`,
-//        SlinkyTyped.M.`material-ui__icons`,
-//        SlinkyTyped.R.`react-facade`,
-//        SlinkyTyped.R.`react-dom`,
-//      ),
-//      Compile / npmDependencies ++= Seq(
-//        "react" -> "16.9",
-//        "react-dom" -> "16.9",
-//      )
-//    )
 
-lazy val `antd-slinky` =
+lazy val antd =
   project
-    .configure(baseSettings, bundlerSettings, browserProject, withCssLoading)
+    .enablePlugins(ScalablyTypedConverterPlugin)
+    .configure(baseSettings, scalajsBundler, browserProject, withCssLoading, slinkyReact)
     .settings(
-      webpackDevServerPort := 8016,
-      libraryDependencies ++= Seq(
-        SlinkyTyped.R.`react-dom`,
-        SlinkyTyped.A.antd,
-      ),
-      Compile / npmDependencies ++= Seq(
-        "react" -> "16.9",
-        "react-dom" -> "16.9",
-      )
+      webpackDevServerPort := 8006,
+      Compile / tsoIgnore += "csstype",
+      Compile / tsoMinimize := Selection.AllExcept("antd"),
+      Compile / npmDependencies ++= Seq("antd" -> "3.26.0")
     )
 
-lazy val `react-router-dom-slinky` =
+lazy val `react-router-dom` =
   project
-    .configure(baseSettings, bundlerSettings, browserProject)
+    .enablePlugins(ScalablyTypedConverterPlugin)
+    .configure(baseSettings, scalajsBundler, browserProject, slinkyReact)
     .settings(
       webpackDevServerPort := 8007,
-      libraryDependencies ++= Seq(SlinkyTyped.R.`react-router-dom`),
+      Compile / tsoIgnore += "csstype",
+      Compile / tsoMinimize := Selection.AllExcept(),
       Compile / npmDependencies ++= Seq(
-        "react" -> "16.9",
-        "react-dom" -> "16.9",
-        "react-router-dom" -> "5.0.0",
+        "react-router-dom" -> "5.1.2",
+        "@types/react-router-dom" -> "5.1.2"
       )
     )
-
-// todo: disabled since they changed everything in react-navigation and I'm lazy.
-//  We'll wait for the next version or replace it altogether.
-//
-//lazy val `react-native` = project
-//  .configure(baseSettings, outputModule, application)
-//  .settings(
-//    scalaJSUseMainModuleInitializer := false,
-//    libraryDependencies ++= Seq(
-//      SlinkyTyped.E.`expo-font`,
-//      SlinkyTyped.R.`react-native`,
-//      SlinkyTyped.R.`react-navigation`,
-//      SlinkyTyped.R.`react-native-gesture-handler`,
-//      SlinkyTyped.R.`react-native-vector-icons`,
-//      SlinkyTyped.R.`react-facade`
-//    ),
-//  )
 
 lazy val baseSettings: Project => Project =
   _.enablePlugins(ScalaJSPlugin)
     .settings(
-      addCompilerPlugin("org.scalamacros" % "paradise" % "2.1.1" cross CrossVersion.full),
-      scalaVersion := "2.12.9",
       version := "0.1-SNAPSHOT",
+      scalaVersion := "2.13.1",
       scalacOptions ++= ScalacOptions.flags,
+      scalaJSUseMainModuleInitializer := true,
+      /* disabled because it somehow triggers many warnings */
+      emitSourceMaps := false,
+      scalaJSModuleKind := ModuleKind.CommonJSModule,
       /* in preparation for scala.js 1.0 */
-      scalacOptions += "-P:scalajs:sjsDefinedByDefault"
+      scalacOptions += "-P:scalajs:sjsDefinedByDefault",
+      /* for slinky*/
+      libraryDependencies += "me.shadaj" %%% "slinky-web" % "0.6.2",
+      scalacOptions += "-Ymacro-annotations"
     )
 
-lazy val application: Project => Project =
+lazy val slinkyReact: Project => Project =
   _.settings(
-    scalaJSUseMainModuleInitializer := true,
-    /* disabled because it somehow triggers many warnings */
-    emitSourceMaps := false,
-    scalaJSModuleKind := ModuleKind.CommonJSModule
+    Compile / tsoFlavour := Flavour.Slinky,
+    Compile / npmDependencies ++= Seq(
+      "react" -> "16.9",
+      "react-dom" -> "16.9",
+      "@types/react" -> "16.9.5"
+    )
   )
 
-lazy val bundlerSettings: Project => Project =
+lazy val scalajsBundler: Project => Project =
   _.enablePlugins(ScalaJSBundlerPlugin)
-    .configure(application)
     .settings(
       /* Specify current versions and modes */
       startWebpackDevServer / version := "3.1.10",

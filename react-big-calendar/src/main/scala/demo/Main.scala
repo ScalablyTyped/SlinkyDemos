@@ -1,11 +1,11 @@
 package demo
 
+import org.scalajs.dom.{console, document}
 import slinky.web.ReactDOM
 import typingsSlinky.moment.momentMod.{^ => Moment}
 import typingsSlinky.moment.momentStrings
-import typingsSlinky.reactDashBigDashCalendar.reactDashBigDashCalendarMod.{View, momentLocalizer}
+import typingsSlinky.reactDashBigDashCalendar.reactDashBigDashCalendarMod.{momentLocalizer, View}
 import typingsSlinky.reactDashBigDashCalendar.{components => BC}
-import typingsSlinky.std.{console, document}
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSImport
@@ -29,24 +29,17 @@ object Main {
     title = "My amazing event"
   )
 
-  def main(argv: Array[String]): Unit =
-    Knowledge.asOption(document.getElementById("container")) match {
-      case Some(container) =>
-        ReactDOM.render(
-          BC.Calendar[Event, js.Object](
-            localizer   = Localizer,
-            events      = js.Array(someEvent),
-            defaultDate = new js.Date,
-            defaultView = View.week,
-            views       = js.Array(View.agenda, View.day, View.week)
-          ),
-          container
-        )
-      case None => console.error("Could not find #container")
-    }
-}
-
-object Knowledge {
-  def asOption[T](t: T | Null): Option[T] =
-    Option(t.asInstanceOf[T])
+  def main(argv: Array[String]): Unit = {
+    val container = document.getElementById("container")
+    ReactDOM.render(
+      BC.Calendar[Event, js.Object](
+        localizer   = Localizer,
+        events      = js.Array(someEvent),
+        defaultDate = new js.Date,
+        defaultView = View.week,
+        views       = js.Array(View.agenda, View.day, View.week)
+      ),
+      container
+    )
+  }
 }

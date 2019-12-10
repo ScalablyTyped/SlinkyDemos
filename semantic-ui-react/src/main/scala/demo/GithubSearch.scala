@@ -5,12 +5,11 @@ import slinky.core.FunctionalComponent
 import slinky.core.annotations.react
 import slinky.core.facade.ReactElement
 import slinky.web.html._
-import typingsSlinky.reactDashRedux.ReduxFacade.Extractor
+import demo.ReduxFacade.Extractor
 import typingsSlinky.redux.reduxMod.{Action, Dispatch, Reducer}
 import typingsSlinky.semanticDashUiDashReact.distCommonjsElementsIconIconMod.{IconProps, IconSizeProp}
 import typingsSlinky.semanticDashUiDashReact.distCommonjsGenericMod.{SemanticICONS, SemanticVERTICALALIGNMENTS}
 import typingsSlinky.semanticDashUiDashReact.{components => Sui}
-import typingsSlinky.std.fetch
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -39,7 +38,7 @@ object GithubSearch {
     }
 
     def doSearch(search: String): Future[Either[GithubError, Response]] =
-      fetch(
+      Fetch.fetch(
         s"https://api.github.com/search/repositories?q=$search&sort=stars",
         new RequestInit {
           override var headers: js.UndefOr[HeadersInit] = js.defined(
@@ -162,7 +161,7 @@ object GithubSearch {
       props.state.repos.toOption.map(
         repos =>
           Sui.List(divided = true, relaxed = true)(
-            repos.map[ReactElement, js.Array[ReactElement]](
+            repos.to(Seq).map[ReactElement](
               repo =>
                 Sui
                   .ListItem()

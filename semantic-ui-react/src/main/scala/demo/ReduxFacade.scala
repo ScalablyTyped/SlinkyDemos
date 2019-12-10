@@ -1,4 +1,4 @@
-package typingsSlinky.reactDashRedux
+package demo
 
 import slinky.core.{ExternalComponent, ReactComponentClass}
 import typingsSlinky.reactDashRedux.reactDashReduxMod.connect

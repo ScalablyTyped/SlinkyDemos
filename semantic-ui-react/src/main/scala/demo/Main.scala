@@ -1,21 +1,19 @@
 package demo
 
+import org.scalajs.dom.window.document
 import slinky.core.ExternalComponent
 import slinky.web.ReactDOM
-import typingsSlinky.react.reactMod._
-import typingsSlinky.reactDashRedux.ReduxFacade
 import typingsSlinky.reactDashRedux.components.Provider
 import typingsSlinky.redux.reduxMod.{createStore, Store}
 import typingsSlinky.reduxDashDevtoolsDashExtension.reduxDashDevtoolsDashExtensionMod.{
   devToolsEnhancer,
   EnhancerOptions
 }
-import typingsSlinky.std.window
 
 object Main {
 
   def main(argv: Array[String]): Unit = {
-    val container = window.document.getElementById("container")
+    val container = document.getElementById("container")
     /* set up redux store with devtools*/
     val Store: Store[GithubSearch.State, GithubSearch.SearchAction] =
       createStore(GithubSearch.Reducer, devToolsEnhancer(EnhancerOptions(name = "github search store")))

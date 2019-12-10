@@ -1,5 +1,6 @@
 package demo
 
+import org.scalajs.dom.{console, window}
 import slinky.core.annotations.react
 import slinky.core.{FunctionalComponent, ObservingFC, TagMod}
 import slinky.web.html._
@@ -9,7 +10,6 @@ import typingsSlinky.materialDashUi.{components => Mui}
 import typingsSlinky.mobx.libTypesObservablevalueMod.IObservableValue
 import typingsSlinky.mobx.{mobxMod => MobX}
 import typingsSlinky.react.reactMod._
-import typingsSlinky.std.{console, window}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js
@@ -113,7 +113,7 @@ object GithubSearch {
                   )
                 ),
                 Mui.TableBody()(
-                  repos.map(repo => RepoRow(repo).withKey(repo.name)): _*
+                  repos.to(Seq).map(repo => RepoRow(repo).withKey(repo.name)): _*
                 )
               )
           )

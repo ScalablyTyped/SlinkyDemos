@@ -1,49 +1,49 @@
 package demo
 
-import typings.react.reactMod.ReactElement
-import typings.reactDashRedux.ReduxFacade.Connected
-import typings.semanticDashUiDashReact.{
+import slinky.core.FunctionalComponent
+import slinky.core.annotations.react
+import slinky.core.facade.ReactElement
+import slinky.web.html._
+import demo.ReduxFacade.Connected
+import typingsSlinky.semanticDashUiDashReact.{
   Anon_MenuItem => TabStructure,
-  semanticDashUiDashReactComponents => Sui,
+  components => Sui,
   semanticDashUiDashReactStrings => SuiStrings
 }
 
 import scala.scalajs.js
 
+@react
 object Demo {
-  import typings.react.dsl._
 
   class Props(val title: String) extends js.Object
 
   val CardDemo: ReactElement =
-    Sui.Card.props(
-      Sui.CardProps(color = SuiStrings.orange),
-      Sui.CardHeader.noprops("CardHeader"),
-      Sui.CardMeta.noprops("CardMeta"),
-      Sui.Divider.noprops(),
-      Sui.Search.props(Sui.SearchProps(minCharacters = 1))
+    Sui.Card(color = SuiStrings.orange)(
+      Sui.CardHeader("CardHeader"),
+      Sui.CardMeta("CardMeta"),
+      Sui.Divider(),
+      Sui.Search(minCharacters = 1)
     )
 
   val ProgressDemo: ReactElement =
-    Sui.Card.noprops(
-      Sui.Progress.props(Sui.ProgressProps(percent = 70, warning  = true)),
-      Sui.Progress.props(Sui.ProgressProps(percent = 100, warning = false))
+    Sui.Card()(
+      Sui.Progress(percent = 70, warning  = true),
+      Sui.Progress(percent = 100, warning = false)
     )
 
-  val C = define.fc[Connected[GithubSearch.State, GithubSearch.SearchAction] with Props](
+  val component = FunctionalComponent[Connected[GithubSearch.State, GithubSearch.SearchAction] with Props](
     props =>
-      div.noprops(
-        Sui.Header.props(Sui.HeaderProps(size = SuiStrings.large), props.title),
-        Sui.Tab.props(
-          Sui.TabProps(
-            panes = js.Array(
-              TabStructure(
-                menuItem = "Repo search",
-                render   = () => GithubSearch.C.props(new GithubSearch.Props(props.state, props.dispatch))
-              ),
-              TabStructure(menuItem = "Card", render     = () => CardDemo),
-              TabStructure(menuItem = "Progress", render = () => ProgressDemo)
-            )
+      div(
+        Sui.Header(size = SuiStrings.large)(props.title),
+        Sui.Tab(
+          panes = js.Array(
+            TabStructure(
+              menuItem = "Repo search",
+              render   = () => GithubSearch(props.state, props.dispatch)
+            ),
+            TabStructure(menuItem = "Card", render     = () => CardDemo),
+            TabStructure(menuItem = "Progress", render = () => ProgressDemo)
           )
         )
       )

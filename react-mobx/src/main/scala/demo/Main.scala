@@ -1,14 +1,12 @@
 package demo
 
-import typings.reactDashDom.reactDashDomMod.render
-import typings.std.window
+import org.scalajs.dom.document
+import slinky.web.ReactDOM
 
 object Main {
-  import typings.react.dsl._
-
   def main(argv: Array[String]): Unit =
-    render(
-      MainTabs.Component.props(new MainTabs.Props(new MobXTest.Store, new GithubSearch.Store())),
-      window.document.body
+    ReactDOM.render(
+      MainTabs(new MobXTest.Store, new GithubSearch.Store),
+      document.getElementsByTagName("body")(0)
     )
 }

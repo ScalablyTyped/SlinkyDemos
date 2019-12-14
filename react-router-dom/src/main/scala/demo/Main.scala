@@ -1,23 +1,17 @@
 package demo
 
-import typings.react.dsl._
-import typings.reactDashDom.reactDashDomMod.render
-import typings.std.document
-
-import scala.scalajs.js.|
+import org.scalajs.dom
+import slinky.web.ReactDOM
 
 object Main {
-  def asOption[T](t: T | Null): Option[T] =
-    Option(t.asInstanceOf[T])
-
   def main(args: Array[String]): Unit = {
-    val container = asOption(document.getElementById("root")).getOrElse {
-      val elem = document.createElement("div")
+    val container = Option(dom.document.getElementById("root")).getOrElse {
+      val elem = dom.document.createElement("div")
       elem.id = "root"
-      document.body.appendChild(elem)
+      dom.document.body.appendChild(elem)
       elem
     }
 
-    render(App.component.noprops(), container)
+    ReactDOM.render(App.component(()), container)
   }
 }

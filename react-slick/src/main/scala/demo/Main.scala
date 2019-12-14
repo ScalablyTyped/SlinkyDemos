@@ -1,55 +1,52 @@
 package demo
 
-import japgolly.scalajs.react._
-import japgolly.scalajs.react.raw.SyntheticMouseEvent
-import japgolly.scalajs.react.vdom.html_<^._
-import org.scalajs.dom
 import org.scalajs.dom.document
-import typings.reactDashSlick.reactDashSlickMod.{Settings, default => ReactSlick}
+import slinky.core.FunctionalComponent
+import slinky.core.facade.{Hooks, ReactElement}
+import slinky.web.ReactDOM
+import slinky.web.html._
+import typingsSlinky.reactDashSlick.components.ReactDashSlick
 
 import scala.scalajs.js
 
 object Main {
-  /* use `JsComponent` to integrate with ScalablyTyped component */
-  val SlickFacade = JsComponent[Settings, Children.Varargs, js.Object](js.constructorOf[ReactSlick])
 
   case class Props(images:      js.Array[String])
   case class State(selectedIdx: Option[Int])
 
-  val SlickTest = ScalaComponent
-    .builder[Props]("Foo")
-    .initialState(State(None))
-    .noBackend
-    .render { $ =>
-      def onClick(idx: Int): SyntheticMouseEvent[dom.Node] => Callback =
-        e => Callback.warn(s"clicked image $idx") >> $.setState(State(Some(idx)))
+  val SlickTest =
+    FunctionalComponent[Props] { props =>
+      val (state, setState) = Hooks.useState(State(None))
 
-      val images = $.props.images.zipWithIndex.map {
-        case (source, idx) =>
-          <.img(^.key := idx, ^.src := source, ^.onClick ==> onClick(idx)).render
+      def myOnClick(idx: Int): () => Unit = () => {
+        println(s"clicked image $idx")
+        setState(State(Some(idx)))
       }
 
-      <.div(
-        ^.style := js.Dynamic.literal(position = "relative", left = "200px", width = 500, height = 500),
-        <.label(
-          ^.style := js.Dynamic.literal(color = "blue"),
-          s"Selected image index: ${$.state.selectedIdx.fold("none")(_.toString)}"
+      val images: js.Array[ReactElement] =
+        props.images.zipWithIndex.map {
+          case (source, idx) =>
+            img(key := idx.toString, src := source, onClick := myOnClick(idx))()
+        }
+
+      div(
+        style := js.Dynamic.literal(position = "relative", left = "200px", width = 500, height = 500),
+        label(
+          style := js.Dynamic.literal(color = "blue"),
+          s"Selected image index: ${state.selectedIdx.fold("none")(_.toString)}"
         ),
-        SlickFacade(
-          Settings(
-            onInit        = () => println("slick init"),
-            dots          = true,
-            autoplay      = true,
-            autoplaySpeed = 1000,
-            slidesToShow  = 2
-          )
-        )(images: _*)
+        ReactDashSlick(
+          onInit        = () => println("slick init"),
+          dots          = true,
+          autoplay      = true,
+          autoplaySpeed = 1000,
+          slidesToShow  = 2
+        )(images.to(Seq): _*)
       )
     }
-    .build
 
-  def main(argv: Array[String]): Unit =
-    <.div(
+  def main(argv: Array[String]): Unit = {
+    ReactDOM.render(
       SlickTest(
         Props(
           js.Array(
@@ -62,6 +59,8 @@ object Main {
             "https://img.buzzfeed.com/buzzfeed-static/static/2014-04/enhanced/webdr07/9/12/enhanced-buzz-28527-1397060122-10.jpg?downsize=800:*&output-format=auto&output-quality=auto"
           )
         )
-      )
-    ).renderIntoDOM(document.body)
+      ),
+      document.body
+    )
+  }
 }

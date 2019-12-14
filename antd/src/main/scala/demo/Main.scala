@@ -1,16 +1,22 @@
 package demo
 
-import typings.react.dsl._
-import typings.reactDashDom.reactDashDomMod.render
-import typings.std.window
+import org.scalajs.dom
+import slinky.web.ReactDOM
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSImport
 
 object Main {
-  def main(argv: Array[String]): Unit = {
-    IndexCSS // touch to load
-    render(App.Component.noprops(), window.document.body)
+  def main(args: Array[String]): Unit = {
+    IndexCSS
+    val container = Option(dom.document.getElementById("root")).getOrElse {
+      val elem = dom.document.createElement("div")
+      elem.id = "root"
+      dom.document.body.appendChild(elem)
+      elem
+    }
+
+    ReactDOM.render(App.component(()), container)
   }
 }
 

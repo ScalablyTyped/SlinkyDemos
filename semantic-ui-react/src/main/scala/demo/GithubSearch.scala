@@ -1,19 +1,22 @@
 package demo
 
-import typings.react.reactMod.AnchorHTMLAttributes
-import typings.reactDashRedux.ReduxFacade.Extractor
-import typings.redux.reduxMod.{Action, Dispatch, Reducer}
-import typings.semanticDashUiDashReact.distCommonjsElementsIconIconMod.IconSizeProp
-import typings.semanticDashUiDashReact.distCommonjsGenericMod.{SemanticICONS, SemanticVERTICALALIGNMENTS}
-import typings.semanticDashUiDashReact.{semanticDashUiDashReactComponents => Sui}
-import typings.std.{RequestInit, fetch}
+import org.scalajs.dom.experimental._
+import slinky.core.FunctionalComponent
+import slinky.core.annotations.react
+import slinky.core.facade.ReactElement
+import slinky.web.html._
+import demo.ReduxFacade.Extractor
+import typingsSlinky.redux.reduxMod.{Action, Dispatch, Reducer}
+import typingsSlinky.semanticDashUiDashReact.distCommonjsElementsIconIconMod.{IconProps, IconSizeProp}
+import typingsSlinky.semanticDashUiDashReact.distCommonjsGenericMod.{SemanticICONS, SemanticVERTICALALIGNMENTS}
+import typingsSlinky.semanticDashUiDashReact.{components => Sui}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.scalajs.js
 
+@react
 object GithubSearch {
-  import typings.react.dsl._
 
   object api {
     trait Repository extends js.Object {
@@ -35,9 +38,25 @@ object GithubSearch {
     }
 
     def doSearch(search: String): Future[Either[GithubError, Response]] =
-      fetch(
-        input = s"https://api.github.com/search/repositories?q=$search&sort=stars",
-        init  = RequestInit(headers = js.Array(js.Array("Accept", "application/vnd.github.v3+json")))
+      Fetch.fetch(
+        s"https://api.github.com/search/repositories?q=$search&sort=stars",
+        new RequestInit {
+          override var headers: js.UndefOr[HeadersInit] = js.defined(
+            js.Array(js.Array("Accept", "application/vnd.github.v3+json"))
+          )
+          override var method:         js.UndefOr[HttpMethod]         = js.undefined
+          override var body:           js.UndefOr[BodyInit]           = js.undefined
+          override var referrer:       js.UndefOr[String]             = js.undefined
+          override var referrerPolicy: js.UndefOr[ReferrerPolicy]     = js.undefined
+          override var mode:           js.UndefOr[RequestMode]        = js.undefined
+          override var credentials:    js.UndefOr[RequestCredentials] = js.undefined
+          override var cache:          js.UndefOr[RequestCache]       = js.undefined
+          override var redirect:       js.UndefOr[RequestRedirect]    = js.undefined
+          override var integrity:      js.UndefOr[String]             = js.undefined
+          override var keepalive:      js.UndefOr[Boolean]            = js.undefined
+          override var signal:         js.UndefOr[AbortSignal]        = js.undefined
+          override var window:         js.UndefOr[Null]               = js.undefined
+        }
       ).toFuture.flatMap {
         case res if res.status == 200 =>
           res.json().toFuture.map(data => Right(data.asInstanceOf[Response]))
@@ -122,53 +141,40 @@ object GithubSearch {
     }
   }
 
-  class Props(val state: State, val dispatch: Dispatch[SearchAction]) extends js.Object
+  case class Props(state: State, dispatch: Dispatch[SearchAction])
 
-  val C = define.fc[Props] { props =>
-    div.noprops(
-      Sui.Input.props(
-        Sui.InputProps(
-          defaultValue = props.state.search,
-          onChange     = (_, data) => props.dispatch(SearchTextChanged(data.value_InputOnChangeData))
-        ),
-        input.noprops(),
-        Sui.Button.props(
-          Sui.ButtonProps(
-            onClick = (e, data) =>
-              api.doSearch(props.state.search).foreach {
-                case Right(res)        => props.dispatch(SearchReposSuccess(res.items))
-                case Left(githubError) => props.dispatch(SearchReposFailure(githubError))
-              }
-          )
-        )
+  val component = FunctionalComponent[Props] { props =>
+    div(
+      Sui.Input(onChange = (_, data) => props.dispatch(SearchTextChanged(data.value_InputOnChangeData)))(
+        defaultValue := props.state.search
       ),
-      props.state.error.map(e => div.noprops(e.message)),
-      props.state.repos.map(
+      input(),
+      Sui.Button(
+        icon = IconProps(name = SemanticICONS.`search plus`),
+        onClick = (e, data) =>
+          api.doSearch(props.state.search).foreach {
+            case Right(res)        => props.dispatch(SearchReposSuccess(res.items))
+            case Left(githubError) => props.dispatch(SearchReposFailure(githubError))
+          }
+      ),
+      props.state.error.toOption.map(e => div(e.message)),
+      props.state.repos.toOption.map(
         repos =>
-          Sui.List.props(
-            Sui.ListProps(divided = true, relaxed = true),
-            repos.map(
+          Sui.List(divided = true, relaxed = true)(
+            repos.to(Seq).map[ReactElement](
               repo =>
-                Sui.ListItem
-                  .withKey(repo.name)
-                  .noprops(
-                    Sui.ListIcon.props(
-                      Sui.ListIconProps(
-                        name          = SemanticICONS.github,
-                        size          = IconSizeProp.large,
-                        verticalAlign = SemanticVERTICALALIGNMENTS.middle
-                      )
+                Sui
+                  .ListItem()
+                  .withKey(repo.name)(
+                    Sui.ListIcon(
+                      name          = SemanticICONS.github,
+                      size          = IconSizeProp.large,
+                      verticalAlign = SemanticVERTICALALIGNMENTS.middle
                     ),
-                    Sui.ListContent.noprops(
-                      Sui.ListHeader.props(
-                        Sui.ListHeaderProps(
-                          content = a.props(AnchorHTMLAttributes(href = repo.html_url), repo.full_name)
-                        )
-                      ),
-                      Sui.ListDescription.noprops(repo.description)
-                    )
+                    Sui.ListContent()(Sui.ListHeader(content = a(href := repo.html_url))(repo.full_name)),
+                    Sui.ListDescription()(repo.description)
                   )
-            )
+            ): _*
           )
       )
     )

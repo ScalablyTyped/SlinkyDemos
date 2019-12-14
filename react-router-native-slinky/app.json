@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "React Router Native basic example",
-    "description": "A template setting up Expo with Slinky and Scala.js",
+    "description": "RRN basic example",
     "slug": "react-router-native-slinky",
     "privacy": "public",
     "sdkVersion": "34.0.0",

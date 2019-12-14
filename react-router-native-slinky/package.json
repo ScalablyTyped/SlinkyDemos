@@ -12,7 +12,8 @@
     "react": "16.8.3",
     "react-dom": "16.8.3",
     "react-native": "https://github.com/expo/react-native/archive/sdk-34.0.0.tar.gz",
-    "react-proxy": "1.1.8"
+    "react-proxy": "1.1.8",
+    "react-router-native": "5.0.0"
   },
   "devDependencies": {
     "babel-preset-expo": "^5.2.0"

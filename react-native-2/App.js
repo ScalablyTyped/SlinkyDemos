@@ -2,7 +2,7 @@ import React from 'react';
 import {Text, View} from 'react-native';
 
 if (__DEV__) {
-  module.exports = require("./target/scala-2.12/react-router-native-slinky-fastopt.js").app;
+  module.exports = require("./target/scala-2.12/react-native-2-fastopt.js").app;
 } else {
   module.exports = () => {
     return <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
@@ -13,5 +13,5 @@ if (__DEV__) {
   }
 
   // uncomment the following line to enable opt building
-  // module.exports = require("./target/scala-2.12/react-router-native-slinky-opt.js").app;
+  // module.exports = require("./target/scala-2.12/react-native-2-opt.js").app;
 }

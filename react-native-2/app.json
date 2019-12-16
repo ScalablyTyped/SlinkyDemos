@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "React Router Native basic example",
-    "description": "RRN basic example",
-    "slug": "react-router-native-slinky",
+    "name": "React Native basic example",
+    "description": "React Native example with react-router and antd",
+    "slug": "react-native-2",
     "privacy": "public",
     "sdkVersion": "34.0.0",
     "platforms": [

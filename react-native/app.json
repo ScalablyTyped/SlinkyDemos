@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "react-native",
-    "description": "A template setting up Expo and Scala.js",
+    "name": "React Native basic example",
+    "description": "React Native example with react-router and antd",
     "slug": "react-native",
     "privacy": "public",
     "sdkVersion": "34.0.0",

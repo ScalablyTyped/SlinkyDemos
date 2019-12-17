@@ -1,5 +1,7 @@
 package hello.world
 
+import typingsSlinky.reactDashNative.reactDashNativeMod.TextStyle
+import typingsSlinky.reactDashNative.reactDashNativeStrings
 import scala.scalajs.js
 import scala.scalajs.js.Dynamic.literal
 
@@ -20,12 +22,11 @@ object Styles {
     padding = 5
   )
 
-  val title = literal(
+  val title = TextStyle(
     padding = 10,
     fontSize = 20,
-    fontWeight = "bold",
-    textAlign = "center",
+    fontWeight = reactDashNativeStrings.bold,
+    textAlign = reactDashNativeStrings.center,
     color = "red"
   )
-
 }

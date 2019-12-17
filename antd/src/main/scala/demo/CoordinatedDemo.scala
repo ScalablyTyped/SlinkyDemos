@@ -11,7 +11,7 @@ import typingsSlinky.antd.libFormFormMod.{FormCreateOption, GetFieldDecoratorOpt
 import typingsSlinky.antd.libGridColMod.ColProps
 
 import scala.scalajs.js
-import scala.scalajs.js.{JSON, |}
+import scala.scalajs.js.{|, JSON}
 
 @react
 object CoordinatedDemo {
@@ -32,7 +32,7 @@ object CoordinatedDemo {
       new ExternalComponent {
         override type Props = P
         override val component: String | js.Object =
-          createForm(options)(f).asInstanceOf[js.Function1[js.Object, ReactElement]].asInstanceOf[js.Object]
+          createForm(options)(f).asInstanceOf[js.Object]
       }
 
     trait WithForm extends js.Object {
@@ -46,7 +46,7 @@ object CoordinatedDemo {
 
   val component: ExternalComponent { type Props = CoordinatedDemo.Props } =
     Facade.formComponent(FormCreateOption[Props](name = "coordinated")) { props =>
-      val  handleSubmit: SyntheticEvent[form.tag.RefType, Event] => Unit = e => {
+      val handleSubmit: SyntheticEvent[form.tag.RefType, Event] => Unit = e => {
         e.preventDefault()
         props.form.validateFields((err, values) => {
           if (err == null) {

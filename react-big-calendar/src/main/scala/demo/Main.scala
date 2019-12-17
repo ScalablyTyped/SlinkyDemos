@@ -5,11 +5,10 @@ import slinky.web.ReactDOM
 import typingsSlinky.moment.momentMod.{^ => Moment}
 import typingsSlinky.moment.momentStrings
 import typingsSlinky.reactDashBigDashCalendar.reactDashBigDashCalendarMod.{momentLocalizer, View}
-import typingsSlinky.reactDashBigDashCalendar.{components => BC}
+import typingsSlinky.reactDashBigDashCalendar.components.Calendar
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSImport
-import scala.scalajs.js.|
 
 @JSImport("react-big-calendar/lib/css/react-big-calendar.css", JSImport.Namespace)
 @js.native
@@ -32,7 +31,7 @@ object Main {
   def main(argv: Array[String]): Unit = {
     val container = document.getElementById("container")
     ReactDOM.render(
-      BC.Calendar[Event, js.Object](
+      Calendar[Event, js.Object](
         localizer   = Localizer,
         events      = js.Array(someEvent),
         defaultDate = new js.Date,

@@ -9,14 +9,7 @@ import scala.scalajs.js.annotation.JSImport
 object Main {
   def main(args: Array[String]): Unit = {
     IndexCSS
-    val container = Option(dom.document.getElementById("root")).getOrElse {
-      val elem = dom.document.createElement("div")
-      elem.id = "root"
-      dom.document.body.appendChild(elem)
-      elem
-    }
-
-    ReactDOM.render(App.component(()), container)
+    ReactDOM.render(App.component(()), dom.document.getElementById("container"))
   }
 }
 

@@ -41,9 +41,9 @@ object MobXTest {
       div(
         Mui.Avatar(
           icon = div(
-            onClick := ((e: SyntheticMouseEvent[`div`.tag.RefType]) => console.warn(s"icon clicked ${e.nativeEvent}"))
+            onClick := (e => console.warn(s"icon clicked ${e.nativeEvent}"))
           )(":D")
-        )(onClick := ((e: SyntheticMouseEvent[`*`.tag.RefType]) => console.warn(s"avatar clicked ${e.nativeEvent}")))
+        )(onClick := (e => console.warn(s"avatar clicked ${e.nativeEvent}")))
       )(
         "Current computed ",
         store.computed.get().strnum,

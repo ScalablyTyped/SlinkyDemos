@@ -147,7 +147,7 @@ lazy val `react-native` = project
   .configure(baseSettings)
   .settings(
     scalaJSUseMainModuleInitializer := false,
-    libraryDependencies += "me.shadaj" %%% "slinky-native" % "0.6.2",
+    libraryDependencies += "me.shadaj" %%% "slinky-native" % "0.6.3",
     /* ScalablyTypedConverterExternalNpmPlugin requires that we define how to install node dependencies and where they are */
     externalNpm := {
       Process("npm install", baseDirectory.value).!
@@ -179,8 +179,8 @@ lazy val baseSettings: Project => Project =
       scalacOptions += "-P:scalajs:sjsDefinedByDefault",
       /* for slinky*/
       libraryDependencies ++= Seq(
-        "me.shadaj" %%% "slinky-web" % "0.6.2",
-        "me.shadaj" %%% "slinky-hot" % "0.6.2"
+        "me.shadaj" %%% "slinky-web" % "0.6.3",
+        "me.shadaj" %%% "slinky-hot" % "0.6.3"
       ),
       scalacOptions += "-Ymacro-annotations"
     )

@@ -4,8 +4,7 @@ import slinky.core._
 import slinky.core.annotations.react
 import slinky.native._
 
-import typings.reactDashRouterDashNative.ReactRouterNativeFacade._
-import typings.reactDashRouter.reactDashRouterMod._
+import typingsSlinky.reactDashRouter.reactDashRouterMod._
 
 import scala.scalajs.js
 

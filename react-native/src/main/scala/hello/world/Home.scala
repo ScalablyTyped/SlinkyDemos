@@ -4,13 +4,13 @@ import slinky.core.FunctionalComponent
 import slinky.core.annotations.react
 import slinky.native.{Text, View}
 
-import typings.reactDashRouter.reactDashRouterMod.`match`
+import typingsSlinky.reactDashRouter.reactDashRouterMod.`match`
 
 import scala.scalajs.js.Dynamic.literal
 
 @react object Home extends Redirectable {
 
-  case class Props(redirPath: String, `match`: `match`[Unit])
+  case class Props(redirPath: String, `match`: `match`[_])
 
   val component = FunctionalComponent[Props] { props =>
 

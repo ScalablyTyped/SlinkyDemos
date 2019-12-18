@@ -4,12 +4,14 @@ import slinky.core.FunctionalComponent
 import slinky.core.annotations.react
 import slinky.core.facade.ReactElement
 import slinky.core.facade.Hooks.useState
-import slinky.web.html.{name, placeholder, size}
+import slinky.web.html.placeholder
+
 import scala.scalajs.js
+
 import typingsSlinky.atAntDashDesignReactDashNative.components.{List => AntdList, _}
 import typingsSlinky.atAntDashDesignReactDashNative.{atAntDashDesignReactDashNativeStrings => antdStrings}
 import typingsSlinky.atAntDashDesignReactDashNative.atAntDashDesignReactDashNativeMod.Toast
-import typingsSlinky.atAntDashDesignIconsDashReactDashNative.components.{IconFill, IconOutline}
+//import typingsSlinky.atAntDashDesignIconsDashReactDashNative.components.{IconFill, IconOutline}
 import typingsSlinky.atAntDashDesignReactDashNative.libModalPropsTypeMod.Action
 import typingsSlinky.reactDashNative.components.ScrollView
 import typingsSlinky.reactDashNative.reactDashNativeMod.ViewStyle
@@ -58,11 +60,11 @@ import typingsSlinky.reactDashNative.reactDashNativeStrings
               last         = true
             )(placeholder := "password"),
             WingBlank(size = antdStrings.lg)(
-              Button(onPress = _ => Toast.fail("Failure!"), `type`  = antdStrings.primary)("Launch fail toast")
+              Button(onPress = _ => Toast.fail("Failure!"), `type` = antdStrings.primary)("Launch fail toast")
             ),
             WhiteSpace(size = antdStrings.xl),
-            IconFill()(size := "20", name := "flag"),
-            IconOutline()(name := "gift"),
+//            IconFill()(size := "20", name := "flag"),
+//            IconOutline()(name := "gift"),
             Icon(name = "experiment", size = antdStrings.lg, color = "#A82")()
           )
         ),

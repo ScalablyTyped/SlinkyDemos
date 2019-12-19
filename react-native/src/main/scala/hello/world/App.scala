@@ -2,25 +2,27 @@ package hello.world
 
 import slinky.core._
 import slinky.core.annotations.react
-import slinky.core.facade.ReactElement
 import slinky.core.facade.Hooks._
+import slinky.core.facade.ReactElement
+import typingsSlinky.atAntDashDesignReactDashNative.components.{List => AntdList, _}
+import typingsSlinky.atAntDashDesignReactDashNative.{
+  PartialLocale,
+  atAntDashDesignReactDashNativeStrings => antdStrings
+}
+import typingsSlinky.atBang88ReactDashNativeDashDrawerDashLayout.atBang88ReactDashNativeDashDrawerDashLayoutMod.DrawerLayout
+import typingsSlinky.reactDashNative.components.ScrollView
+import typingsSlinky.reactDashRouter.components.Route
+import typingsSlinky.reactDashRouter.reactDashRouterMod.RouteProps
+import typingsSlinky.reactDashRouterDashNative.components.NativeRouter
 
 import scala.scalajs.js.|
-import typingsSlinky.atAntDashDesignReactDashNative.PartialLocale
-import typingsSlinky.atAntDashDesignReactDashNative.components.{List => AntdList, _}
-import typingsSlinky.atBang88ReactDashNativeDashDrawerDashLayout.atBang88ReactDashNativeDashDrawerDashLayoutMod.{DrawerLayout, default}
-import typingsSlinky.atAntDashDesignReactDashNative.{atAntDashDesignReactDashNativeStrings => antdStrings}
-import typingsSlinky.reactDashNative.components.ScrollView
-import typingsSlinky.reactDashRouter.reactDashRouterMod.RouteProps
-import typingsSlinky.reactDashRouter.components.Route
-import typingsSlinky.reactDashRouterDashNative.components.NativeRouter
 
 @react object App {
 
   type Props = Unit
 
   val component = FunctionalComponent[Props] { _ =>
-    var ref: default | Null = new default {}
+    var ref: DrawerLayout | Null = null
 
     val (redirPath, updateRedirPath) = useState(RoutePath.HOME.path)
 
@@ -31,9 +33,7 @@ import typingsSlinky.reactDashRouterDashNative.components.NativeRouter
             updateRedirPath(RoutePath.allOrdered(index).path)
             ref.asInstanceOf[DrawerLayout].closeDrawer()
           }
-        )(
-          RoutePath.allOrdered(index).title
-        ).withKey(index.toString)
+        )(RoutePath.allOrdered(index).title).withKey(index.toString)
     )
 
     Provider(locale = PartialLocale(locale = "enUS"))(

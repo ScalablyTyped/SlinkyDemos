@@ -2,7 +2,6 @@ import React from 'react';
 import {Text, View} from 'react-native';
 
 if (__DEV__) {
-  console.warn("foo");
   module.exports = require("./target/scala-2.12/react-native-fastopt.js").app;
 } else {
   module.exports = () => {
@@ -14,5 +13,5 @@ if (__DEV__) {
   }
 
   // uncomment the following line to enable opt building
-  // module.exports = require("./target/scala-2.12/app-opt.js").app;
+  // module.exports = require("./target/scala-2.12/react-native-opt.js").app;
 }

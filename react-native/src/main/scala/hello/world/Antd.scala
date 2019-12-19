@@ -1,17 +1,17 @@
 package hello.world
 
+import org.scalablytyped.runtime.StringDictionary
 import slinky.core.FunctionalComponent
 import slinky.core.annotations.react
 import slinky.core.facade.ReactElement
 import slinky.core.facade.Hooks.useState
-import slinky.web.html.placeholder
+import slinky.web.html.{name, placeholder}
 
 import scala.scalajs.js
-
 import typingsSlinky.atAntDashDesignReactDashNative.components.{List => AntdList, _}
 import typingsSlinky.atAntDashDesignReactDashNative.{atAntDashDesignReactDashNativeStrings => antdStrings}
 import typingsSlinky.atAntDashDesignReactDashNative.atAntDashDesignReactDashNativeMod.Toast
-//import typingsSlinky.atAntDashDesignIconsDashReactDashNative.components.{IconFill, IconOutline}
+import typingsSlinky.atAntDashDesignIconsDashReactDashNative.components.{IconFill, IconOutline}
 import typingsSlinky.atAntDashDesignReactDashNative.libModalPropsTypeMod.Action
 import typingsSlinky.reactDashNative.components.ScrollView
 import typingsSlinky.reactDashNative.reactDashNativeMod.ViewStyle
@@ -63,8 +63,8 @@ import typingsSlinky.reactDashNative.reactDashNativeStrings
               Button(onPress = _ => Toast.fail("Failure!"), `type` = antdStrings.primary)("Launch fail toast")
             ),
             WhiteSpace(size = antdStrings.xl),
-//            IconFill()(size := "20", name := "flag"),
-//            IconOutline()(name := "gift"),
+            IconFill(_overrides = StringDictionary("size" -> 40))(name := "flag"),
+            IconOutline(_overrides = StringDictionary("size" -> 80))(name := "gift"),
             Icon(name = "experiment", size = antdStrings.lg, color = "#A82")()
           )
         ),

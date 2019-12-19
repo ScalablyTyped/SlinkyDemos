@@ -150,12 +150,12 @@ lazy val `react-native` = project
     libraryDependencies += "me.shadaj" %%% "slinky-native" % "0.6.3",
     /* ScalablyTypedConverterExternalNpmPlugin requires that we define how to install node dependencies and where they are */
     externalNpm := {
-      Process("npm install", baseDirectory.value).!
+      Process("yarn install", baseDirectory.value).!
       baseDirectory.value
     },
     Compile / tsoFlavour := Flavour.Slinky,
     Compile / tsoIgnore += "csstype",
-    Compile / tsoMinimize := Selection.AllExcept("@ant-design/react-native"),
+    Compile / tsoMinimize := Selection.AllExcept("@ant-design/react-native", "expo-font", "expo"),
     /** This is not suitable for development, but effective for demo.
       * Run `expo start` yourself, and run `~react-native/fastOptJS` from sbt
       */

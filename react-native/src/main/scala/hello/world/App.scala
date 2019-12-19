@@ -3,63 +3,56 @@ package hello.world
 import slinky.core._
 import slinky.core.annotations.react
 import slinky.core.facade.Hooks._
-import slinky.native._
+import slinky.core.facade.ReactElement
+import typingsSlinky.atAntDashDesignReactDashNative.components.{List => AntdList, _}
+import typingsSlinky.atAntDashDesignReactDashNative.{
+  PartialLocale,
+  atAntDashDesignReactDashNativeStrings => antdStrings
+}
+import typingsSlinky.atBang88ReactDashNativeDashDrawerDashLayout.atBang88ReactDashNativeDashDrawerDashLayoutMod.DrawerLayout
+import typingsSlinky.reactDashNative.components.ScrollView
+import typingsSlinky.reactDashRouter.components.Route
+import typingsSlinky.reactDashRouter.reactDashRouterMod.RouteProps
+import typingsSlinky.reactDashRouterDashNative.components.NativeRouter
 
 import scala.scalajs.js.|
-
-import typings.antdDashNative.AntdNativeFacade.{List => AntdList, _}
-import typings.react.ScalableSlinky._
-import typings.atAntDashDesignReactDashNative.PartialLocale
-import typings.atBang88ReactDashNativeDashDrawerDashLayout.atBang88ReactDashNativeDashDrawerDashLayoutMod.{
-  default,
-  DrawerLayout
-}
-import typings.reactDashRouterDashNative.ReactRouterNativeFacade._
 
 @react object App {
 
   type Props = Unit
 
   val component = FunctionalComponent[Props] { _ =>
-    var ref: default | Null = new default {}
+    var ref: DrawerLayout | Null = null
 
     val (redirPath, updateRedirPath) = useState(RoutePath.HOME.path)
 
     val menus = RoutePath.allOrdered.indices.map(
       index =>
         ListItem(
-          ListItemProps(
-            onPress = _ => {
-              updateRedirPath(RoutePath.allOrdered(index).path)
-              ref.asInstanceOf[DrawerLayout].closeDrawer()
-            }
-          )
-        )(
-          RoutePath.allOrdered(index).title
-        ).withKey(index.toString)
+          onPress = () => {
+            updateRedirPath(RoutePath.allOrdered(index).path)
+            ref.asInstanceOf[DrawerLayout].closeDrawer()
+          }
+        )(RoutePath.allOrdered(index).title).withKey(index.toString)
     )
 
-    Provider(ProviderProps(locale = PartialLocale(locale = "enUS")))(
+    Provider(locale = PartialLocale(locale = "enUS"))(
       Drawer(
-        DrawerProps(
-          drawerRef = (ref = _),
-          sidebar   = ScrollView(WhiteSpace(WhiteSpaceProps(size = antdStrings.xl)), AntdList(ListProps())(menus)).toST
-        )
+        drawerRef = (ref = _),
+        sidebar   = ScrollView()(WhiteSpace(size = antdStrings.xl), AntdList()(menus))
       )(
-        NativeRouter(NativeRouterProps())(
+        NativeRouter()(
           View()(
-            AntdList(ListProps(renderHeader = WhiteSpace(WhiteSpaceProps(size = antdStrings.xl)).toST))(
+            AntdList(renderHeader = WhiteSpace(size = antdStrings.xl): ReactElement)(
               ListItem(
-                ListItemProps(
-                  arrow   = antdStrings.horizontal,
-                  onPress = _ => ref.asInstanceOf[DrawerLayout].openDrawer()
-                )
-              )("Open menu")
+                extra = Icon(name = "menu"),
+                onPress = () => ref.asInstanceOf[DrawerLayout].openDrawer()
+              )("React Native demo")
             )
           ),
-          Route[Unit](path = RoutePath.HOME.path, render        = props => Home(redirPath, props.`match`), exact = true),
-          Route[Unit](path = RoutePath.ANTD.path, render        = props => Antd(redirPath, props.`match`)),
-          Route[Unit](path = RoutePath.REACTROUTER.path, render = props => ReactRouter(redirPath, props.`match`))
+          Route(RouteProps(path = RoutePath.HOME.path, render        = props => Home(redirPath, props.`match`), exact = true)),
+          Route(RouteProps(path = RoutePath.ANTD.path, render        = props => Antd(redirPath, props.`match`))),
+          Route(RouteProps(path = RoutePath.REACTROUTER.path, render = props => ReactRouter(redirPath, props.`match`)))
         )
       )
     )

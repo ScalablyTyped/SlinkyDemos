@@ -1,18 +1,20 @@
 package hello.world
 
-import scala.scalajs.js
+import typingsSlinky.reactDashNative.reactDashNativeMod.TextStyle
+import typingsSlinky.reactDashNative.reactDashNativeStrings
+
 import scala.scalajs.js.Dynamic.literal
 
 object Styles {
-  val headerStyle = literal(
+  val headerStyle = TextStyle(
     padding = 10,
     fontSize = 20,
     color = "black"
   )
 
-  val topicStyle = literal(
+  val topicStyle = TextStyle(
     paddingTop = 30,
-    textAlign = "center",
+    textAlign = reactDashNativeStrings.center,
     fontSize = 15
   )
 
@@ -20,12 +22,11 @@ object Styles {
     padding = 5
   )
 
-  val title = literal(
+  val title = TextStyle(
     padding = 10,
     fontSize = 20,
-    fontWeight = "bold",
-    textAlign = "center",
+    fontWeight = reactDashNativeStrings.bold,
+    textAlign = reactDashNativeStrings.center,
     color = "red"
   )
-
 }

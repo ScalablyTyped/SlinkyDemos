@@ -139,6 +139,32 @@ lazy val `react-router-dom` =
       )
     )
 
+/** Note: This can't use scalajs-bundler (at least I don't know how),
+  *  so we run yarn ourselves with an external package.json.
+  **/
+lazy val `react-native` = project
+  .enablePlugins(ScalablyTypedConverterExternalNpmPlugin)
+  .configure(baseSettings)
+  .settings(
+    scalaJSUseMainModuleInitializer := false,
+    libraryDependencies += "me.shadaj" %%% "slinky-native" % "0.6.3",
+    /* ScalablyTypedConverterExternalNpmPlugin requires that we define how to install node dependencies and where they are */
+    externalNpm := {
+      Process("yarn install", baseDirectory.value).!
+      baseDirectory.value
+    },
+    Compile / tsoFlavour := Flavour.Slinky,
+    Compile / tsoIgnore += "csstype",
+    Compile / tsoMinimize := Selection.AllExcept("@ant-design/react-native", "expo-font", "expo"),
+    /** This is not suitable for development, but effective for demo.
+      * Run `expo start` yourself, and run `~react-native/fastOptJS` from sbt
+      */
+    run := {
+      (Compile / fastOptJS).value
+      Process("expo start", baseDirectory.value).!
+    },
+  )
+
 lazy val baseSettings: Project => Project =
   _.enablePlugins(ScalaJSPlugin)
     .settings(
@@ -152,7 +178,10 @@ lazy val baseSettings: Project => Project =
       /* in preparation for scala.js 1.0 */
       scalacOptions += "-P:scalajs:sjsDefinedByDefault",
       /* for slinky*/
-      libraryDependencies += "me.shadaj" %%% "slinky-web" % "0.6.2",
+      libraryDependencies ++= Seq(
+        "me.shadaj" %%% "slinky-web" % "0.6.3",
+        "me.shadaj" %%% "slinky-hot" % "0.6.3"
+      ),
       scalacOptions += "-Ymacro-annotations"
     )
 

@@ -56,7 +56,7 @@ import typingsSlinky.reactDashNative.reactDashNativeStrings
             InputItem(
               `type`       = antdStrings.password,
               error        = true,
-              onErrorClick = e => {Toast.fail("Always wrong!")},
+              onErrorClick = _ => {Toast.fail("Always wrong!")},
               last         = true
             )(placeholder := "password"),
             WingBlank(size = antdStrings.lg)(

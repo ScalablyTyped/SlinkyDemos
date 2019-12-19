@@ -45,9 +45,9 @@ import typingsSlinky.reactDashRouterDashNative.components.NativeRouter
           View()(
             AntdList(renderHeader = WhiteSpace(size = antdStrings.xl): ReactElement)(
               ListItem(
-                arrow   = antdStrings.horizontal,
+                extra = Icon(name = "menu"),
                 onPress = () => ref.asInstanceOf[DrawerLayout].openDrawer()
-              )("Open menu")
+              )("React Native demo")
             )
           ),
           Route(RouteProps(path = RoutePath.HOME.path, render        = props => Home(redirPath, props.`match`), exact = true)),

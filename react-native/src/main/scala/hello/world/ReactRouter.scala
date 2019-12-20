@@ -3,9 +3,10 @@ package hello.world
 import slinky.core.FunctionalComponent
 import slinky.core.annotations.react
 import slinky.core.facade.ReactElement
+import slinky.native.{Text, View}
+
 import typingsSlinky.reactDashRouterDashNative.components._
 import typingsSlinky.reactDashRouter.reactDashRouterMod._
-import typingsSlinky.reactDashNative.components._
 
 @react object ReactRouter extends Redirectable {
 

@@ -4,10 +4,10 @@ import org.scalablytyped.runtime.TopLevel
 import slinky.core.Component
 import slinky.core.annotations.react
 import slinky.core.facade.ReactElement
+import slinky.native.Text
 import typingsSlinky.expo.components.AppLoading
 import typingsSlinky.expoDashFont.expoDashFontMod.FontSource
 import typingsSlinky.expoDashFont.{expoDashFontMod => Font}
-import typingsSlinky.reactDashNative.components.Text
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js

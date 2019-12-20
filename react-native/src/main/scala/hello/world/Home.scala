@@ -2,7 +2,7 @@ package hello.world
 
 import slinky.core.FunctionalComponent
 import slinky.core.annotations.react
-import typingsSlinky.reactDashNative.components.{Text, View}
+import slinky.native.{Text, View}
 import typingsSlinky.reactDashNative.reactDashNativeMod.{TextStyle, ViewStyle}
 import typingsSlinky.reactDashRouter.reactDashRouterMod.`match`
 

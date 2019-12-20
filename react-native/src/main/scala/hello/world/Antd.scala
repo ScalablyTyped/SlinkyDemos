@@ -6,6 +6,7 @@ import slinky.core.annotations.react
 import slinky.core.facade.ReactElement
 import slinky.core.facade.Hooks.useState
 import slinky.web.html.{name, placeholder}
+import slinky.native.ScrollView
 
 import scala.scalajs.js
 import typingsSlinky.atAntDashDesignReactDashNative.components.{List => AntdList, _}
@@ -13,7 +14,6 @@ import typingsSlinky.atAntDashDesignReactDashNative.{atAntDashDesignReactDashNat
 import typingsSlinky.atAntDashDesignReactDashNative.atAntDashDesignReactDashNativeMod.Toast
 import typingsSlinky.atAntDashDesignIconsDashReactDashNative.components.{IconFill, IconOutline}
 import typingsSlinky.atAntDashDesignReactDashNative.libModalPropsTypeMod.Action
-import typingsSlinky.reactDashNative.components.ScrollView
 import typingsSlinky.reactDashNative.reactDashNativeMod.ViewStyle
 import typingsSlinky.reactDashRouter.reactDashRouterMod.`match`
 import typingsSlinky.reactDashNative.reactDashNativeStrings

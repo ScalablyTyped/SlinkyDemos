@@ -2,7 +2,7 @@ package hello.world
 
 import slinky.core._
 import slinky.core.annotations.react
-import slinky.native._
+import slinky.native.Text
 
 import typingsSlinky.reactDashRouter.reactDashRouterMod._
 

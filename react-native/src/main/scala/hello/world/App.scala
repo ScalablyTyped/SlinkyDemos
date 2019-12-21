@@ -4,13 +4,13 @@ import slinky.core._
 import slinky.core.annotations.react
 import slinky.core.facade.Hooks._
 import slinky.core.facade.ReactElement
+import slinky.native.ScrollView
 import typingsSlinky.atAntDashDesignReactDashNative.components.{List => AntdList, _}
 import typingsSlinky.atAntDashDesignReactDashNative.{
   PartialLocale,
   atAntDashDesignReactDashNativeStrings => antdStrings
 }
 import typingsSlinky.atBang88ReactDashNativeDashDrawerDashLayout.atBang88ReactDashNativeDashDrawerDashLayoutMod.DrawerLayout
-import typingsSlinky.reactDashNative.components.ScrollView
 import typingsSlinky.reactDashRouter.components.Route
 import typingsSlinky.reactDashRouter.reactDashRouterMod.RouteProps
 import typingsSlinky.reactDashRouterDashNative.components.NativeRouter
@@ -42,13 +42,11 @@ import scala.scalajs.js.|
         sidebar   = ScrollView()(WhiteSpace(size = antdStrings.xl), AntdList()(menus))
       )(
         NativeRouter()(
-          View()(
-            AntdList(renderHeader = WhiteSpace(size = antdStrings.xl): ReactElement)(
-              ListItem(
-                extra = Icon(name = "menu"),
-                onPress = () => ref.asInstanceOf[DrawerLayout].openDrawer()
-              )("React Native demo")
-            )
+          AntdList(renderHeader = WhiteSpace(size = antdStrings.xl): ReactElement)(
+            ListItem(
+              extra   = Icon(name = "menu"),
+              onPress = () => ref.asInstanceOf[DrawerLayout].openDrawer()
+            )("React Native demo")
           ),
           Route(RouteProps(path = RoutePath.HOME.path, render        = props => Home(redirPath, props.`match`), exact = true)),
           Route(RouteProps(path = RoutePath.ANTD.path, render        = props => Antd(redirPath, props.`match`))),

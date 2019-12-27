@@ -25,6 +25,7 @@ lazy val `react-mobx` =
     .configure(baseSettings, scalajsBundler, browserProject, slinkyReact)
     .settings(
       webpackDevServerPort := 8001,
+      Compile / tsoEnableScalaJsDefined := Selection.All,
       Compile / tsoIgnore ++= List("material-ui/svg-icons"),
       Compile / tsoMinimize := Selection.AllExcept("axios", "material-ui", "mobx-react", "mobx"),
       Compile / npmDependencies ++= Seq(
@@ -43,7 +44,7 @@ lazy val `react-slick` =
     .settings(
       webpackDevServerPort := 8002,
       Compile / tsoIgnore += "csstype",
-      Compile / tsoMinimize := Selection.All(),
+      Compile / tsoMinimize := Selection.All,
       Compile / npmDependencies ++= Seq(
         "react-slick" -> "0.23",
         "@types/react-slick" -> "0.23.4"
@@ -70,6 +71,7 @@ lazy val `semantic-ui-react` = project
   .configure(baseSettings, scalajsBundler, browserProject, slinkyReact)
   .settings(
     webpackDevServerPort := 8004,
+    Compile / tsoEnableScalaJsDefined := Selection.All,
     Compile / tsoIgnore += "csstype",
     Compile / tsoMinimize := Selection.AllExcept(
       "react-redux",
@@ -132,7 +134,7 @@ lazy val `react-router-dom` =
     .settings(
       webpackDevServerPort := 8007,
       Compile / tsoIgnore += "csstype",
-      Compile / tsoMinimize := Selection.AllExcept(),
+      Compile / tsoMinimize := Selection.All,
       Compile / npmDependencies ++= Seq(
         "react-router-dom" -> "5.1.2",
         "@types/react-router-dom" -> "5.1.2"
@@ -150,7 +152,7 @@ lazy val `react-native` = project
     libraryDependencies += "me.shadaj" %%% "slinky-native" % "0.6.3",
     /* ScalablyTypedConverterExternalNpmPlugin requires that we define how to install node dependencies and where they are */
     externalNpm := {
-      Process("yarn install", baseDirectory.value).!
+      Process("yarn", baseDirectory.value).!
       baseDirectory.value
     },
     Compile / tsoFlavour := Flavour.Slinky,

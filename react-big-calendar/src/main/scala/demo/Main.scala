@@ -24,7 +24,7 @@ object Main {
 
   val someEvent = new Event(
     start = new js.Date,
-    end   = Moment(new js.Date).add(1, momentStrings.day).toDate(),
+    end = Moment(new js.Date).add(1, momentStrings.day).toDate(),
     title = "My amazing event"
   )
 
@@ -32,11 +32,11 @@ object Main {
     val container = document.getElementById("container")
     ReactDOM.render(
       Calendar[Event, js.Object](
-        localizer   = Localizer,
-        events      = js.Array(someEvent),
+        localizer = Localizer,
+        events = js.Array(someEvent),
         defaultDate = new js.Date,
         defaultView = View.week,
-        views       = js.Array(View.agenda, View.day, View.week)
+        views = js.Array(View.agenda, View.day, View.week)
       ),
       container
     )

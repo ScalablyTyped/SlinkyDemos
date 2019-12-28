@@ -1,6 +1,6 @@
 package demo
 
-import org.scalajs.dom.{Event, console}
+import org.scalajs.dom.{console, Event}
 import slinky.core._
 import slinky.core.annotations.react
 import slinky.core.facade.{Hooks, ReactElement}
@@ -27,7 +27,7 @@ object CSS extends js.Any
 
   val component = FunctionalComponent[Props] { _ =>
     val (isModalVisible, updateIsModalVisible) = Hooks.useState(false)
-    val (selectValue, updateSelectValue)       = Hooks.useState("lucy")
+    val (selectValue, updateSelectValue) = Hooks.useState("lucy")
 
     val renderIntro = Row(
       Col(span := 7),
@@ -74,12 +74,12 @@ object CSS extends js.Any
         ),
         columns = js.Array(
           ColumnProps[TableItem](
-            title     = ReactElement.stringToElement("Name"),
+            title = ReactElement.stringToElement("Name"),
             dataIndex = "name",
-            key       = "name",
-            render    = (text, _, _) => Tag(text.toString)
+            key = "name",
+            render = (text, _, _) => Tag(text.toString)
           ),
-          ColumnProps(title = ReactElement.stringToElement("Age"), dataIndex     = "age", key     = "age"),
+          ColumnProps(title = ReactElement.stringToElement("Age"), dataIndex = "age", key = "age"),
           ColumnProps(title = ReactElement.stringToElement("Address"), dataIndex = "address", key = "address")
         )
       )
@@ -88,10 +88,10 @@ object CSS extends js.Any
     val renderAlert = section(
       h2("Alert"),
       Alert(
-        message     = "Success Tips",
+        message = "Success Tips",
         description = "Detailed description and advice about successful copywriting.",
-        `type`      = antdStrings.success,
-        showIcon    = true
+        `type` = antdStrings.success,
+        showIcon = true
       )
     )
 
@@ -102,10 +102,10 @@ object CSS extends js.Any
       h2("Modal"),
       Button(onClick := (() => updateIsModalVisible(true)))("Open modal"),
       Modal(
-        visible  = isModalVisible,
-        title    = "Basic modal",
+        visible = isModalVisible,
+        title = "Basic modal",
         onCancel = _ => updateIsModalVisible(false),
-        onOk     = _ => updateIsModalVisible(false)
+        onOk = _ => updateIsModalVisible(false)
       )(p("Some contents..."), p("Some contents..."), p("Some contents..."))
     )
 
@@ -113,7 +113,7 @@ object CSS extends js.Any
       h2("Select"),
       Select[String](
         defaultValue = selectValue,
-        onChange     = (changedValue, _) => updateSelectValue(changedValue)
+        onChange = (changedValue, _) => updateSelectValue(changedValue)
       )(
         List(
           Option("Jack").withKey("jack"),
@@ -140,10 +140,10 @@ object CSS extends js.Any
       h2("Spin"),
       Spin(size = antdStrings.large, spinning = true)(
         Alert(
-          message     = "Alert message title",
+          message = "Alert message title",
           description = "Further details about the context of this alert.",
-          `type`      = antdStrings.info,
-          showIcon    = true
+          `type` = antdStrings.info,
+          showIcon = true
         )
       )
     )

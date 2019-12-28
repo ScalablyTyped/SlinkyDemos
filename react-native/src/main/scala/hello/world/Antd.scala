@@ -32,8 +32,8 @@ import typingsSlinky.reactDashNative.reactDashNativeStrings
         Text(style = Styles.title)("Antd components"): ReactElement,
         ScrollView(
           automaticallyAdjustContentInsets = false,
-          showsHorizontalScrollIndicator   = false,
-          showsVerticalScrollIndicator     = false
+          showsHorizontalScrollIndicator = false,
+          showsVerticalScrollIndicator = false
         )(
           AntdList(renderHeader = Text("List header"): ReactElement)(
             ListItem(arrow = antdStrings.horizontal, onPress = () => updateIsModalVisible(true))(
@@ -46,18 +46,18 @@ import typingsSlinky.reactDashNative.reactDashNativeStrings
           View(
             style = ViewStyle(
               backgroundColor = "white",
-              flex            = 1,
-              flexDirection   = reactDashNativeStrings.column,
-              justifyContent  = reactDashNativeStrings.center,
-              alignItems      = reactDashNativeStrings.center
+              flex = 1,
+              flexDirection = reactDashNativeStrings.column,
+              justifyContent = reactDashNativeStrings.center,
+              alignItems = reactDashNativeStrings.center
             )
           )(
             InputItem(placeholder := "input text"),
             InputItem(
-              `type`       = antdStrings.password,
-              error        = true,
-              onErrorClick = _ => {Toast.fail("Always wrong!")},
-              last         = true
+              `type` = antdStrings.password,
+              error = true,
+              onErrorClick = _ => { Toast.fail("Always wrong!") },
+              last = true
             )(placeholder := "password"),
             WingBlank(size = antdStrings.lg)(
               Button(onPress = _ => Toast.fail("Failure!"), `type` = antdStrings.primary)("Launch fail toast")
@@ -69,12 +69,12 @@ import typingsSlinky.reactDashNative.reactDashNativeStrings
           )
         ),
         Modal(
-          visible      = isModalVisible,
-          transparent  = true,
+          visible = isModalVisible,
+          transparent = true,
           maskClosable = true,
-          closable     = false,
-          title        = "Basic modal",
-          onClose      = () => updateIsModalVisible(false),
+          closable = false,
+          title = "Basic modal",
+          onClose = () => updateIsModalVisible(false),
           footer = js.Array(
             Action("Cancel", () => updateIsModalVisible(false), ""),
             Action("OK", () => updateIsModalVisible(false), "")

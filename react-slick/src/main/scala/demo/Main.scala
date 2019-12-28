@@ -11,7 +11,7 @@ import scala.scalajs.js
 
 object Main {
 
-  case class Props(images:      js.Array[String])
+  case class Props(images: js.Array[String])
   case class State(selectedIdx: Option[Int])
 
   val SlickTest =
@@ -36,16 +36,16 @@ object Main {
           s"Selected image index: ${state.selectedIdx.fold("none")(_.toString)}"
         ),
         ReactDashSlick(
-          onInit        = () => println("slick init"),
-          dots          = true,
-          autoplay      = true,
+          onInit = () => println("slick init"),
+          dots = true,
+          autoplay = true,
           autoplaySpeed = 1000,
-          slidesToShow  = 2
+          slidesToShow = 2
         )(images.to(Seq): _*)
       )
     }
 
-  def main(argv: Array[String]): Unit = {
+  def main(argv: Array[String]): Unit =
     ReactDOM.render(
       SlickTest(
         Props(
@@ -62,5 +62,4 @@ object Main {
       ),
       document.body
     )
-  }
 }

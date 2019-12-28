@@ -31,7 +31,7 @@ import typingsSlinky.reactDashRouter.reactDashRouterMod._
         ),
         Route(
           RouteProps(
-            path   = props.`match`.path + "/:topicId",
+            path = props.`match`.path + "/:topicId",
             render = props => Topic(props.`match`.asInstanceOf[`match`[Topic.Param]])
           )
         ),

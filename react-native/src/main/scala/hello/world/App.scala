@@ -26,30 +26,29 @@ import scala.scalajs.js.|
 
     val (redirPath, updateRedirPath) = useState(RoutePath.HOME.path)
 
-    val menus = RoutePath.allOrdered.indices.map(
-      index =>
-        ListItem(
-          onPress = () => {
-            updateRedirPath(RoutePath.allOrdered(index).path)
-            ref.asInstanceOf[DrawerLayout].closeDrawer()
-          }
-        )(RoutePath.allOrdered(index).title).withKey(index.toString)
+    val menus = RoutePath.allOrdered.indices.map(index =>
+      ListItem(
+        onPress = () => {
+          updateRedirPath(RoutePath.allOrdered(index).path)
+          ref.asInstanceOf[DrawerLayout].closeDrawer()
+        }
+      )(RoutePath.allOrdered(index).title).withKey(index.toString)
     )
 
     Provider(locale = PartialLocale(locale = "enUS"))(
       Drawer(
         drawerRef = (ref = _),
-        sidebar   = ScrollView(WhiteSpace(size = antdStrings.xl), AntdList(menus))
+        sidebar = ScrollView(WhiteSpace(size = antdStrings.xl), AntdList(menus))
       )(
         NativeRouter(
           AntdList(renderHeader = WhiteSpace(size = antdStrings.xl): ReactElement)(
             ListItem(
-              extra   = Icon(name = "menu"),
+              extra = Icon(name = "menu"),
               onPress = () => ref.asInstanceOf[DrawerLayout].openDrawer()
             )("React Native demo")
           ),
-          Route(RouteProps(path = RoutePath.HOME.path, render        = props => Home(redirPath, props.`match`), exact = true)),
-          Route(RouteProps(path = RoutePath.ANTD.path, render        = props => Antd(redirPath, props.`match`))),
+          Route(RouteProps(path = RoutePath.HOME.path, render = props => Home(redirPath, props.`match`), exact = true)),
+          Route(RouteProps(path = RoutePath.ANTD.path, render = props => Antd(redirPath, props.`match`))),
           Route(RouteProps(path = RoutePath.REACTROUTER.path, render = props => ReactRouter(redirPath, props.`match`)))
         )
       )

@@ -40,7 +40,7 @@ object CoordinatedDemo {
     }
 
     def decoratedField(form: WrappedFormUtils[js.Object], fieldName: String, options: GetFieldDecoratorOptions)(
-        children:            ReactElement
+        children: ReactElement
     ): TagMod[Any] = form.getFieldDecorator(fieldName, options).apply(children)
   }
 
@@ -48,11 +48,11 @@ object CoordinatedDemo {
     Facade.formComponent(FormCreateOption[Props](name = "coordinated")) { props =>
       val handleSubmit: SyntheticEvent[form.tag.RefType, Event] => Unit = e => {
         e.preventDefault()
-        props.form.validateFields((err, values) => {
+        props.form.validateFields { (err, values) =>
           if (err == null) {
             console.log("Received values of form: " + JSON.stringify(values))
           }
-        })
+        }
       }
 
       def handleSelectChange(value: String, option: Any): Unit = {
@@ -76,7 +76,7 @@ object CoordinatedDemo {
         Facade.decoratedField(props.form, "gender", options) {
           Select[String](
             placeholder = "Select a option and change input text above",
-            onChange    = handleSelectChange
+            onChange = handleSelectChange
           )(
             Option()(value := "male")("male"),
             Option()(value := "female")("female")
@@ -84,9 +84,9 @@ object CoordinatedDemo {
         }
       }
 
-      Form(labelCol         = ColProps(span = 5), wrapperCol = ColProps(span = 12))(onSubmit := handleSubmit)(
-        FormItem(label      = props.noteTitle)(noteInput),
-        FormItem(label      = "Gender")(genderInput),
+      Form(labelCol = ColProps(span = 5), wrapperCol = ColProps(span = 12))(onSubmit := handleSubmit)(
+        FormItem(label = props.noteTitle)(noteInput),
+        FormItem(label = "Gender")(genderInput),
         FormItem(wrapperCol = ColProps(span = 12, offset = 5))(
           Button(`type` = antdStrings.primary, htmlType = antdStrings.submit)("Submit")
         )

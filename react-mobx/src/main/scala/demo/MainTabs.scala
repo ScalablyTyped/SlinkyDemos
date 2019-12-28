@@ -21,7 +21,7 @@ object MainTabs {
     case Props(testStore, githubStore) =>
       val effectiveTheme = getMuiTheme(new MuiTheme {
         rawTheme = js.defined(theme)
-        palette  = theme.palette
+        palette = theme.palette
       })
 
       Mui.MuiThemeProvider(effectiveTheme)(
@@ -29,8 +29,8 @@ object MainTabs {
           onClick := (e => console.warn("onclick", e)),
           style := new CSSProperties {
             backgroundColor = theme.palette.flatMap(_.canvasColor).asInstanceOf[js.UndefOr[BackgroundColorProperty]]
-            width           = 800
-            height          = 800
+            width = 800
+            height = 800
           }.asInstanceOf[js.Dynamic]
         )(
           Mui.Tabs(

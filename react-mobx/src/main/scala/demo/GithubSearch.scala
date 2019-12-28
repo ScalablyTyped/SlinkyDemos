@@ -21,11 +21,11 @@ object GithubSearch {
   case class Props(store: Store)
 
   trait Repository extends js.Object {
-    val description:      String
-    val forks_count:      Int
-    val name:             String
+    val description: String
+    val forks_count: Int
+    val name: String
     val stargazers_count: Int
-    val html_url:         String
+    val html_url: String
   }
 
   trait Response extends js.Object {
@@ -47,7 +47,7 @@ object GithubSearch {
             .get[Response, AxiosResponse[Response]](
               "https://api.github.com/search/repositories",
               AxiosRequestConfig(
-                params  = js.Dynamic.literal(q      = search.get(), sort = "stars"),
+                params = js.Dynamic.literal(q = search.get(), sort = "stars"),
                 headers = js.Dynamic.literal(Accept = "application/vnd.github.v3+json")
               )
             )
@@ -68,18 +68,17 @@ object GithubSearch {
   def gotoRepo(repo: Repository): () => Unit = () => window.location.href = repo.html_url
 
   /* this is a simple functional component to display a github repo in a table row */
-  val RepoRow = FunctionalComponent[Repository](
-    repo =>
-      Mui.TableRow(
-        Mui.TableRowColumn(repo.name),
-        Mui.TableRowColumn(repo.forks_count),
-        Mui.TableRowColumn(repo.stargazers_count),
-        Mui.TableRowColumn(
-          Mui.FlatButton(onClick := gotoRepo(repo), disabled := false)(
-            "Go to project"
-          )
+  val RepoRow = FunctionalComponent[Repository](repo =>
+    Mui.TableRow(
+      Mui.TableRowColumn(repo.name),
+      Mui.TableRowColumn(repo.forks_count),
+      Mui.TableRowColumn(repo.stargazers_count),
+      Mui.TableRowColumn(
+        Mui.FlatButton(onClick := gotoRepo(repo), disabled := false)(
+          "Go to project"
         )
       )
+    )
   )
 
   val component: FunctionalComponent[Props] = ObservingFC[Props] {
@@ -87,9 +86,9 @@ object GithubSearch {
       div(
         Mui.Paper(
           style = new CSSProperties {
-            height         = "100px"
-            display        = csstypeStrings.flex
-            alignItems     = csstypeStrings.center
+            height = "100px"
+            display = csstypeStrings.flex
+            alignItems = csstypeStrings.center
             justifyContent = csstypeStrings.center
           },
           rounded = true
@@ -101,21 +100,20 @@ object GithubSearch {
         Mui.FlatButton(onClick := store.searchForRepos)("Search"),
         store.result
           .get()
-          .fold[TagMod[Any]](div("No result yet"))(
-            repos =>
-              Mui.Table(
-                Mui.TableHeader(
-                  Mui.TableRow(
-                    Mui.TableRowColumn("name"),
-                    Mui.TableRowColumn("forks_count"),
-                    Mui.TableRowColumn("stargazers_count"),
-                    Mui.TableRowColumn("link")
-                  )
-                ),
-                Mui.TableBody(
-                  repos.to(Seq).map(repo => RepoRow(repo).withKey(repo.name)): _*
+          .fold[TagMod[Any]](div("No result yet"))(repos =>
+            Mui.Table(
+              Mui.TableHeader(
+                Mui.TableRow(
+                  Mui.TableRowColumn("name"),
+                  Mui.TableRowColumn("forks_count"),
+                  Mui.TableRowColumn("stargazers_count"),
+                  Mui.TableRowColumn("link")
                 )
+              ),
+              Mui.TableBody(
+                repos.to(Seq).map(repo => RepoRow(repo).withKey(repo.name)): _*
               )
+            )
           )
       )
   }

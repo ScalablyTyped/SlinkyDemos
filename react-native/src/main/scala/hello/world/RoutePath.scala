@@ -10,14 +10,14 @@ object RoutePath extends Enumeration {
       case HOME        => "/"
       case ANTD        => "/antd"
       case REACTROUTER => "/react_router"
-      case _ => throw new Error
+      case _           => throw new Error
     }
 
     def title: String = p match {
       case HOME        => "Home"
       case ANTD        => "Antd"
       case REACTROUTER => "React Router"
-      case _ => throw new Error
+      case _           => throw new Error
     }
 
   }

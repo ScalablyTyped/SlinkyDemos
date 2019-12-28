@@ -23,13 +23,13 @@ object ReduxFacade {
 
   trait Connected[State, Action] extends js.Object {
     val dispatch: Dispatch[Action]
-    val state:    State
+    val state: State
   }
 
   /* take a store and a component which takes `dispatch` and `state` as props, return a component with those filled */
   def simpleConnect[State <: js.Any, Action <: js.Any, P <: js.Object](
       store: Store[State, Action],
-      c:     ReactComponentClass[Connected[State, Action] with P]
+      c: ReactComponentClass[Connected[State, Action] with P]
   ): ExternalComponent { type Props = P } = {
     val keepState: js.Function1[State, js.Dynamic] =
       s => js.Dynamic.literal(state = s)

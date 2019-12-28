@@ -20,12 +20,12 @@ object GithubSearch {
 
   object api {
     trait Repository extends js.Object {
-      val description:      String
-      val forks_count:      Int
-      val name:             String
-      val full_name:        String
+      val description: String
+      val forks_count: Int
+      val name: String
+      val full_name: String
       val stargazers_count: Int
-      val html_url:         String
+      val html_url: String
     }
 
     trait Response extends js.Object {
@@ -33,43 +33,46 @@ object GithubSearch {
     }
 
     trait GithubError extends js.Object {
-      val message:           String
+      val message: String
       val documentation_url: String
     }
 
     def doSearch(search: String): Future[Either[GithubError, Response]] =
-      Fetch.fetch(
-        s"https://api.github.com/search/repositories?q=$search&sort=stars",
-        new RequestInit {
-          override var headers: js.UndefOr[HeadersInit] = js.defined(
-            js.Array(js.Array("Accept", "application/vnd.github.v3+json"))
-          )
-          override var method:         js.UndefOr[HttpMethod]         = js.undefined
-          override var body:           js.UndefOr[BodyInit]           = js.undefined
-          override var referrer:       js.UndefOr[String]             = js.undefined
-          override var referrerPolicy: js.UndefOr[ReferrerPolicy]     = js.undefined
-          override var mode:           js.UndefOr[RequestMode]        = js.undefined
-          override var credentials:    js.UndefOr[RequestCredentials] = js.undefined
-          override var cache:          js.UndefOr[RequestCache]       = js.undefined
-          override var redirect:       js.UndefOr[RequestRedirect]    = js.undefined
-          override var integrity:      js.UndefOr[String]             = js.undefined
-          override var keepalive:      js.UndefOr[Boolean]            = js.undefined
-          override var signal:         js.UndefOr[AbortSignal]        = js.undefined
-          override var window:         js.UndefOr[Null]               = js.undefined
+      Fetch
+        .fetch(
+          s"https://api.github.com/search/repositories?q=$search&sort=stars",
+          new RequestInit {
+            override var headers: js.UndefOr[HeadersInit] = js.defined(
+              js.Array(js.Array("Accept", "application/vnd.github.v3+json"))
+            )
+            override var method: js.UndefOr[HttpMethod] = js.undefined
+            override var body: js.UndefOr[BodyInit] = js.undefined
+            override var referrer: js.UndefOr[String] = js.undefined
+            override var referrerPolicy: js.UndefOr[ReferrerPolicy] = js.undefined
+            override var mode: js.UndefOr[RequestMode] = js.undefined
+            override var credentials: js.UndefOr[RequestCredentials] = js.undefined
+            override var cache: js.UndefOr[RequestCache] = js.undefined
+            override var redirect: js.UndefOr[RequestRedirect] = js.undefined
+            override var integrity: js.UndefOr[String] = js.undefined
+            override var keepalive: js.UndefOr[Boolean] = js.undefined
+            override var signal: js.UndefOr[AbortSignal] = js.undefined
+            override var window: js.UndefOr[Null] = js.undefined
+          }
+        )
+        .toFuture
+        .flatMap {
+          case res if res.status == 200 =>
+            res.json().toFuture.map(data => Right(data.asInstanceOf[Response]))
+          case errorRes =>
+            errorRes.json().toFuture.map(data => Left(data.asInstanceOf[GithubError]))
         }
-      ).toFuture.flatMap {
-        case res if res.status == 200 =>
-          res.json().toFuture.map(data => Right(data.asInstanceOf[Response]))
-        case errorRes =>
-          errorRes.json().toFuture.map(data => Left(data.asInstanceOf[GithubError]))
-      }
 
   }
 
   trait State extends js.Object {
     val search: String
-    val repos:  js.UndefOr[js.Array[api.Repository]]
-    val error:  js.UndefOr[api.GithubError]
+    val repos: js.UndefOr[js.Array[api.Repository]]
+    val error: js.UndefOr[api.GithubError]
   }
 
   object State {
@@ -77,13 +80,13 @@ object GithubSearch {
 
     def apply(
         _search: String,
-        _repos:  js.UndefOr[js.Array[api.Repository]],
-        _error:  js.UndefOr[api.GithubError]
+        _repos: js.UndefOr[js.Array[api.Repository]],
+        _error: js.UndefOr[api.GithubError]
     ): State =
       new State {
         val search = _search
-        val repos  = _repos
-        val error  = _error
+        val repos = _repos
+        val error = _error
       }
   }
 
@@ -99,7 +102,7 @@ object GithubSearch {
     def apply(_value: String): SearchTextChanged =
       new SearchTextChanged {
         var `type` = _type
-        val value  = _value
+        val value = _value
       }
   }
 
@@ -113,7 +116,7 @@ object GithubSearch {
     def apply(_repos: js.Array[api.Repository]): SearchReposSuccess =
       new SearchReposSuccess {
         var `type` = _type
-        val repos  = _repos
+        val repos = _repos
       }
   }
 
@@ -127,7 +130,7 @@ object GithubSearch {
     def apply(_error: api.GithubError): SearchReposFailure =
       new SearchReposFailure {
         var `type` = _type
-        val error  = _error
+        val error = _error
       }
   }
 
@@ -158,24 +161,24 @@ object GithubSearch {
           }
       ),
       props.state.error.toOption.map(e => div(e.message)),
-      props.state.repos.toOption.map(
-        repos =>
-          Sui.List(divided = true, relaxed = true)(
-            repos.to(Seq).map[ReactElement](
-              repo =>
-                Sui
-                  .ListItem()
-                  .withKey(repo.name)(
-                    Sui.ListIcon(
-                      name          = SemanticICONS.github,
-                      size          = IconSizeProp.large,
-                      verticalAlign = SemanticVERTICALALIGNMENTS.middle
-                    ),
-                    Sui.ListContent(Sui.ListHeader(content = a(href := repo.html_url))(repo.full_name)),
-                    Sui.ListDescription(repo.description)
-                  )
+      props.state.repos.toOption.map(repos =>
+        Sui.List(divided = true, relaxed = true)(
+          repos
+            .to(Seq)
+            .map[ReactElement](repo =>
+              Sui
+                .ListItem()
+                .withKey(repo.name)(
+                  Sui.ListIcon(
+                    name = SemanticICONS.github,
+                    size = IconSizeProp.large,
+                    verticalAlign = SemanticVERTICALALIGNMENTS.middle
+                  ),
+                  Sui.ListContent(Sui.ListHeader(content = a(href := repo.html_url))(repo.full_name)),
+                  Sui.ListDescription(repo.description)
+                )
             ): _*
-          )
+        )
       )
     )
   }

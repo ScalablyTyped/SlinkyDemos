@@ -1,6 +1,6 @@
 package demo
 
-import org.scalajs.dom.console
+import org.scalajs.dom.{Event, console}
 import slinky.core._
 import slinky.core.annotations.react
 import slinky.core.facade.{Hooks, ReactElement}
@@ -29,37 +29,37 @@ object CSS extends js.Any
     val (isModalVisible, updateIsModalVisible) = Hooks.useState(false)
     val (selectValue, updateSelectValue)       = Hooks.useState("lucy")
 
-    val renderIntro = Row()(
-      Col()(span := 7),
-      Col()(span := 10)(
+    val renderIntro = Row(
+      Col(span := 7),
+      Col(span := 10)(
         header(className := "App-header")(h1(className := "App-title")("Welcome to React (with Scala.js!)")),
         p(className := "App-intro")("To get started, edit ", code("App.scala"), " and save to reload.")
       ),
-      Col()(span := 7)
+      Col(span := 7)
     )
 
     def renderGrid = section(
       h2("Grid"),
-      Row()(
-        Col()(span := 12)(div(className := "block blue1")("col-12")),
-        Col()(span := 12)(div(className := "block blue2")("col-12"))
+      Row(
+        Col(span := 12)(div(className := "block blue1")("col-12")),
+        Col(span := 12)(div(className := "block blue2")("col-12"))
       ),
-      Row()(
-        Col()(span := 8)(div(className := "block blue1")("col-8")),
-        Col()(span := 8)(div(className := "block blue2")("col-8")),
-        Col()(span := 8)(div(className := "block blue1")("col-8"))
+      Row(
+        Col(span := 8)(div(className := "block blue1")("col-8")),
+        Col(span := 8)(div(className := "block blue2")("col-8")),
+        Col(span := 8)(div(className := "block blue1")("col-8"))
       ),
-      Row()(
-        Col()(span := 6)(div(className := "block blue1")("col-6")),
-        Col()(span := 6)(div(className := "block blue2")("col-6")),
-        Col()(span := 6)(div(className := "block blue1")("col-6")),
-        Col()(span := 6)(div(className := "block blue2")("col-6"))
+      Row(
+        Col(span := 6)(div(className := "block blue1")("col-6")),
+        Col(span := 6)(div(className := "block blue2")("col-6")),
+        Col(span := 6)(div(className := "block blue1")("col-6")),
+        Col(span := 6)(div(className := "block blue2")("col-6"))
       )
     )
 
     def renderTag = section(
       h2("Tag"),
-      Tag()("Tag 1"),
+      Tag("Tag 1"),
       Tag(color = "red")("red")
     )
 
@@ -77,7 +77,7 @@ object CSS extends js.Any
             title     = ReactElement.stringToElement("Name"),
             dataIndex = "name",
             key       = "name",
-            render    = (text, _, _) => Tag()(text.toString)
+            render    = (text, _, _) => Tag(text.toString)
           ),
           ColumnProps(title = ReactElement.stringToElement("Age"), dataIndex     = "age", key     = "age"),
           ColumnProps(title = ReactElement.stringToElement("Address"), dataIndex = "address", key = "address")
@@ -100,7 +100,7 @@ object CSS extends js.Any
 
     val renderModal = section(
       h2("Modal"),
-      Button()(onClick := (() => updateIsModalVisible(true)))("Open modal"),
+      Button(onClick := (() => updateIsModalVisible(true)))("Open modal"),
       Modal(
         visible  = isModalVisible,
         title    = "Basic modal",
@@ -116,19 +116,19 @@ object CSS extends js.Any
         onChange     = (changedValue, _) => updateSelectValue(changedValue)
       )(
         List(
-          Option()("Jack").withKey("jack"),
-          Option()("Lucy").withKey("lucy"),
-          Option()(disabled := true)("Disabled").withKey("disabled"),
-          Option()("Yiminghe").withKey("yiminghe")
+          Option("Jack").withKey("jack"),
+          Option("Lucy").withKey("lucy"),
+          Option(disabled := true)("Disabled").withKey("disabled"),
+          Option("Yiminghe").withKey("yiminghe")
         )
       )
     )
 
-    val renderIcon = section(h2("Icon"), Icon()(`type` := "home"))
+    val renderIcon = section(h2("Icon"), Icon(`type` := "home"))
 
     val renderInput = section(
       h2("Input"),
-      Input(addonBefore = Icon()(placeholder := "Basic usage", `type` := "user"))(
+      Input(addonBefore = Icon(placeholder := "Basic usage", `type` := "user"))(
         onChange := (event => console.log(event.target.value))
       )
     )
@@ -150,16 +150,17 @@ object CSS extends js.Any
 
     val renderForm = section(
       h2("Form"),
-      Form()(onSubmit := { e =>
-        e.preventDefault(); console.log("Form submitted")
-      })(
-        FormItem()(
+      Form(onSubmit := ((e: SyntheticEvent[form.tag.RefType, Event]) => {
+        e.preventDefault;
+        console.log("Form submitted")
+      }))(
+        FormItem(
           Input(addonBefore = Icon(theme = ThemeType.twoTone))(`type` := "mail", placeholder := "input email")
         ),
-        FormItem()(
+        FormItem(
           Password(addonBefore = Icon(theme = antdStrings.twoTone)(`type` := "lock"))(placeholder := "input password")
         ),
-        FormItem()(Button(htmlType = antdStrings.submit, `type` = antdStrings.primary)("Log in"))
+        FormItem(Button(htmlType = antdStrings.submit, `type` = antdStrings.primary)("Log in"))
       )
     )
 
@@ -184,9 +185,9 @@ object CSS extends js.Any
 
     div(className := "App")(
       renderIntro,
-      Row()(
-        Col()(span := 2),
-        Col()(span := 20)(
+      Row(
+        Col(span := 2),
+        Col(span := 20)(
           renderGrid,
           renderTag,
           renderTable,
@@ -202,7 +203,7 @@ object CSS extends js.Any
           renderCoordinated,
           renderNotification
         ),
-        Col()(span := 2)
+        Col(span := 2)
       )
     )
   }

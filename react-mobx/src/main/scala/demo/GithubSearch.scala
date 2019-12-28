@@ -70,12 +70,12 @@ object GithubSearch {
   /* this is a simple functional component to display a github repo in a table row */
   val RepoRow = FunctionalComponent[Repository](
     repo =>
-      Mui.TableRow()(
-        Mui.TableRowColumn()(repo.name),
-        Mui.TableRowColumn()(repo.forks_count),
-        Mui.TableRowColumn()(repo.stargazers_count),
-        Mui.TableRowColumn()(
-          Mui.FlatButton()(onClick := gotoRepo(repo), disabled := false)(
+      Mui.TableRow(
+        Mui.TableRowColumn(repo.name),
+        Mui.TableRowColumn(repo.forks_count),
+        Mui.TableRowColumn(repo.stargazers_count),
+        Mui.TableRowColumn(
+          Mui.FlatButton(onClick := gotoRepo(repo), disabled := false)(
             "Go to project"
           )
         )
@@ -93,26 +93,26 @@ object GithubSearch {
             justifyContent = csstypeStrings.center
           },
           rounded = true
-        )(),
+        ),
         Mui.TextField(onChange = (_, newValue) => store.search.set(newValue))(
           name := "search",
           value := store.search.get
         ),
-        Mui.FlatButton()(onClick := store.searchForRepos)("Search"),
+        Mui.FlatButton(onClick := store.searchForRepos)("Search"),
         store.result
           .get()
           .fold[TagMod[Any]](div("No result yet"))(
             repos =>
-              Mui.Table()(
-                Mui.TableHeader()(
-                  Mui.TableRow()(
-                    Mui.TableRowColumn()("name"),
-                    Mui.TableRowColumn()("forks_count"),
-                    Mui.TableRowColumn()("stargazers_count"),
-                    Mui.TableRowColumn()("link")
+              Mui.Table(
+                Mui.TableHeader(
+                  Mui.TableRow(
+                    Mui.TableRowColumn("name"),
+                    Mui.TableRowColumn("forks_count"),
+                    Mui.TableRowColumn("stargazers_count"),
+                    Mui.TableRowColumn("link")
                   )
                 ),
-                Mui.TableBody()(
+                Mui.TableBody(
                   repos.to(Seq).map(repo => RepoRow(repo).withKey(repo.name)): _*
                 )
               )

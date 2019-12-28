@@ -27,7 +27,7 @@ object Demo {
     )
 
   val ProgressDemo: ReactElement =
-    Sui.Card()(
+    Sui.Card(
       Sui.Progress(percent = 70, warning  = true),
       Sui.Progress(percent = 100, warning = false)
     )

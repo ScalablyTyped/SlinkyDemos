@@ -29,7 +29,7 @@ class LoadFonts extends Component {
 
   override def initialState = State(None)
 
-  override def componentWillMount(): Unit =
+  override def componentWillMount: Unit =
     js.Promise
       .all(js.Array(Font.loadAsync("antoutline", AntdIconOutline), Font.loadAsync("antfill", AntdIconFill)))
       .toFuture
@@ -38,7 +38,7 @@ class LoadFonts extends Component {
         case Success(_)         => setState(State(Some(Right(()))))
       }
 
-  override def render(): ReactElement =
+  override def render: ReactElement =
     state.result match {
       case Some(Right(_))    => App()
       case Some(Left(value)) => Text()(s"Could not load fonts: $value")

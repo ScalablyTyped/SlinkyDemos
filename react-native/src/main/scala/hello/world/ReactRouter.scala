@@ -21,10 +21,10 @@ import typingsSlinky.reactDashRouter.reactDashRouterMod._
     checkRedirection(
       props.redirPath,
       props.`match`.path,
-      View()(
+      View(
         Text(style = Styles.title)("React Router demo": ReactElement),
         Text(style = Styles.headerStyle)("Topics"),
-        View()(
+        View(
           link("Rendering with React", "/rendering"),
           link("Components", "/components"),
           link("Props v. State", "/props-v-state")
@@ -35,7 +35,7 @@ import typingsSlinky.reactDashRouter.reactDashRouterMod._
             render = props => Topic(props.`match`.asInstanceOf[`match`[Topic.Param]])
           )
         ),
-        Route(RouteProps(path = props.`match`.path, render = _ => Text()("Please select a topic"), exact = true))
+        Route(RouteProps(path = props.`match`.path, render = _ => Text("Please select a topic"), exact = true))
       )
     )
   }

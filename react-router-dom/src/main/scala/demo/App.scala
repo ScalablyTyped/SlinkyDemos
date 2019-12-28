@@ -24,7 +24,7 @@ import scala.scalajs.js
 
     div(className := "App")(
       renderIntro,
-      BrowserRouter()(
+      BrowserRouter(
         div(
           ul(
             li(Link[js.Object](to = "/")("Home")),

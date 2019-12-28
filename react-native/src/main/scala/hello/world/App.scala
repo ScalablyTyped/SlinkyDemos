@@ -39,9 +39,9 @@ import scala.scalajs.js.|
     Provider(locale = PartialLocale(locale = "enUS"))(
       Drawer(
         drawerRef = (ref = _),
-        sidebar   = ScrollView()(WhiteSpace(size = antdStrings.xl), AntdList()(menus))
+        sidebar   = ScrollView(WhiteSpace(size = antdStrings.xl), AntdList(menus))
       )(
-        NativeRouter()(
+        NativeRouter(
           AntdList(renderHeader = WhiteSpace(size = antdStrings.xl): ReactElement)(
             ListItem(
               extra   = Icon(name = "menu"),

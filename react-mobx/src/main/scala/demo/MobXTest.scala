@@ -52,7 +52,7 @@ object MobXTest {
         " Current value str ",
         store.values.get().str,
         " ",
-        Mui.RaisedButton()(onClick := increaseNum)("increase num")
+        Mui.RaisedButton(onClick := increaseNum)("increase num")
       )
   }
 }

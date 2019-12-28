@@ -33,7 +33,7 @@ object MainTabs {
             height          = 800
           }.asInstanceOf[js.Dynamic]
         )(
-          Mui.Tabs()(
+          Mui.Tabs(
             Mui.Tab(label = "Github search")(GithubSearch(githubStore)),
             Mui.Tab(label = "MobX")(MobXTest(testStore))
           )

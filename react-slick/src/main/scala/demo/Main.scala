@@ -26,7 +26,7 @@ object Main {
       val images: js.Array[ReactElement] =
         props.images.zipWithIndex.map {
           case (source, idx) =>
-            img(key := idx.toString, src := source, onClick := myOnClick(idx))()
+            img(key := idx.toString, src := source, onClick := myOnClick(idx))
         }
 
       div(

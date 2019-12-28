@@ -171,8 +171,8 @@ object GithubSearch {
                       size          = IconSizeProp.large,
                       verticalAlign = SemanticVERTICALALIGNMENTS.middle
                     ),
-                    Sui.ListContent()(Sui.ListHeader(content = a(href := repo.html_url))(repo.full_name)),
-                    Sui.ListDescription()(repo.description)
+                    Sui.ListContent(Sui.ListHeader(content = a(href := repo.html_url))(repo.full_name)),
+                    Sui.ListDescription(repo.description)
                   )
             ): _*
           )

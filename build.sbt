@@ -141,6 +141,20 @@ lazy val `react-router-dom` =
       )
     )
 
+lazy val `material-ui` =
+  project
+    .enablePlugins(ScalablyTypedConverterPlugin)
+    .configure(baseSettings, scalajsBundler, browserProject, slinkyReact)
+    .settings(
+      webpackDevServerPort := 8008,
+      Compile / tsoMinimize := Selection.All,
+      Compile / tsoEnableScalaJsDefined := Selection.AllExcept("@material-ui/core"),
+      Compile / tsoIgnore ++= List("@material-ui/icons", "csstype"),
+      Compile / npmDependencies ++= Seq(
+        "@material-ui/core" -> "3.9.3",
+      )
+    )
+
 /** Note: This can't use scalajs-bundler (at least I don't know how),
   *  so we run yarn ourselves with an external package.json.
   **/

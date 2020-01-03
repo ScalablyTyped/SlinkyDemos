@@ -25,9 +25,9 @@ lazy val `react-mobx` =
     .configure(baseSettings, scalajsBundler, browserProject, slinkyReact)
     .settings(
       webpackDevServerPort := 8001,
-      Compile / tsoEnableScalaJsDefined := Selection.All,
-      Compile / tsoIgnore ++= List("material-ui/svg-icons"),
-      Compile / tsoMinimize := Selection.AllExcept("axios", "material-ui", "mobx-react", "mobx"),
+      Compile / stEnableScalaJsDefined := Selection.All,
+      Compile / stIgnore ++= List("material-ui/svg-icons"),
+      Compile / stMinimize := Selection.AllExcept("axios", "material-ui", "mobx-react", "mobx"),
       Compile / npmDependencies ++= Seq(
         "axios" -> "0.19.0",
         "material-ui" -> "0.20.1",
@@ -43,8 +43,8 @@ lazy val `react-slick` =
     .configure(baseSettings, scalajsBundler, browserProject, slinkyReact)
     .settings(
       webpackDevServerPort := 8002,
-      Compile / tsoIgnore += "csstype",
-      Compile / tsoMinimize := Selection.All,
+      Compile / stIgnore += "csstype",
+      Compile / stMinimize := Selection.All,
       Compile / npmDependencies ++= Seq(
         "react-slick" -> "0.23",
         "@types/react-slick" -> "0.23.4"
@@ -57,8 +57,8 @@ lazy val `react-big-calendar` =
     .configure(baseSettings, scalajsBundler, browserProject, withCssLoading, slinkyReact)
     .settings(
       webpackDevServerPort := 8003,
-      Compile / tsoIgnore += "csstype",
-      Compile / tsoMinimize := Selection.AllExcept("moment", "react-big-calendar"),
+      Compile / stIgnore += "csstype",
+      Compile / stMinimize := Selection.AllExcept("moment", "react-big-calendar"),
       Compile / npmDependencies ++= Seq(
         "moment" -> "2.24.0",
         "react-big-calendar" -> "0.22",
@@ -71,9 +71,9 @@ lazy val `semantic-ui-react` = project
   .configure(baseSettings, scalajsBundler, browserProject, slinkyReact)
   .settings(
     webpackDevServerPort := 8004,
-    Compile / tsoEnableScalaJsDefined := Selection.All,
-    Compile / tsoIgnore += "csstype",
-    Compile / tsoMinimize := Selection.AllExcept(
+    Compile / stEnableScalaJsDefined := Selection.All,
+    Compile / stIgnore += "csstype",
+    Compile / stMinimize := Selection.AllExcept(
       "react-redux",
       "redux",
       "redux-devtools-extension"
@@ -98,9 +98,9 @@ lazy val `storybook-react` = project
       Process("yarn", baseDirectory.value).!
       baseDirectory.value
     },
-    Compile / tsoFlavour := Flavour.Slinky,
-    Compile / tsoIgnore += "csstype",
-    Compile / tsoMinimize := Selection.AllExcept("@storybook/react", "node", "history"),
+    Compile / stFlavour := Flavour.Slinky,
+    Compile / stIgnore += "csstype",
+    Compile / stMinimize := Selection.AllExcept("@storybook/react", "node", "history"),
     /** This is not suitable for development, but effective for demo.
       * Run `yarn storybook` commands yourself, and run `~storybook-react/fastOptJS` from sbt
       */
@@ -122,8 +122,8 @@ lazy val antd =
     .configure(baseSettings, scalajsBundler, browserProject, withCssLoading, slinkyReact)
     .settings(
       webpackDevServerPort := 8006,
-      Compile / tsoIgnore += "csstype",
-      Compile / tsoMinimize := Selection.AllExcept("antd"),
+      Compile / stIgnore += "csstype",
+      Compile / stMinimize := Selection.AllExcept("antd"),
       Compile / npmDependencies ++= Seq("antd" -> "3.26.0")
     )
 
@@ -133,8 +133,8 @@ lazy val `react-router-dom` =
     .configure(baseSettings, scalajsBundler, browserProject, slinkyReact)
     .settings(
       webpackDevServerPort := 8007,
-      Compile / tsoIgnore += "csstype",
-      Compile / tsoMinimize := Selection.All,
+      Compile / stIgnore += "csstype",
+      Compile / stMinimize := Selection.All,
       Compile / npmDependencies ++= Seq(
         "react-router-dom" -> "5.1.2",
         "@types/react-router-dom" -> "5.1.2"
@@ -147,9 +147,9 @@ lazy val `material-ui` =
     .configure(baseSettings, scalajsBundler, browserProject, slinkyReact)
     .settings(
       webpackDevServerPort := 8008,
-      Compile / tsoMinimize := Selection.All,
-      Compile / tsoEnableScalaJsDefined := Selection.AllExcept("@material-ui/core"),
-      Compile / tsoIgnore ++= List("@material-ui/icons", "csstype"),
+      Compile / stMinimize := Selection.AllExcept("@material-ui/core"),
+      Compile / stEnableScalaJsDefined := Selection.AllExcept("@material-ui/core"),
+      Compile / stIgnore ++= List("@material-ui/icons", "csstype"),
       Compile / npmDependencies ++= Seq(
         "@material-ui/core" -> "3.9.3",
       )
@@ -169,9 +169,9 @@ lazy val `react-native` = project
       Process("yarn", baseDirectory.value).!
       baseDirectory.value
     },
-    Compile / tsoFlavour := Flavour.Slinky,
-    Compile / tsoIgnore += "csstype",
-    Compile / tsoMinimize := Selection.AllExcept("@ant-design/react-native", "expo-font", "expo"),
+    Compile / stFlavour := Flavour.Slinky,
+    Compile / stIgnore += "csstype",
+    Compile / stMinimize := Selection.AllExcept("@ant-design/react-native", "expo-font", "expo"),
     /** This is not suitable for development, but effective for demo.
       * Run `expo start` yourself, and run `~react-native/fastOptJS` from sbt
       */
@@ -203,7 +203,7 @@ lazy val baseSettings: Project => Project =
 
 lazy val slinkyReact: Project => Project =
   _.settings(
-    Compile / tsoFlavour := Flavour.Slinky,
+    Compile / stFlavour := Flavour.Slinky,
     Compile / npmDependencies ++= Seq(
       "react" -> "16.9",
       "react-dom" -> "16.9",

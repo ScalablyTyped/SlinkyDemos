@@ -169,7 +169,7 @@ lazy val `react-native` = project
       Process("yarn", baseDirectory.value).!
       baseDirectory.value
     },
-    Compile / stFlavour := Flavour.Slinky,
+    Compile / stFlavour := Flavour.SlinkyNative,
     Compile / stIgnore += "csstype",
     Compile / stMinimize := Selection.AllExcept("@ant-design/react-native", "expo-font", "expo"),
     /** This is not suitable for development, but effective for demo.

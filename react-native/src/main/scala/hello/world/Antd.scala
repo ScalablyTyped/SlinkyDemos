@@ -52,7 +52,7 @@ import typingsSlinky.reactDashNative.reactDashNativeStrings
               alignItems = reactDashNativeStrings.center
             )
           )(
-            InputItem(placeholder := "input text"),
+            InputItem(placeholder = "input text"),
             InputItem(
               `type` = antdStrings.password,
               error = true,

@@ -150,7 +150,7 @@ lazy val `material-ui` =
       Compile / stEnableScalaJsDefined := Selection.AllExcept("@material-ui/core"),
       Compile / stIgnore ++= List("@material-ui/icons", "csstype"),
       Compile / npmDependencies ++= Seq(
-        "@material-ui/core" -> "3.9.3",
+        "@material-ui/core" -> "3.9.3"
       )
     )
 
@@ -162,7 +162,6 @@ lazy val `react-native` = project
   .configure(baseSettings, slinkyNative)
   .settings(
     scalaJSUseMainModuleInitializer := false,
-    libraryDependencies += "me.shadaj" %%% "slinky-native" % "0.6.3",
     /* ScalablyTypedConverterExternalNpmPlugin requires that we define how to install node dependencies and where they are */
     externalNpm := {
       Process("yarn", baseDirectory.value).!
@@ -176,7 +175,7 @@ lazy val `react-native` = project
     run := {
       (Compile / fastOptJS).value
       Process("expo start", baseDirectory.value).!
-    },
+    }
   )
 
 lazy val baseSettings: Project => Project =
@@ -200,17 +199,18 @@ lazy val baseSettings: Project => Project =
 
 lazy val slinkyNative: Project => Project =
   _.settings(
-      Compile / stFlavour := Flavour.SlinkyNative,
-      libraryDependencies ++= Seq(
-        "me.shadaj" %%% "slinky-native" % "0.6.3",
-      )
+    Compile / stFlavour := Flavour.SlinkyNative,
+    libraryDependencies ++= Seq(
+      "org.scala-js" %%% "scalajs-dom" % "0.9.7",
+      "me.shadaj" %%% "slinky-native" % "0.6.3"
     )
+  )
 
 lazy val slinkyWeb: Project => Project =
   _.settings(
     Compile / stFlavour := Flavour.Slinky,
     libraryDependencies ++= Seq(
-      "me.shadaj" %%% "slinky-web" % "0.6.3",
+      "me.shadaj" %%% "slinky-web" % "0.6.3"
     )
   )
 

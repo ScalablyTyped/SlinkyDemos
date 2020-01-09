@@ -22,7 +22,7 @@ lazy val dist = TaskKey[File]("dist")
 lazy val `react-mobx` =
   project
     .enablePlugins(ScalablyTypedConverterPlugin)
-    .configure(baseSettings, scalajsBundler, browserProject, slinkyReact)
+    .configure(baseSettings, scalajsBundler, browserProject, slinkyWeb, reactNpmDeps)
     .settings(
       webpackDevServerPort := 8001,
       Compile / stEnableScalaJsDefined := Selection.All,
@@ -40,7 +40,7 @@ lazy val `react-mobx` =
 lazy val `react-slick` =
   project
     .enablePlugins(ScalablyTypedConverterPlugin)
-    .configure(baseSettings, scalajsBundler, browserProject, slinkyReact)
+    .configure(baseSettings, scalajsBundler, browserProject, slinkyWeb, reactNpmDeps)
     .settings(
       webpackDevServerPort := 8002,
       Compile / stIgnore += "csstype",
@@ -54,7 +54,7 @@ lazy val `react-slick` =
 lazy val `react-big-calendar` =
   project
     .enablePlugins(ScalablyTypedConverterPlugin)
-    .configure(baseSettings, scalajsBundler, browserProject, withCssLoading, slinkyReact)
+    .configure(baseSettings, scalajsBundler, browserProject, withCssLoading, slinkyWeb, reactNpmDeps)
     .settings(
       webpackDevServerPort := 8003,
       Compile / stIgnore += "csstype",
@@ -68,7 +68,7 @@ lazy val `react-big-calendar` =
 
 lazy val `semantic-ui-react` = project
   .enablePlugins(ScalablyTypedConverterPlugin)
-  .configure(baseSettings, scalajsBundler, browserProject, slinkyReact)
+  .configure(baseSettings, scalajsBundler, browserProject, slinkyWeb, reactNpmDeps)
   .settings(
     webpackDevServerPort := 8004,
     Compile / stEnableScalaJsDefined := Selection.All,
@@ -91,14 +91,13 @@ lazy val `semantic-ui-react` = project
   **/
 lazy val `storybook-react` = project
   .enablePlugins(ScalablyTypedConverterExternalNpmPlugin)
-  .configure(baseSettings)
+  .configure(baseSettings, slinkyWeb)
   .settings(
     /* ScalablyTypedConverterExternalNpmPlugin requires that we define how to install node dependencies and where they are */
     externalNpm := {
       Process("yarn", baseDirectory.value).!
       baseDirectory.value
     },
-    Compile / stFlavour := Flavour.Slinky,
     Compile / stIgnore += "csstype",
     Compile / stMinimize := Selection.AllExcept("@storybook/react", "node", "history"),
     /** This is not suitable for development, but effective for demo.
@@ -119,7 +118,7 @@ lazy val `storybook-react` = project
 lazy val antd =
   project
     .enablePlugins(ScalablyTypedConverterPlugin)
-    .configure(baseSettings, scalajsBundler, browserProject, withCssLoading, slinkyReact)
+    .configure(baseSettings, scalajsBundler, browserProject, withCssLoading, slinkyWeb, reactNpmDeps)
     .settings(
       webpackDevServerPort := 8006,
       Compile / stIgnore += "csstype",
@@ -130,7 +129,7 @@ lazy val antd =
 lazy val `react-router-dom` =
   project
     .enablePlugins(ScalablyTypedConverterPlugin)
-    .configure(baseSettings, scalajsBundler, browserProject, slinkyReact)
+    .configure(baseSettings, scalajsBundler, browserProject, slinkyWeb, reactNpmDeps)
     .settings(
       webpackDevServerPort := 8007,
       Compile / stIgnore += "csstype",
@@ -144,14 +143,14 @@ lazy val `react-router-dom` =
 lazy val `material-ui` =
   project
     .enablePlugins(ScalablyTypedConverterPlugin)
-    .configure(baseSettings, scalajsBundler, browserProject, slinkyReact)
+    .configure(baseSettings, scalajsBundler, browserProject, slinkyWeb, reactNpmDeps)
     .settings(
       webpackDevServerPort := 8008,
       Compile / stMinimize := Selection.AllExcept("@material-ui/core"),
       Compile / stEnableScalaJsDefined := Selection.AllExcept("@material-ui/core"),
       Compile / stIgnore ++= List("@material-ui/icons", "csstype"),
       Compile / npmDependencies ++= Seq(
-        "@material-ui/core" -> "3.9.3",
+        "@material-ui/core" -> "3.9.3"
       )
     )
 
@@ -160,16 +159,14 @@ lazy val `material-ui` =
   **/
 lazy val `react-native` = project
   .enablePlugins(ScalablyTypedConverterExternalNpmPlugin)
-  .configure(baseSettings)
+  .configure(baseSettings, slinkyNative)
   .settings(
     scalaJSUseMainModuleInitializer := false,
-    libraryDependencies += "me.shadaj" %%% "slinky-native" % "0.6.3",
     /* ScalablyTypedConverterExternalNpmPlugin requires that we define how to install node dependencies and where they are */
     externalNpm := {
       Process("yarn", baseDirectory.value).!
       baseDirectory.value
     },
-    Compile / stFlavour := Flavour.SlinkyNative,
     Compile / stIgnore += "csstype",
     Compile / stMinimize := Selection.AllExcept("@ant-design/react-native", "expo-font", "expo"),
     /** This is not suitable for development, but effective for demo.
@@ -178,7 +175,7 @@ lazy val `react-native` = project
     run := {
       (Compile / fastOptJS).value
       Process("expo start", baseDirectory.value).!
-    },
+    }
   )
 
 lazy val baseSettings: Project => Project =
@@ -195,15 +192,30 @@ lazy val baseSettings: Project => Project =
       scalacOptions += "-P:scalajs:sjsDefinedByDefault",
       /* for slinky*/
       libraryDependencies ++= Seq(
-        "me.shadaj" %%% "slinky-web" % "0.6.3",
         "me.shadaj" %%% "slinky-hot" % "0.6.3"
       ),
       scalacOptions += "-Ymacro-annotations"
     )
 
-lazy val slinkyReact: Project => Project =
+lazy val slinkyNative: Project => Project =
+  _.settings(
+    Compile / stFlavour := Flavour.SlinkyNative,
+    libraryDependencies ++= Seq(
+      "org.scala-js" %%% "scalajs-dom" % "0.9.7",
+      "me.shadaj" %%% "slinky-native" % "0.6.3"
+    )
+  )
+
+lazy val slinkyWeb: Project => Project =
   _.settings(
     Compile / stFlavour := Flavour.Slinky,
+    libraryDependencies ++= Seq(
+      "me.shadaj" %%% "slinky-web" % "0.6.3"
+    )
+  )
+
+lazy val reactNpmDeps: Project => Project =
+  _.settings(
     Compile / npmDependencies ++= Seq(
       "react" -> "16.9",
       "react-dom" -> "16.9",

@@ -5,7 +5,6 @@ import slinky.core.FunctionalComponent
 import slinky.core.annotations.react
 import slinky.core.facade.ReactElement
 import slinky.core.facade.Hooks.useState
-import slinky.web.html.placeholder
 import slinky.native.ScrollView
 
 import scala.scalajs.js
@@ -54,11 +53,12 @@ import typingsSlinky.reactDashNative.reactDashNativeStrings
           )(
             InputItem(placeholder = "input text"),
             InputItem(
+              placeholder = "password",
               `type` = antdStrings.password,
               error = true,
               onErrorClick = _ => { Toast.fail("Always wrong!") },
               last = true
-            )(placeholder := "password"),
+            ),
             WingBlank(size = antdStrings.lg)(
               Button(onPress = _ => Toast.fail("Failure!"), `type` = antdStrings.primary)("Launch fail toast")
             ),

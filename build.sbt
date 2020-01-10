@@ -227,7 +227,7 @@ lazy val scalajsBundler: Project => Project =
   _.enablePlugins(ScalaJSBundlerPlugin)
     .settings(
       /* Specify current versions and modes */
-      startWebpackDevServer / version := "3.1.10",
+      startWebpackDevServer / version := "3.1.11",
       webpack / version := "4.26.1",
       Compile / fastOptJS / webpackExtraArgs += "--mode=development",
       Compile / fullOptJS / webpackExtraArgs += "--mode=production",

@@ -210,6 +210,24 @@ lazy val `material-ui` =
       )
     )
 
+lazy val `react-leaflet` = project
+  .enablePlugins(ScalablyTypedConverterPlugin)
+  .configure(baseSettings, bundlerSettings, browserProject, reactNpmDeps, withCssLoading)
+  .settings(
+    webpackDevServerPort := 8009,
+    Compile / stFlavour := Flavour.Slinky,
+    Compile / stIgnore += "csstype",
+    Compile / stMinimize := Selection.All,
+    Compile / stMinimizeKeep ++= List(
+      "leaflet.leafletRequire"
+    ),
+    Compile / npmDependencies ++= Seq(
+      "react-leaflet" -> "2.5",
+      "@types/react-leaflet" -> "2.5",
+      "leaflet" -> "1.5"
+    )
+  )
+
 /** Note: This can't use scalajs-bundler (at least I don't know how),
   *  so we run yarn ourselves with an external package.json.
   **/

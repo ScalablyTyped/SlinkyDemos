@@ -5,10 +5,7 @@ import slinky.core.annotations.react
 import slinky.core.facade.ReactElement
 import slinky.web.html._
 import demo.ReduxFacade.Connected
-import typingsSlinky.semanticDashUiDashReact.{
-  Anon_MenuItem => TabStructure,
-  components => Sui,
-  semanticDashUiDashReactStrings => SuiStrings
+import typingsSlinky.semanticUiReact.{AnonMenuItem => TabStructure, components => Sui, semanticUiReactStrings => SuiStrings
 }
 
 import scala.scalajs.js

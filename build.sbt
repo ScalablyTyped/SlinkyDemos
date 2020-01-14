@@ -5,6 +5,21 @@ import org.scalajs.core.tools.linker.ModuleKind
 
 import scala.sys.process.Process
 
+onLoad in Global := {
+  println("""
+      |Welcome to ScalablyTyped demos!
+      |
+      |These demos demonstrate the Slinky flavour of ScalablyTyped.
+      |
+      |For documentation see https://scalablytyped.org .
+      |
+      |Note that compiling all the demos at once can be computationally quite
+      | expensive, so you might have a better experience running `<project>/start`
+      | than starting all with `start` (though you can!)
+      |""".stripMargin)
+  (onLoad in Global).value
+}
+
 /**
   * Custom task to start demo with webpack-dev-server, use as `<project>/start`.
   * Just `start` also works, and starts all frontend demos
@@ -227,7 +242,7 @@ lazy val scalajsBundler: Project => Project =
   _.enablePlugins(ScalaJSBundlerPlugin)
     .settings(
       /* Specify current versions and modes */
-      startWebpackDevServer / version := "3.1.11",
+      startWebpackDevServer / version := "3.10.0",
       webpack / version := "4.26.1",
       Compile / fastOptJS / webpackExtraArgs += "--mode=development",
       Compile / fullOptJS / webpackExtraArgs += "--mode=production",
@@ -258,13 +273,13 @@ lazy val browserProject: Project => Project =
     start := {
       (Compile / fastOptJS / startWebpackDevServer).value
       val indexFrom = baseDirectory.value / "assets/index.html"
-      val indexTo   = (Compile / fastOptJS / crossTarget).value / "index.html"
+      val indexTo = (Compile / fastOptJS / crossTarget).value / "index.html"
       Files.copy(indexFrom.toPath, indexTo.toPath, REPLACE_EXISTING)
     },
     dist := {
-      val artifacts      = (Compile / fullOptJS / webpack).value
+      val artifacts = (Compile / fullOptJS / webpack).value
       val artifactFolder = (Compile / fullOptJS / crossTarget).value
-      val distFolder     = (ThisBuild / baseDirectory).value / "docs" / moduleName.value
+      val distFolder = (ThisBuild / baseDirectory).value / "docs" / moduleName.value
 
       distFolder.mkdirs()
       artifacts.foreach { artifact =>
@@ -277,7 +292,7 @@ lazy val browserProject: Project => Project =
       }
 
       val indexFrom = baseDirectory.value / "assets/index.html"
-      val indexTo   = distFolder / "index.html"
+      val indexTo = distFolder / "index.html"
 
       val indexPatchedContent = {
         import collection.JavaConverters._

@@ -6,10 +6,10 @@ import slinky.core.annotations.react
 import slinky.core.facade.ReactElement
 import slinky.web.html._
 import demo.ReduxFacade.Extractor
-import typingsSlinky.redux.reduxMod.{Action, Dispatch, Reducer}
-import typingsSlinky.semanticDashUiDashReact.distCommonjsElementsIconIconMod.{IconProps, IconSizeProp}
-import typingsSlinky.semanticDashUiDashReact.distCommonjsGenericMod.{SemanticICONS, SemanticVERTICALALIGNMENTS}
-import typingsSlinky.semanticDashUiDashReact.{components => Sui}
+import typingsSlinky.redux.mod.{Action, Dispatch, Reducer}
+import typingsSlinky.semanticUiReact.iconIconMod.{IconProps, IconSizeProp}
+import typingsSlinky.semanticUiReact.genericMod.{SemanticICONS, SemanticVERTICALALIGNMENTS}
+import typingsSlinky.semanticUiReact.{components => Sui}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future

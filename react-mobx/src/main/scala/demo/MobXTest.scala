@@ -3,12 +3,11 @@ package demo
 import org.scalajs.dom.console
 import slinky.core.annotations.react
 import slinky.core.{FunctionalComponent, ObservingFC}
-import slinky.web.SyntheticMouseEvent
 import slinky.web.html._
-import typingsSlinky.materialDashUi.{components => Mui}
-import typingsSlinky.mobx.libCoreComputedvalueMod.IComputedValue
-import typingsSlinky.mobx.libTypesObservablevalueMod.IObservableValue
-import typingsSlinky.mobx.{mobxMod => MobX}
+import typingsSlinky.materialUi.{components => Mui}
+import typingsSlinky.mobx.computedvalueMod.IComputedValue
+import typingsSlinky.mobx.observablevalueMod.IObservableValue
+import typingsSlinky.mobx.{mod => MobX}
 
 import scala.scalajs.js
 

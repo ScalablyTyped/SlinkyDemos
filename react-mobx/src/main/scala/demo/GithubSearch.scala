@@ -4,12 +4,12 @@ import org.scalajs.dom.{console, window}
 import slinky.core.annotations.react
 import slinky.core.{FunctionalComponent, ObservingFC, TagMod}
 import slinky.web.html._
-import typingsSlinky.axios.axiosMod.{AxiosError, AxiosRequestConfig, AxiosResponse, default => Axios}
+import typingsSlinky.axios.mod.{AxiosError, AxiosRequestConfig, AxiosResponse, default => Axios}
 import typingsSlinky.csstype.csstypeStrings
-import typingsSlinky.materialDashUi.{components => Mui}
-import typingsSlinky.mobx.libTypesObservablevalueMod.IObservableValue
-import typingsSlinky.mobx.{mobxMod => MobX}
-import typingsSlinky.react.reactMod._
+import typingsSlinky.materialUi.{components => Mui}
+import typingsSlinky.mobx.observablevalueMod.IObservableValue
+import typingsSlinky.mobx.{mod => MobX}
+import typingsSlinky.react.mod._
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js

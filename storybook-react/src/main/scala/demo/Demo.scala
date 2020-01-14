@@ -3,7 +3,7 @@ package demo
 import org.scalajs.dom.window.alert
 import slinky.core.AttrPair
 import slinky.web.html._
-import typingsSlinky.atStorybookReact.atStorybookReactMod.storiesOf
+import typingsSlinky.storybookReact.mod.storiesOf
 import typingsSlinky.node.module
 
 object Demo {

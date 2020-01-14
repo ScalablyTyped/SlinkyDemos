@@ -2,10 +2,10 @@ package demo
 
 import org.scalajs.dom.{console, document}
 import slinky.web.ReactDOM
-import typingsSlinky.moment.momentMod.{^ => Moment}
+import typingsSlinky.moment.mod.{^ => Moment}
 import typingsSlinky.moment.momentStrings
-import typingsSlinky.reactDashBigDashCalendar.reactDashBigDashCalendarMod.{momentLocalizer, View}
-import typingsSlinky.reactDashBigDashCalendar.components.Calendar
+import typingsSlinky.reactBigCalendar.mod.{momentLocalizer, View}
+import typingsSlinky.reactBigCalendar.components.Calendar
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSImport

@@ -6,11 +6,11 @@ import slinky.core.annotations.react
 import slinky.core.facade.{Hooks, ReactElement}
 import slinky.web.ReactDOM
 import slinky.web.html._
-import typingsSlinky.atMaterialDashUiCore.stylesCreateMuiThemeMod.Theme
-import typingsSlinky.atMaterialDashUiCore.stylesWithStylesMod.CSSProperties
-import typingsSlinky.atMaterialDashUiCore.textFieldTextFieldMod.StandardTextFieldProps
-import typingsSlinky.atMaterialDashUiCore.{atMaterialDashUiCoreStrings => MuiStrings, components => Mui}
-import typingsSlinky.react.Anon_Children
+import typingsSlinky.materialUiCore.createMuiThemeMod.Theme
+import typingsSlinky.materialUiCore.withStylesMod.CSSProperties
+import typingsSlinky.materialUiCore.textFieldTextFieldMod.StandardTextFieldProps
+import typingsSlinky.materialUiCore.{materialUiCoreStrings => MuiStrings, components => Mui}
+import typingsSlinky.react.AnonChildren
 
 import scala.scalajs.js
 import scala.scalajs.js.|
@@ -141,7 +141,7 @@ object ButtonTest {
 //object StyledFC {
 //  import scala.language.higherKinds
 //
-//  @inline private def stylesMod = typingsSlinky.atMaterialDashUiCore.stylesMod.asInstanceOf[js.Dynamic]
+//  @inline private def stylesMod = typingsSlinky.atMaterialUiCore.stylesMod.asInstanceOf[js.Dynamic]
 //
 //  trait GeneratedClassNames[Styles[_] <: js.Object] extends js.Object {
 //    val classes: Styles[String]
@@ -149,6 +149,6 @@ object ButtonTest {
 //
 //  @inline def apply[Styles[_] <: js.Object, P <: js.Object](
 //      styles: Styles[CSSProperties] | js.Function1[Theme, Styles[CSSProperties]]
-//  )(f:        js.Function1[P with Anon_Children with GeneratedClassNames[Styles], ReactNode]): FC[P] =
+//  )(f:        js.Function1[P with AnonChildren with GeneratedClassNames[Styles], ReactNode]): FC[P] =
 //    stylesMod.withStyles(styles.asInstanceOf[js.Any])(f).asInstanceOf[FC[P]]
 //}

@@ -3,12 +3,9 @@ package demo
 import org.scalajs.dom.window.document
 import slinky.core.ExternalComponent
 import slinky.web.ReactDOM
-import typingsSlinky.reactDashRedux.components.Provider
-import typingsSlinky.redux.reduxMod.{createStore, Store}
-import typingsSlinky.reduxDashDevtoolsDashExtension.reduxDashDevtoolsDashExtensionMod.{
-  devToolsEnhancer,
-  EnhancerOptions
-}
+import typingsSlinky.reactRedux.components.Provider
+import typingsSlinky.redux.mod.{createStore, Store}
+import typingsSlinky.reduxDevtoolsExtension.mod.{devToolsEnhancer, EnhancerOptions}
 
 object Main {
 

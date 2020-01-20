@@ -7,9 +7,9 @@ import slinky.core.facade.{Hooks, ReactElement}
 import slinky.web.html._
 import typingsSlinky.antd.antdStrings
 import typingsSlinky.antd.components.{List => _, _}
-import typingsSlinky.antd.libIconMod.ThemeType
-import typingsSlinky.antd.libNotificationMod.{ArgsProps, default => Notification}
-import typingsSlinky.antd.libTableInterfaceMod.ColumnProps
+import typingsSlinky.antd.iconMod.ThemeType
+import typingsSlinky.antd.notificationMod.{ArgsProps, default => Notification}
+import typingsSlinky.antd.tableInterfaceMod.ColumnProps
 
 import scala.language.implicitConversions
 import scala.scalajs.js

@@ -4,11 +4,11 @@ import org.scalajs.dom.console
 import slinky.core.annotations.react
 import slinky.core.{FunctionalComponent, ObservingFC}
 import slinky.web.html._
-import typingsSlinky.csstype.csstypeMod.BackgroundColorProperty
-import typingsSlinky.materialDashUi.stylesBaseThemesLightBaseThemeMod.{default => theme}
-import typingsSlinky.materialDashUi.stylesMod.{getMuiTheme, MuiTheme}
-import typingsSlinky.materialDashUi.{components => Mui}
-import typingsSlinky.react.reactMod.CSSProperties
+import typingsSlinky.csstype.mod.BackgroundColorProperty
+import typingsSlinky.materialUi.lightBaseThemeMod.{default => theme}
+import typingsSlinky.materialUi.stylesMod.{getMuiTheme, MuiTheme}
+import typingsSlinky.materialUi.{components => Mui}
+import typingsSlinky.react.mod.CSSProperties
 
 import scala.scalajs.js
 

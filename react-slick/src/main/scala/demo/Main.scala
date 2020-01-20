@@ -5,7 +5,7 @@ import slinky.core.FunctionalComponent
 import slinky.core.facade.{Hooks, ReactElement}
 import slinky.web.ReactDOM
 import slinky.web.html._
-import typingsSlinky.reactDashSlick.components.ReactDashSlick
+import typingsSlinky.reactSlick.components.ReactSlick
 
 import scala.scalajs.js
 
@@ -35,7 +35,7 @@ object Main {
           style := js.Dynamic.literal(color = "blue"),
           s"Selected image index: ${state.selectedIdx.fold("none")(_.toString)}"
         ),
-        ReactDashSlick(
+        ReactSlick(
           onInit = () => println("slick init"),
           dots = true,
           autoplay = true,

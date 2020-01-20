@@ -7,8 +7,8 @@ import slinky.core.{ExternalComponent, SyntheticEvent, TagMod}
 import slinky.web.html._
 import typingsSlinky.antd.antdStrings
 import typingsSlinky.antd.components._
-import typingsSlinky.antd.libFormFormMod.{FormCreateOption, GetFieldDecoratorOptions, ValidationRule, WrappedFormUtils}
-import typingsSlinky.antd.libGridColMod.ColProps
+import typingsSlinky.antd.formFormMod.{FormCreateOption, GetFieldDecoratorOptions, ValidationRule, WrappedFormUtils}
+import typingsSlinky.antd.gridColMod.ColProps
 
 import scala.scalajs.js
 import scala.scalajs.js.{|, JSON}
@@ -21,7 +21,7 @@ object CoordinatedDemo {
 
   object Facade {
 
-    import typingsSlinky.antd.libFormFormMod.default.{create => createForm}
+    import typingsSlinky.antd.formFormMod.default.{create => createForm}
 
     /**
       * This is an example of something a bit more complicated than just rewriting component types, and which a manually

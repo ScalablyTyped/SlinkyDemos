@@ -5,15 +5,12 @@ import slinky.core.annotations.react
 import slinky.core.facade.Hooks._
 import slinky.core.facade.ReactElement
 import slinky.native.ScrollView
-import typingsSlinky.atAntDashDesignReactDashNative.components.{List => AntdList, _}
-import typingsSlinky.atAntDashDesignReactDashNative.{
-  PartialLocale,
-  atAntDashDesignReactDashNativeStrings => antdStrings
-}
-import typingsSlinky.atBang88ReactDashNativeDashDrawerDashLayout.atBang88ReactDashNativeDashDrawerDashLayoutMod.DrawerLayout
-import typingsSlinky.reactDashRouter.components.Route
-import typingsSlinky.reactDashRouter.reactDashRouterMod.RouteProps
-import typingsSlinky.reactDashRouterDashNative.components.NativeRouter
+import typingsSlinky.antDesignReactNative.components.{List => AntdList, _}
+import typingsSlinky.antDesignReactNative.{PartialLocale, antDesignReactNativeStrings => antdStrings}
+import typingsSlinky.bang88ReactNativeDrawerLayout.mod.DrawerLayout
+import typingsSlinky.reactRouter.components.Route
+import typingsSlinky.reactRouter.mod.RouteProps
+import typingsSlinky.reactRouterNative.components.NativeRouter
 
 import scala.scalajs.js.|
 

@@ -8,14 +8,14 @@ import slinky.core.facade.Hooks.useState
 import slinky.native.ScrollView
 
 import scala.scalajs.js
-import typingsSlinky.atAntDashDesignReactDashNative.components.{List => AntdList, _}
-import typingsSlinky.atAntDashDesignReactDashNative.{atAntDashDesignReactDashNativeStrings => antdStrings}
-import typingsSlinky.atAntDashDesignReactDashNative.atAntDashDesignReactDashNativeMod.Toast
-import typingsSlinky.atAntDashDesignIconsDashReactDashNative.components.{IconFill, IconOutline}
-import typingsSlinky.atAntDashDesignReactDashNative.libModalPropsTypeMod.Action
-import typingsSlinky.reactDashNative.reactDashNativeMod.ViewStyle
-import typingsSlinky.reactDashRouter.reactDashRouterMod.`match`
-import typingsSlinky.reactDashNative.reactDashNativeStrings
+import typingsSlinky.antDesignReactNative.components.{List => AntdList, _}
+import typingsSlinky.antDesignReactNative.{antDesignReactNativeStrings => antdStrings}
+import typingsSlinky.antDesignReactNative.mod.Toast
+import typingsSlinky.antDesignIconsReactNative.components.{IconFill, IconOutline}
+import typingsSlinky.antDesignReactNative.modalPropsTypeMod.Action
+import typingsSlinky.reactNative.mod.ViewStyle
+import typingsSlinky.reactRouter.mod.`match`
+import typingsSlinky.reactNative.reactNativeStrings
 
 @react object Antd extends Redirectable {
 
@@ -46,9 +46,9 @@ import typingsSlinky.reactDashNative.reactDashNativeStrings
             style = ViewStyle(
               backgroundColor = "white",
               flex = 1,
-              flexDirection = reactDashNativeStrings.column,
-              justifyContent = reactDashNativeStrings.center,
-              alignItems = reactDashNativeStrings.center
+              flexDirection = reactNativeStrings.column,
+              justifyContent = reactNativeStrings.center,
+              alignItems = reactNativeStrings.center
             )
           )(
             InputItem(placeholder = "input text"),

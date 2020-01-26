@@ -5,9 +5,9 @@ import slinky.core.Component
 import slinky.core.annotations.react
 import slinky.core.facade.ReactElement
 import slinky.native.Text
-import typingsSlinky.expo.components.AppLoading
-import typingsSlinky.expoFont.mod.FontSource
-import typingsSlinky.expoFont.{mod => Font}
+import typings.expo.components.AppLoading
+import typings.expoFont.mod.FontSource
+import typings.expoFont.{mod => Font}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js

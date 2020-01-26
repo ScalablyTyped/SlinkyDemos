@@ -8,14 +8,14 @@ import slinky.core.facade.Hooks.useState
 import slinky.native.ScrollView
 
 import scala.scalajs.js
-import typingsSlinky.antDesignReactNative.components.{List => AntdList, _}
-import typingsSlinky.antDesignReactNative.{antDesignReactNativeStrings => antdStrings}
-import typingsSlinky.antDesignReactNative.mod.Toast
-import typingsSlinky.antDesignIconsReactNative.components.{IconFill, IconOutline}
-import typingsSlinky.antDesignReactNative.modalPropsTypeMod.Action
-import typingsSlinky.reactNative.mod.ViewStyle
-import typingsSlinky.reactRouter.mod.`match`
-import typingsSlinky.reactNative.reactNativeStrings
+import typings.antDesignReactNative.components.{List => AntdList, _}
+import typings.antDesignReactNative.{antDesignReactNativeStrings => antdStrings}
+import typings.antDesignReactNative.mod.Toast
+import typings.antDesignIconsReactNative.components.{IconFill, IconOutline}
+import typings.antDesignReactNative.modalPropsTypeMod.Action
+import typings.reactNative.mod.ViewStyle
+import typings.reactRouter.mod.`match`
+import typings.reactNative.reactNativeStrings
 
 @react object Antd extends Redirectable {
 

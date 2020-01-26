@@ -3,8 +3,8 @@ package demo
 import slinky.core._
 import slinky.core.annotations.react
 import slinky.web.html._
-import typingsSlinky.reactRouter.mod._
-import typingsSlinky.reactRouterDom.components._
+import typings.reactRouter.mod._
+import typings.reactRouterDom.components._
 
 import scala.scalajs.js
 

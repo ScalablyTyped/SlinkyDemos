@@ -4,7 +4,7 @@ import slinky.core._
 import slinky.core.annotations.react
 import slinky.native.Text
 
-import typingsSlinky.reactRouter.mod._
+import typings.reactRouter.mod._
 
 import scala.scalajs.js
 

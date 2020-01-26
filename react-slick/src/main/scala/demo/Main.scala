@@ -5,7 +5,7 @@ import slinky.core.FunctionalComponent
 import slinky.core.facade.{Hooks, ReactElement}
 import slinky.web.ReactDOM
 import slinky.web.html._
-import typingsSlinky.reactSlick.components.ReactSlick
+import typings.reactSlick.components.ReactSlick
 
 import scala.scalajs.js
 

@@ -6,10 +6,10 @@ import slinky.core.annotations.react
 import slinky.core.facade.ReactElement
 import slinky.web.html._
 import demo.ReduxFacade.Extractor
-import typingsSlinky.redux.mod.{Action, Dispatch, Reducer}
-import typingsSlinky.semanticUiReact.iconIconMod.{IconProps, IconSizeProp}
-import typingsSlinky.semanticUiReact.genericMod.{SemanticICONS, SemanticVERTICALALIGNMENTS}
-import typingsSlinky.semanticUiReact.{components => Sui}
+import typings.redux.mod.{Action, Dispatch, Reducer}
+import typings.semanticUiReact.iconIconMod.{IconProps, IconSizeProp}
+import typings.semanticUiReact.genericMod.{SemanticICONS, SemanticVERTICALALIGNMENTS}
+import typings.semanticUiReact.{components => Sui}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future

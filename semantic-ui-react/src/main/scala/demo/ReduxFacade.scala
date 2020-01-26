@@ -1,8 +1,8 @@
 package demo
 
 import slinky.core.{ExternalComponent, ReactComponentClass}
-import typingsSlinky.reactRedux.mod.connect
-import typingsSlinky.redux.mod.{Action, Dispatch, Store}
+import typings.reactRedux.mod.connect
+import typings.redux.mod.{Action, Dispatch, Store}
 
 import scala.scalajs.js
 import scala.scalajs.js.|

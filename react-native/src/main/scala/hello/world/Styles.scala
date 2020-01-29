@@ -1,7 +1,7 @@
 package hello.world
 
-import typingsSlinky.reactNative.mod.TextStyle
-import typingsSlinky.reactNative.reactNativeStrings
+import typings.reactNative.mod.TextStyle
+import typings.reactNative.reactNativeStrings
 
 import scala.scalajs.js.Dynamic.literal
 

@@ -3,8 +3,8 @@ package hello.world
 import slinky.core.FunctionalComponent
 import slinky.core.annotations.react
 import slinky.native.{Text, View}
-import typingsSlinky.reactNative.mod.{TextStyle, ViewStyle}
-import typingsSlinky.reactRouter.mod.`match`
+import typings.reactNative.mod.{TextStyle, ViewStyle}
+import typings.reactRouter.mod.`match`
 
 @react object Home extends Redirectable {
 

@@ -5,8 +5,8 @@ import slinky.core.annotations.react
 import slinky.core.facade.ReactElement
 import slinky.native.{Text, View}
 
-import typingsSlinky.reactRouterNative.components._
-import typingsSlinky.reactRouter.mod._
+import typings.reactRouterNative.components._
+import typings.reactRouter.mod._
 
 @react object ReactRouter extends Redirectable {
 

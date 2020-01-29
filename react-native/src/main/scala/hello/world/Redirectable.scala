@@ -1,7 +1,7 @@
 package hello.world
 
 import slinky.core.facade.ReactElement
-import typingsSlinky.reactRouterNative.components.Redirect
+import typings.reactRouterNative.components.Redirect
 
 trait Redirectable {
 

@@ -6,11 +6,11 @@ import slinky.core.annotations.react
 import slinky.core.facade.{Hooks, ReactElement}
 import slinky.web.ReactDOM
 import slinky.web.html._
-import typingsSlinky.materialUiCore.createMuiThemeMod.Theme
-import typingsSlinky.materialUiCore.withStylesMod.CSSProperties
-import typingsSlinky.materialUiCore.textFieldTextFieldMod.StandardTextFieldProps
-import typingsSlinky.materialUiCore.{materialUiCoreStrings => MuiStrings, components => Mui}
-import typingsSlinky.react.AnonChildren
+import typings.materialUiCore.createMuiThemeMod.Theme
+import typings.materialUiCore.withStylesMod.CSSProperties
+import typings.materialUiCore.textFieldTextFieldMod.StandardTextFieldProps
+import typings.materialUiCore.{materialUiCoreStrings => MuiStrings, components => Mui}
+import typings.react.AnonChildren
 
 import scala.scalajs.js
 import scala.scalajs.js.|
@@ -141,7 +141,7 @@ object ButtonTest {
 //object StyledFC {
 //  import scala.language.higherKinds
 //
-//  @inline private def stylesMod = typingsSlinky.atMaterialUiCore.stylesMod.asInstanceOf[js.Dynamic]
+//  @inline private def stylesMod = typings.atMaterialUiCore.stylesMod.asInstanceOf[js.Dynamic]
 //
 //  trait GeneratedClassNames[Styles[_] <: js.Object] extends js.Object {
 //    val classes: Styles[String]

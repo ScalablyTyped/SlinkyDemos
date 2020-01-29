@@ -3,8 +3,8 @@ package demo
 import org.scalajs.dom.window.alert
 import slinky.core.AttrPair
 import slinky.web.html._
-import typingsSlinky.storybookReact.mod.storiesOf
-import typingsSlinky.node.module
+import typings.storybookReact.mod.storiesOf
+import typings.node.module
 
 object Demo {
   def main(args: Array[String]): Unit =

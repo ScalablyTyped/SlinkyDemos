@@ -4,10 +4,10 @@ import org.scalajs.dom.console
 import slinky.core.annotations.react
 import slinky.core.{FunctionalComponent, ObservingFC}
 import slinky.web.html._
-import typingsSlinky.materialUi.{components => Mui}
-import typingsSlinky.mobx.computedvalueMod.IComputedValue
-import typingsSlinky.mobx.observablevalueMod.IObservableValue
-import typingsSlinky.mobx.{mod => MobX}
+import typings.materialUi.{components => Mui}
+import typings.mobx.computedvalueMod.IComputedValue
+import typings.mobx.observablevalueMod.IObservableValue
+import typings.mobx.{mod => MobX}
 
 import scala.scalajs.js
 

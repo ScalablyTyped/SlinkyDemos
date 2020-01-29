@@ -3,9 +3,9 @@ package demo
 import org.scalajs.dom.window.document
 import slinky.core.ExternalComponent
 import slinky.web.ReactDOM
-import typingsSlinky.reactRedux.components.Provider
-import typingsSlinky.redux.mod.{createStore, Store}
-import typingsSlinky.reduxDevtoolsExtension.mod.{devToolsEnhancer, EnhancerOptions}
+import typings.reactRedux.components.Provider
+import typings.redux.mod.{createStore, Store}
+import typings.reduxDevtoolsExtension.mod.{devToolsEnhancer, EnhancerOptions}
 
 object Main {
 

@@ -253,6 +253,19 @@ lazy val `react-native` = project
     }
   )
 
+lazy val `semantic-ui-react-kitchensink` = project
+  .enablePlugins(ScalablyTypedConverterPlugin)
+  .configure(baseSettings, bundlerSettings, browserProject, reactNpmDeps)
+  .settings(
+    webpackDevServerPort := 8010,
+    Compile / stFlavour := Flavour.Slinky,
+    Compile / stEnableScalaJsDefined := Selection.All,
+    Compile / stIgnore += "csstype",
+    Compile / stMinimize := Selection.All,
+    Compile / npmDependencies ++= Seq(
+      "semantic-ui-react" -> "0.88.1"
+    )
+  )
 
 lazy val reactNpmDeps: Project => Project =
   _.settings(

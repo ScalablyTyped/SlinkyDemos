@@ -1,6 +1,6 @@
-## Kitchensink demo for semantic-ui-react
+## Kitchen sink demo for semantic-ui-react
 
-This is a kitchensink, a loosely organized collection of usages of [Semantic UI React](https://react.semantic-ui.com/), the official  Semantic-UI-React integration.
+This is a kitchen sink, a loosely organized collection of usages of [Semantic UI React](https://react.semantic-ui.com/), the official  Semantic-UI-React integration.
 
 ### Contribute
 

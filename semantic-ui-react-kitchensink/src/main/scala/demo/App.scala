@@ -35,12 +35,12 @@ import scala.language.implicitConversions
             Sui.Icon(name = SuiStrings.recycle)
           ),
           p(
-            Sui.Button(
+            Sui.Button(icon = true)(
               Sui.Icon(name = SuiStrings.recycle)
             )
           ),
           p(
-            Sui.Button(labelPosition = SuiStrings.left)(
+            Sui.Button(labelPosition = SuiStrings.left, icon = true)(
               Sui.Icon(name = SuiStrings.pause),
               "Pause"
             )

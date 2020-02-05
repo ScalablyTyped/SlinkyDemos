@@ -78,7 +78,9 @@ import scala.language.implicitConversions
             )
           ),
           Sui.Card(
-            img(src := "https://react.semantic-ui.com/images/avatar/large/matthew.png"),
+            Sui.Image(size = SuiStrings.medium, wrapped = true, ui = false)(
+              src := "https://react.semantic-ui.com/images/avatar/large/matthew.png"
+            ),
             Sui.CardContent(
               Sui.CardHeader()("Matthew"),
               Sui.CardMeta()(
@@ -105,19 +107,20 @@ import scala.language.implicitConversions
             Sui.Button(primary = true, onClick = (_, _) => updateIsModalVisible(true))(
               "Show modal"
             )
-          ),
-
+          )
         ),
         Sui.GridColumn(width = `1`)
       ),
       Sui.Modal(
-        onClose = (_, _) => updateIsModalVisible(false),
+        onClose = (_, _) => updateIsModalVisible(false)
       )(
         open := isModalVisible
       )(
         Sui.ModalHeader("Select a Photo"),
-        Sui.ModalContent(
-          img(src := "https://react.semantic-ui.com/images/avatar/large/rachel.png"),
+        Sui.ModalContent(image = true)(
+          Sui.Image(size = SuiStrings.medium, wrapped = true)(
+            src := "https://react.semantic-ui.com/images/avatar/large/rachel.png"
+          ),
           Sui.ModalDescription(
             Sui.Header("Default Profile Image"),
             p("We've found the following gravatar image associated with your e-mail address."),

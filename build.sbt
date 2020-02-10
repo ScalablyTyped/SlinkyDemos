@@ -118,23 +118,17 @@ lazy val `react-big-calendar` =
       )
     )
 
-lazy val `semantic-ui-react` = project
+lazy val `semantic-ui-react-kitchensink` = project
+  .enablePlugins(ScalablyTypedConverterPlugin)
   .configure(baseSettings, bundlerSettings, browserProject, reactNpmDeps)
   .settings(
     webpackDevServerPort := 8004,
     Compile / stFlavour := Flavour.Slinky,
     Compile / stEnableScalaJsDefined := Selection.All,
     Compile / stIgnore += "csstype",
-    Compile / stMinimize := Selection.AllExcept(
-      "react-redux",
-      "redux",
-      "redux-devtools-extension"
-    ),
+    Compile / stMinimize := Selection.All,
     Compile / npmDependencies ++= Seq(
-      "react-redux" -> "7.1",
-      "redux-devtools-extension" -> "2.13.8",
-      "semantic-ui-react" -> "0.88.1",
-      "@types/react-redux" -> "7.1.5"
+      "semantic-ui-react" -> "0.88.1"
     )
   )
 
@@ -252,7 +246,6 @@ lazy val `react-native` = project
       Process("expo start", baseDirectory.value).!
     }
   )
-
 
 lazy val reactNpmDeps: Project => Project =
   _.settings(

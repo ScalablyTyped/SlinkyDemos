@@ -13,7 +13,7 @@ Global / onLoad := {
       |*
       |* For documentation see https://scalablytyped.org .
       |*
-      |* Note that compiling all the demos at once can be computationally quite expensive, so you might have a better experience running `<project>/start` than starting all with `start` (though you can!)
+      |* Note that the first time you import/compile the projects it'll take a while for the dependencies to build
       |*""".stripMargin)
   (Global / onLoad).value
 }
@@ -236,6 +236,7 @@ lazy val `react-native` = project
       baseDirectory.value
     },
     Compile / stFlavour := Flavour.SlinkyNative,
+    Compile / stStdlib := List("es5"),
     Compile / stIgnore := List("csstype"),
     Compile / stMinimize := Selection.AllExcept("@ant-design/react-native", "expo-font", "expo"),
     /** This is not suitable for development, but effective for demo.

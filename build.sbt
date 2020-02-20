@@ -69,12 +69,6 @@ lazy val `react-mobx` =
       Compile / stFlavour := Flavour.Slinky,
       Compile / stEnableScalaJsDefined := Selection.All,
       Compile / stIgnore ++= List("material-ui/svg-icons"),
-      Compile / stMinimize := Selection.AllExcept("axios", "mobx-react", "mobx"),
-      Compile / stMinimizeKeep ++= List(
-        "materialUi.lightBaseThemeMod.default",
-        "materialUi.stylesMod.MuiTheme",
-        "materialUi.stylesMod.getMuiTheme"
-      ),
       Compile / npmDependencies ++= Seq(
         "axios" -> "0.19.0",
         "material-ui" -> "0.20.1",
@@ -91,7 +85,6 @@ lazy val `react-slick` =
       webpackDevServerPort := 8002,
       Compile / stFlavour := Flavour.Slinky,
       Compile / stIgnore += "csstype",
-      Compile / stMinimize := Selection.All,
       Compile / npmDependencies ++= Seq(
         "react-slick" -> "0.23",
         "@types/react-slick" -> "0.23.4"
@@ -105,12 +98,6 @@ lazy val `react-big-calendar` =
       webpackDevServerPort := 8003,
       Compile / stFlavour := Flavour.Slinky,
       Compile / stIgnore += "csstype",
-      Compile / stMinimize := Selection.All,
-      Compile / stMinimizeKeep ++= List(
-        "moment.mod.^",
-        "reactBigCalendar.mod.momentLocalizer",
-        "reactBigCalendar.mod.View",
-      ),
       Compile / npmDependencies ++= Seq(
         "moment" -> "2.24.0",
         "react-big-calendar" -> "0.22",
@@ -126,7 +113,6 @@ lazy val `semantic-ui-react-kitchensink` = project
     Compile / stFlavour := Flavour.Slinky,
     Compile / stEnableScalaJsDefined := Selection.All,
     Compile / stIgnore += "csstype",
-    Compile / stMinimize := Selection.All,
     Compile / npmDependencies ++= Seq(
       "semantic-ui-react" -> "0.88.1"
     )
@@ -146,10 +132,6 @@ lazy val `storybook-react` = project
     },
     Compile / stFlavour := Flavour.Slinky,
     Compile / stIgnore += "csstype",
-    Compile / stMinimize := Selection.AllExcept("@storybook/react"),
-    Compile / stMinimizeKeep ++= List(
-      "node.module"
-    ),
     /** This is not suitable for development, but effective for demo.
       * Run `yarn storybook` commands yourself, and run `~storybook-react/fastOptJS` from sbt
       */
@@ -172,7 +154,6 @@ lazy val antd =
       webpackDevServerPort := 8006,
       Compile / stFlavour := Flavour.Slinky,
       Compile / stIgnore += "csstype",
-      Compile / stMinimize := Selection.AllExcept("antd"),
       Compile / npmDependencies ++= Seq("antd" -> "3.26.0")
     )
 
@@ -183,7 +164,6 @@ lazy val `react-router-dom` =
       webpackDevServerPort := 8007,
       Compile / stFlavour := Flavour.Slinky,
       Compile / stIgnore += "csstype",
-      Compile / stMinimize := Selection.All,
       Compile / npmDependencies ++= Seq(
         "react-router-dom" -> "5.1.2",
         "@types/react-router-dom" -> "5.1.2"
@@ -196,7 +176,6 @@ lazy val `material-ui` =
     .settings(
       webpackDevServerPort := 8008,
       Compile / stFlavour := Flavour.Slinky,
-      Compile / stMinimize := Selection.AllExcept("@material-ui/core"),
       Compile / stEnableScalaJsDefined := Selection.AllExcept("@material-ui/core"),
       Compile / stIgnore ++= List("@material-ui/icons", "csstype"),
       Compile / npmDependencies ++= Seq(
@@ -211,10 +190,6 @@ lazy val `react-leaflet` = project
     webpackDevServerPort := 8009,
     Compile / stFlavour := Flavour.Slinky,
     Compile / stIgnore += "csstype",
-    Compile / stMinimize := Selection.All,
-    Compile / stMinimizeKeep ++= List(
-      "leaflet.leafletRequire"
-    ),
     Compile / npmDependencies ++= Seq(
       "react-leaflet" -> "2.5",
       "@types/react-leaflet" -> "2.5",
@@ -238,10 +213,6 @@ lazy val `react-native` = project
     Compile / stFlavour := Flavour.SlinkyNative,
     Compile / stStdlib := List("es5"),
     Compile / stIgnore := List("csstype"),
-    Compile / stMinimize := Selection.AllExcept("@ant-design/react-native", "expo-font", "expo"),
-    /** This is not suitable for development, but effective for demo.
-      * Run `expo start` yourself, and run `~react-native/fastOptJS` from sbt
-      */
     run := {
       (Compile / fastOptJS).value
       Process("expo start", baseDirectory.value).!

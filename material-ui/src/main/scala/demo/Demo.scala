@@ -30,8 +30,6 @@ object Demo {
 @react
 object ButtonTest {
   case class Props(name: String)
-  @inline implicit def foo1(pair: AttrPair[_value_attr.type]) = pair.asInstanceOf[AttrPair[div.tag.type]]
-  @inline implicit def foo2(pair: AttrPair[_disabled_attr.type]) = pair.asInstanceOf[AttrPair[div.tag.type]]
 
   val component = FunctionalComponent[Props] { props =>
     /* use a hook to keep state */

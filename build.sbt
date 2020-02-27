@@ -5,6 +5,11 @@ import org.scalajs.core.tools.linker.ModuleKind
 
 import scala.sys.process.Process
 
+// both intellij and ci needs this to not OOM during initial import
+Global / concurrentRestrictions ++= Seq(
+  Tags.limit(ScalablyTypedTag, 2),
+)
+
 Global / onLoad := {
   println("""*
       |* Welcome to ScalablyTyped demos!

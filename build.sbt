@@ -226,7 +226,7 @@ lazy val reactNpmDeps: Project => Project =
     Compile / npmDependencies ++= Seq(
       "react" -> "16.9",
       "react-dom" -> "16.9",
-      "@types/react" -> "16.9.5"
+      "@types/react" -> "16.9.16"
     )
   )
 

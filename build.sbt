@@ -1,9 +1,12 @@
 import java.nio.file.Files
 import java.nio.file.StandardCopyOption.REPLACE_EXISTING
 
-import org.scalajs.core.tools.linker.ModuleKind
-
 import scala.sys.process.Process
+
+// both intellij and ci needs this to not OOM during initial import
+Global / concurrentRestrictions ++= Seq(
+  Tags.limit(ScalablyTypedTag, 2)
+)
 
 Global / onLoad := {
   println("""*
@@ -42,12 +45,11 @@ lazy val baseSettings: Project => Project =
       scalaVersion := "2.13.1",
       scalacOptions ++= ScalacOptions.flags,
       scalaJSUseMainModuleInitializer := true,
-      scalaJSLinkerConfig ~= (
-        /* disabled because it somehow triggers many warnings */
-        _.withSourceMap(false)
-          .withModuleKind(ModuleKind.CommonJSModule)),
+      scalaJSLinkerConfig ~= (/* disabled because it somehow triggers many warnings */
+      _.withSourceMap(false)
+        .withModuleKind(ModuleKind.CommonJSModule)),
       /* for slinky */
-      libraryDependencies ++= Seq("me.shadaj" %%% "slinky-hot" % "0.6.3"),
+      libraryDependencies ++= Seq("me.shadaj" %%% "slinky-hot" % "0.6.4"),
       scalacOptions += "-Ymacro-annotations"
     )
 
@@ -66,9 +68,9 @@ lazy val `react-mobx` =
     .configure(baseSettings, bundlerSettings, browserProject, reactNpmDeps)
     .settings(
       webpackDevServerPort := 8001,
-      Compile / stFlavour := Flavour.Slinky,
-      Compile / stEnableScalaJsDefined := Selection.All,
-      Compile / stIgnore ++= List("material-ui/svg-icons"),
+      stFlavour := Flavour.Slinky,
+      stEnableScalaJsDefined := Selection.All,
+      stIgnore ++= List("material-ui/svg-icons"),
       Compile / npmDependencies ++= Seq(
         "axios" -> "0.19.0",
         "material-ui" -> "0.20.1",
@@ -83,8 +85,8 @@ lazy val `react-slick` =
     .configure(baseSettings, bundlerSettings, browserProject, reactNpmDeps)
     .settings(
       webpackDevServerPort := 8002,
-      Compile / stFlavour := Flavour.Slinky,
-      Compile / stIgnore += "csstype",
+      stFlavour := Flavour.Slinky,
+      stIgnore += "csstype",
       Compile / npmDependencies ++= Seq(
         "react-slick" -> "0.23",
         "@types/react-slick" -> "0.23.4"
@@ -96,8 +98,8 @@ lazy val `react-big-calendar` =
     .configure(baseSettings, bundlerSettings, browserProject, withCssLoading, reactNpmDeps)
     .settings(
       webpackDevServerPort := 8003,
-      Compile / stFlavour := Flavour.Slinky,
-      Compile / stIgnore += "csstype",
+      stFlavour := Flavour.Slinky,
+      stIgnore += "csstype",
       Compile / npmDependencies ++= Seq(
         "moment" -> "2.24.0",
         "react-big-calendar" -> "0.22",
@@ -110,9 +112,9 @@ lazy val `semantic-ui-react-kitchensink` = project
   .configure(baseSettings, bundlerSettings, browserProject, reactNpmDeps)
   .settings(
     webpackDevServerPort := 8004,
-    Compile / stFlavour := Flavour.Slinky,
-    Compile / stEnableScalaJsDefined := Selection.All,
-    Compile / stIgnore += "csstype",
+    stFlavour := Flavour.Slinky,
+    stEnableScalaJsDefined := Selection.All,
+    stIgnore += "csstype",
     Compile / npmDependencies ++= Seq(
       "semantic-ui-react" -> "0.88.1"
     )
@@ -130,8 +132,8 @@ lazy val `storybook-react` = project
       Process("yarn", baseDirectory.value).!
       baseDirectory.value
     },
-    Compile / stFlavour := Flavour.Slinky,
-    Compile / stIgnore += "csstype",
+    stFlavour := Flavour.Slinky,
+    stIgnore += "csstype",
     /** This is not suitable for development, but effective for demo.
       * Run `yarn storybook` commands yourself, and run `~storybook-react/fastOptJS` from sbt
       */
@@ -152,8 +154,8 @@ lazy val antd =
     .configure(baseSettings, bundlerSettings, browserProject, withCssLoading, reactNpmDeps)
     .settings(
       webpackDevServerPort := 8006,
-      Compile / stFlavour := Flavour.Slinky,
-      Compile / stIgnore += "csstype",
+      stFlavour := Flavour.Slinky,
+      stIgnore += "csstype",
       Compile / npmDependencies ++= Seq("antd" -> "3.26.0")
     )
 
@@ -162,8 +164,8 @@ lazy val `react-router-dom` =
     .configure(baseSettings, bundlerSettings, browserProject, reactNpmDeps)
     .settings(
       webpackDevServerPort := 8007,
-      Compile / stFlavour := Flavour.Slinky,
-      Compile / stIgnore += "csstype",
+      stFlavour := Flavour.Slinky,
+      stIgnore += "csstype",
       Compile / npmDependencies ++= Seq(
         "react-router-dom" -> "5.1.2",
         "@types/react-router-dom" -> "5.1.2"
@@ -175,9 +177,9 @@ lazy val `material-ui` =
     .configure(baseSettings, bundlerSettings, browserProject, reactNpmDeps)
     .settings(
       webpackDevServerPort := 8008,
-      Compile / stFlavour := Flavour.Slinky,
-      Compile / stEnableScalaJsDefined := Selection.AllExcept("@material-ui/core"),
-      Compile / stIgnore ++= List("@material-ui/icons", "csstype"),
+      stFlavour := Flavour.Slinky,
+      stEnableScalaJsDefined := Selection.AllExcept("@material-ui/core"),
+      stIgnore ++= List("@material-ui/icons", "csstype"),
       Compile / npmDependencies ++= Seq(
         "@material-ui/core" -> "3.9.3"
       )
@@ -188,8 +190,8 @@ lazy val `react-leaflet` = project
   .configure(baseSettings, bundlerSettings, browserProject, reactNpmDeps, withCssLoading)
   .settings(
     webpackDevServerPort := 8009,
-    Compile / stFlavour := Flavour.Slinky,
-    Compile / stIgnore += "csstype",
+    stFlavour := Flavour.Slinky,
+    stIgnore += "csstype",
     Compile / npmDependencies ++= Seq(
       "react-leaflet" -> "2.5",
       "@types/react-leaflet" -> "2.5",
@@ -210,9 +212,9 @@ lazy val `react-native` = project
       Process("yarn", baseDirectory.value).!
       baseDirectory.value
     },
-    Compile / stFlavour := Flavour.SlinkyNative,
-    Compile / stStdlib := List("es5"),
-    Compile / stIgnore := List("csstype"),
+    stFlavour := Flavour.SlinkyNative,
+    stStdlib := List("es5"),
+    stIgnore := List("csstype"),
     run := {
       (Compile / fastOptJS).value
       Process("expo start", baseDirectory.value).!
@@ -224,7 +226,7 @@ lazy val reactNpmDeps: Project => Project =
     Compile / npmDependencies ++= Seq(
       "react" -> "16.9",
       "react-dom" -> "16.9",
-      "@types/react" -> "16.9.5"
+      "@types/react" -> "16.9.16"
     )
   )
 

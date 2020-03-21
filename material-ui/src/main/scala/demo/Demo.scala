@@ -3,17 +3,10 @@ package demo
 import org.scalajs.dom
 import slinky.core._
 import slinky.core.annotations.react
-import slinky.core.facade.{Hooks, ReactElement}
+import slinky.core.facade.Hooks
 import slinky.web.ReactDOM
 import slinky.web.html._
-import typings.materialUiCore.createMuiThemeMod.Theme
-import typings.materialUiCore.withStylesMod.CSSProperties
-import typings.materialUiCore.textFieldTextFieldMod.StandardTextFieldProps
-import typings.materialUiCore.{materialUiCoreStrings => MuiStrings, components => Mui}
-import typings.react.AnonChildren
-
-import scala.scalajs.js
-import scala.scalajs.js.|
+import typings.materialUiCore.{components => Mui}
 
 object Demo {
 
@@ -43,7 +36,7 @@ object ButtonTest {
       /* a cake icon to celebrate */
 //      MuiIcons.CakeOutlined.props(MuiIcons.CakeOutlinedProps(color = MuiStrings.action)),
       /* text field controlled by the value of the state hook above*/
-      Mui.TextField(value := state.toString, disabled := true),
+      Mui.TextField.StandardTextFieldProps(value = state, disabled = true),
       incrementButton
     )
   }

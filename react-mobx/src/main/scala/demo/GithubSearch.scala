@@ -84,15 +84,12 @@ object GithubSearch {
   val component: FunctionalComponent[Props] = ObservingFC[Props] {
     case Props(store) =>
       div(
-        Mui.Paper(
-          style = new CSSProperties {
-            height = "100px"
-            display = csstypeStrings.flex
-            alignItems = csstypeStrings.center
-            justifyContent = csstypeStrings.center
-          },
-          rounded = true
-        ),
+        Mui.Paper(rounded = true)(style := new CSSProperties {
+          height = "100px"
+          display = csstypeStrings.flex
+          alignItems = csstypeStrings.center
+          justifyContent = csstypeStrings.center
+        }),
         Mui.TextField(onChange = (_, newValue) => store.search.set(newValue))(
           name := "search",
           value := store.search.get

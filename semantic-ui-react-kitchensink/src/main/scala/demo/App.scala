@@ -61,15 +61,15 @@ import scala.language.implicitConversions
               input(placeholder := "Last Name")
             ),
             Sui.FormField()(
-              Sui.Checkbox(label = "I agree to the Terms and Conditions".asInstanceOf[ReactElement])()
+              Sui.Checkbox(label = "I agree to the Terms and Conditions".asInstanceOf[TagMod[Any]])()
             ),
-            Sui.FormField()(
+            Sui.FormField(
               Sui.Checkbox(
-                label = "I agree to the Cookie Policy".asInstanceOf[ReactElement],
+                label = "I agree to the Cookie Policy".asInstanceOf[TagMod[Any]],
                 toggle = true
               )()
             ),
-            Sui.Button(`type` = typings.react.reactStrings.submit)("Submit")
+            Sui.Button(`type` := "submit", "Submit")
           ),
           Sui.Divider(horizontal = true)(
             Sui.Header(as = "h4")(

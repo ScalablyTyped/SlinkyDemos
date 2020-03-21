@@ -3,11 +3,6 @@ import java.nio.file.StandardCopyOption.REPLACE_EXISTING
 
 import scala.sys.process.Process
 
-// both intellij and ci needs this to not OOM during initial import
-Global / concurrentRestrictions ++= Seq(
-  Tags.limit(ScalablyTypedTag, 2)
-)
-
 Global / onLoad := {
   println("""*
       |* Welcome to ScalablyTyped demos!
@@ -19,6 +14,13 @@ Global / onLoad := {
       |* Note that the first time you import/compile the projects it'll take a while for the dependencies to build
       |*""".stripMargin)
   (Global / onLoad).value
+}
+
+// both intellij and ci needs this to not OOM during initial import since we have so many projects
+Global / concurrentRestrictions ++= {
+  val gigabytes = (java.lang.Runtime.getRuntime.maxMemory) / (1000 * 1000 * 1000)
+  val numParallel = Math.max(1, gigabytes.toInt)
+  List(Tags.limit(ScalablyTypedTag, numParallel))
 }
 
 // Uncomment if you want to remove debug output
@@ -227,9 +229,9 @@ lazy val `react-native` = project
 lazy val reactNpmDeps: Project => Project =
   _.settings(
     Compile / npmDependencies ++= Seq(
-      "react" -> "16.9",
-      "react-dom" -> "16.9",
-      "@types/react" -> "16.9.16"
+      "react" -> "16.13",
+      "react-dom" -> "16.13",
+      "@types/react" -> "16.9.23"
     )
   )
 
@@ -238,11 +240,11 @@ lazy val withCssLoading: Project => Project =
     /* custom webpack file to include css */
     webpackConfigFile := Some((ThisBuild / baseDirectory).value / "custom.webpack.config.js"),
     Compile / npmDevDependencies ++= Seq(
-      "webpack-merge" -> "4.1",
-      "css-loader" -> "2.1.0",
-      "style-loader" -> "0.23.1",
-      "file-loader" -> "3.0.1",
-      "url-loader" -> "1.1.2"
+      "webpack-merge" -> "4.2.2",
+      "css-loader" -> "3.4.2",
+      "style-loader" -> "1.1.3",
+      "file-loader" -> "5.1.0",
+      "url-loader" -> "3.0.0"
     )
   )
 

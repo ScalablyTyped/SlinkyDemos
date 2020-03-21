@@ -199,6 +199,17 @@ lazy val `react-leaflet` = project
     )
   )
 
+lazy val `office-ui-fabric-react` = project
+  .enablePlugins(ScalablyTypedConverterPlugin)
+  .configure(baseSettings, bundlerSettings, browserProject, reactNpmDeps)
+  .settings(
+    webpackDevServerPort := 8010,
+    stFlavour := Flavour.Slinky,
+    Compile / npmDependencies ++= Seq(
+      "office-ui-fabric-react" -> "7.98.1"
+    )
+  )
+
 /** Note: This can't use scalajs-bundler (at least I don't know how),
   *  so we run yarn ourselves with an external package.json.
   **/

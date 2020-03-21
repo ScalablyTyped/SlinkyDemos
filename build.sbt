@@ -86,7 +86,6 @@ lazy val `react-slick` =
     .settings(
       webpackDevServerPort := 8002,
       stFlavour := Flavour.Slinky,
-      stIgnore += "csstype",
       Compile / npmDependencies ++= Seq(
         "react-slick" -> "0.23",
         "@types/react-slick" -> "0.23.4"
@@ -99,9 +98,8 @@ lazy val `react-big-calendar` =
     .settings(
       webpackDevServerPort := 8003,
       stFlavour := Flavour.Slinky,
-      stIgnore += "csstype",
       Compile / npmDependencies ++= Seq(
-        "moment" -> "2.24.0",
+        "moment" -> "2.23.0",
         "react-big-calendar" -> "0.22",
         "@types/react-big-calendar" -> "0.22.3"
       )
@@ -114,7 +112,6 @@ lazy val `semantic-ui-react-kitchensink` = project
     webpackDevServerPort := 8004,
     stFlavour := Flavour.Slinky,
     stEnableScalaJsDefined := Selection.All,
-    stIgnore += "csstype",
     Compile / npmDependencies ++= Seq(
       "semantic-ui-react" -> "0.88.1"
     )
@@ -133,7 +130,6 @@ lazy val `storybook-react` = project
       baseDirectory.value
     },
     stFlavour := Flavour.Slinky,
-    stIgnore += "csstype",
     /** This is not suitable for development, but effective for demo.
       * Run `yarn storybook` commands yourself, and run `~storybook-react/fastOptJS` from sbt
       */
@@ -155,7 +151,6 @@ lazy val antd =
     .settings(
       webpackDevServerPort := 8006,
       stFlavour := Flavour.Slinky,
-      stIgnore += "csstype",
       Compile / npmDependencies ++= Seq("antd" -> "3.26.0")
     )
 
@@ -165,7 +160,6 @@ lazy val `react-router-dom` =
     .settings(
       webpackDevServerPort := 8007,
       stFlavour := Flavour.Slinky,
-      stIgnore += "csstype",
       Compile / npmDependencies ++= Seq(
         "react-router-dom" -> "5.1.2",
         "@types/react-router-dom" -> "5.1.2"
@@ -179,7 +173,7 @@ lazy val `material-ui` =
       webpackDevServerPort := 8008,
       stFlavour := Flavour.Slinky,
       stEnableScalaJsDefined := Selection.AllExcept("@material-ui/core"),
-      stIgnore ++= List("@material-ui/icons", "csstype"),
+      stIgnore ++= List("@material-ui/icons"),
       Compile / npmDependencies ++= Seq(
         "@material-ui/core" -> "3.9.3"
       )
@@ -191,7 +185,6 @@ lazy val `react-leaflet` = project
   .settings(
     webpackDevServerPort := 8009,
     stFlavour := Flavour.Slinky,
-    stIgnore += "csstype",
     Compile / npmDependencies ++= Seq(
       "react-leaflet" -> "2.5",
       "@types/react-leaflet" -> "2.5",
@@ -225,7 +218,6 @@ lazy val `react-native` = project
     },
     stFlavour := Flavour.SlinkyNative,
     stStdlib := List("es5"),
-    stIgnore := List("csstype"),
     run := {
       (Compile / fastOptJS).value
       Process("expo start", baseDirectory.value).!

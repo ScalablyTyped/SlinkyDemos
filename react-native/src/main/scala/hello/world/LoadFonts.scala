@@ -6,7 +6,7 @@ import slinky.core.annotations.react
 import slinky.core.facade.ReactElement
 import slinky.native.Text
 import typings.expo.components.AppLoading
-import typings.expoFont.mod.FontSource
+import typings.expoFont.fontTypesMod.FontSource
 import typings.expoFont.{mod => Font}
 
 import scala.concurrent.ExecutionContext.Implicits.global

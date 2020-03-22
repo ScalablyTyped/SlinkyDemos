@@ -8,22 +8,22 @@
     "eject": "expo eject"
   },
   "dependencies": {
-    "@ant-design/icons-react-native": "1.0.2",
-    "@ant-design/react-native": "3.1.10",
-    "@types/react": "16.9.16",
-    "@types/react-native": "^0.60.25",
+    "@ant-design/icons-react-native": "2.0.0",
+    "@ant-design/react-native": "3.3.0",
+    "@types/react": "16.9.25",
+    "@types/react-native": "^0.61.23",
     "@types/react-router-native": "^5.1.0",
-    "expo": "^35.0.0",
-    "expo-font": "7",
-    "react": "16.8.3",
-    "react-dom": "16.8.3",
+    "expo": "^36.0.2",
+    "expo-font": "8.0.0",
+    "react": "16.13.1",
+    "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-34.0.0.tar.gz",
     "react-proxy": "1.1.8",
-    "react-router-native": "5.0.0",
+    "react-router-native": "5.1.2",
     "typescript": "3.8"
   },
   "devDependencies": {
-    "babel-preset-expo": "^5.2.0"
+    "babel-preset-expo": "^8.0.0"
   },
   "private": true
 }

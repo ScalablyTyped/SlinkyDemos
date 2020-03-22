@@ -35,10 +35,10 @@ import typings.reactNative.reactNativeStrings
           showsVerticalScrollIndicator = false
         )(
           AntdList(renderHeader = Text("List header"): ReactElement)(
-            ListItem(arrow = antdStrings.horizontal, onPress = () => updateIsModalVisible(true))(
+            ListItem(arrow = antdStrings.horizontal, onPress = e => updateIsModalVisible(true))(
               "Open modal"
             ),
-            ListItem(arrow = antdStrings.horizontal, onPress = () => Toast.success("Successful!"))(
+            ListItem(arrow = antdStrings.horizontal, onPress = e => Toast.success("Successful!"))(
               "Launch success toast"
             )
           ),

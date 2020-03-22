@@ -25,7 +25,7 @@ import scala.scalajs.js.|
 
     val menus = RoutePath.allOrdered.indices.map(index =>
       ListItem(
-        onPress = () => {
+        onPress = e => {
           updateRedirPath(RoutePath.allOrdered(index).path)
           ref.asInstanceOf[DrawerLayout].closeDrawer()
         }
@@ -41,7 +41,7 @@ import scala.scalajs.js.|
           AntdList(renderHeader = WhiteSpace(size = antdStrings.xl): ReactElement)(
             ListItem(
               extra = Icon(name = "menu"),
-              onPress = () => ref.asInstanceOf[DrawerLayout].openDrawer()
+              onPress = e => ref.asInstanceOf[DrawerLayout].openDrawer()
             )("React Native demo")
           ),
           Route(RouteProps(path = RoutePath.HOME.path, render = props => Home(redirPath, props.`match`), exact = true)),

@@ -20,4 +20,8 @@ import scala.scalajs.js
   val component = FunctionalComponent[Props] { props =>
     Text(style = Styles.topicStyle)("Topic: " + props.`match`.params.topicId)
   }
+
+  val component2 = FunctionalComponent[Unit] { _ =>
+    Text(style = Styles.topicStyle)("Topic: ")
+  }
 }

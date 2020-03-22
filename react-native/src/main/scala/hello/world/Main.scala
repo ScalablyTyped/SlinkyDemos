@@ -3,7 +3,7 @@ package hello.world
 import slinky.core.ReactComponentClass
 import slinky.hot
 
-import scala.scalajs.LinkingInfo
+import scala.scalajs.{LinkingInfo, js}
 import scala.scalajs.js.annotation.JSExportTopLevel
 
 object Main {

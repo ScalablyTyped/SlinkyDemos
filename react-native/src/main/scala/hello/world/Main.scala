@@ -12,5 +12,5 @@ object Main {
   }
 
   @JSExportTopLevel("app")
-  val app: ReactComponentClass[_] = LoadFonts
+  val app: ReactComponentClass[_] = LoadFonts.component
 }

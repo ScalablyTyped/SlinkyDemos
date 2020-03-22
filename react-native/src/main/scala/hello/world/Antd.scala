@@ -35,7 +35,11 @@ import typings.reactNative.reactNativeStrings
           showsVerticalScrollIndicator = false
         )(
           AntdList(renderHeader = Text("List header"): ReactElement)(
-            ListItem(arrow = antdStrings.horizontal, onPress = e => updateIsModalVisible(true))(
+            ListItem(
+              disabled = true, // todo: modal is current broken?
+              arrow = antdStrings.horizontal,
+              onPress = e => updateIsModalVisible(true)
+            )(
               "Open modal"
             ),
             ListItem(arrow = antdStrings.horizontal, onPress = e => Toast.success("Successful!"))(
@@ -76,8 +80,8 @@ import typings.reactNative.reactNativeStrings
           title = "Basic modal",
           onClose = () => updateIsModalVisible(false),
           footer = js.Array(
-            Action("Cancel", () => updateIsModalVisible(false), ""),
-            Action("OK", () => updateIsModalVisible(false), "")
+            Action("Cancel", () => updateIsModalVisible(false)),
+            Action("OK", () => updateIsModalVisible(false))
           )
         )(Text("Some contents..."))
       )

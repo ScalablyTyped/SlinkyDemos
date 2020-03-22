@@ -1,13 +1,13 @@
 package hello.world
 
 import org.scalablytyped.runtime.TopLevel
-import slinky.core.Component
+import slinky.core.FunctionalComponent
 import slinky.core.annotations.react
-import slinky.core.facade.ReactElement
 import slinky.native.Text
 import typings.expo.components.AppLoading
 import typings.expoFont.fontTypesMod.FontSource
 import typings.expoFont.{mod => Font}
+import typings.react.mod.{useEffect, useState}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js
@@ -23,25 +23,28 @@ object AntdIconOutline extends TopLevel[FontSource]
 object AntdIconFill extends TopLevel[FontSource]
 
 @react
-class LoadFonts extends Component {
+object LoadFonts  {
   type Props = Unit
   case class State(result: Option[Either[String, Unit]])
+  val initialState = State(None)
 
-  override def initialState = State(None)
+  val component = FunctionalComponent[Unit] {
+    case () =>
+      val js.Tuple2(state, setState) = useState[State](State(None))
+      useEffect(() => {
+        js.Promise
+          .all(js.Array(Font.loadAsync("antoutline", AntdIconOutline), Font.loadAsync("antfill", AntdIconFill)))
+          .toFuture
+          .onComplete {
+            case Failure(exception) => setState(State(Some(Left(exception.toString))))
+            case Success(_)         => setState(State(Some(Right(()))))
+          }
+      })
 
-  override def componentWillMount: Unit =
-    js.Promise
-      .all(js.Array(Font.loadAsync("antoutline", AntdIconOutline), Font.loadAsync("antfill", AntdIconFill)))
-      .toFuture
-      .onComplete {
-        case Failure(exception) => setState(State(Some(Left(exception.toString))))
-        case Success(_)         => setState(State(Some(Right(()))))
+      state.result match {
+        case Some(Right(_))    => App()
+        case Some(Left(value)) => Text()(s"Could not load fonts: $value")
+        case None              => AppLoading.AnonAutoHideSplash()
       }
-
-  override def render: ReactElement =
-    state.result match {
-      case Some(Right(_))    => App()
-      case Some(Left(value)) => Text()(s"Could not load fonts: $value")
-      case None              => AppLoading.AnonAutoHideSplash()
-    }
+  }
 }

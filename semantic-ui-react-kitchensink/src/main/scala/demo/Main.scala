@@ -7,7 +7,6 @@ import scala.scalajs.js
 import scala.scalajs.js.annotation.JSImport
 
 object Main {
-  def main(args: Array[String]): Unit = {
+  def main(args: Array[String]): Unit =
     ReactDOM.render(App.component(()), dom.document.getElementById("container"))
-  }
 }

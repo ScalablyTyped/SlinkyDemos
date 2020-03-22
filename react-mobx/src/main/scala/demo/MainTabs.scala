@@ -31,7 +31,7 @@ object MainTabs {
             backgroundColor = theme.palette.flatMap(_.canvasColor).asInstanceOf[js.UndefOr[BackgroundColorProperty]]
             width = 800
             height = 800
-           }
+          }
         )(
           Mui.Tabs(
             Mui.Tab(label = "Github search")(GithubSearch(githubStore)),

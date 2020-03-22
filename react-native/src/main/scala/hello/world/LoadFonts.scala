@@ -23,7 +23,7 @@ object AntdIconOutline extends TopLevel[FontSource]
 object AntdIconFill extends TopLevel[FontSource]
 
 @react
-object LoadFonts  {
+object LoadFonts {
   type Props = Unit
   case class State(result: Option[Either[String, Unit]])
   val initialState = State(None)
@@ -31,7 +31,7 @@ object LoadFonts  {
   val component = FunctionalComponent[Unit] {
     case () =>
       val js.Tuple2(state, setState) = useState[State](State(None))
-      useEffect(() => {
+      useEffect { () =>
         js.Promise
           .all(js.Array(Font.loadAsync("antoutline", AntdIconOutline), Font.loadAsync("antfill", AntdIconFill)))
           .toFuture
@@ -39,7 +39,7 @@ object LoadFonts  {
             case Failure(exception) => setState(State(Some(Left(exception.toString))))
             case Success(_)         => setState(State(Some(Right(()))))
           }
-      })
+      }
 
       state.result match {
         case Some(Right(_))    => App()

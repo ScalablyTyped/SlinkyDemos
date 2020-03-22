@@ -11,7 +11,6 @@ import typings.antd.iconMod.ThemeType
 import typings.antd.notificationMod.{ArgsProps, default => Notification}
 import typings.antd.tableInterfaceMod.ColumnProps
 
-import scala.language.implicitConversions
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSImport
 
@@ -23,37 +22,36 @@ object CSS extends js.Any
   type Props = Unit
 
   private val css = CSS
-  @inline implicit def tocolApplied(pair: AttrPair[_span_attr.type]) = pair.asInstanceOf[AttrPair[div.tag.type]]
 
   val component = FunctionalComponent[Props] { _ =>
     val (isModalVisible, updateIsModalVisible) = Hooks.useState(false)
     val (selectValue, updateSelectValue) = Hooks.useState("lucy")
 
     val renderIntro = Row(
-      Col(span := 7),
-      Col(span := 10)(
+      Col(span = 7),
+      Col(span = 10)(
         header(className := "App-header")(h1(className := "App-title")("Welcome to React (with Scala.js!)")),
         p(className := "App-intro")("To get started, edit ", code("App.scala"), " and save to reload.")
       ),
-      Col(span := 7)
+      Col(span = 7)
     )
 
     def renderGrid = section(
       h2("Grid"),
       Row(
-        Col(span := 12)(div(className := "block blue1")("col-12")),
-        Col(span := 12)(div(className := "block blue2")("col-12"))
+        Col(span = 12)(div(className := "block blue1")("col-12")),
+        Col(span = 12)(div(className := "block blue2")("col-12"))
       ),
       Row(
-        Col(span := 8)(div(className := "block blue1")("col-8")),
-        Col(span := 8)(div(className := "block blue2")("col-8")),
-        Col(span := 8)(div(className := "block blue1")("col-8"))
+        Col(span = 8)(div(className := "block blue1")("col-8")),
+        Col(span = 8)(div(className := "block blue2")("col-8")),
+        Col(span = 8)(div(className := "block blue1")("col-8"))
       ),
       Row(
-        Col(span := 6)(div(className := "block blue1")("col-6")),
-        Col(span := 6)(div(className := "block blue2")("col-6")),
-        Col(span := 6)(div(className := "block blue1")("col-6")),
-        Col(span := 6)(div(className := "block blue2")("col-6"))
+        Col(span = 6)(div(className := "block blue1")("col-6")),
+        Col(span = 6)(div(className := "block blue2")("col-6")),
+        Col(span = 6)(div(className := "block blue1")("col-6")),
+        Col(span = 6)(div(className := "block blue2")("col-6"))
       )
     )
 
@@ -186,8 +184,8 @@ object CSS extends js.Any
     div(className := "App")(
       renderIntro,
       Row(
-        Col(span := 2),
-        Col(span := 20)(
+        Col(span = 2),
+        Col(span = 20)(
           renderGrid,
           renderTag,
           renderTable,
@@ -203,7 +201,7 @@ object CSS extends js.Any
           renderCoordinated,
           renderNotification
         ),
-        Col(span := 2)
+        Col(span = 2)
       )
     )
   }

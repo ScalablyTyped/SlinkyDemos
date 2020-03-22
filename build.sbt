@@ -51,7 +51,7 @@ lazy val baseSettings: Project => Project =
       _.withSourceMap(false)
         .withModuleKind(ModuleKind.CommonJSModule)),
       /* for slinky */
-      libraryDependencies ++= Seq("me.shadaj" %%% "slinky-hot" % "0.6.4"),
+      libraryDependencies ++= Seq("me.shadaj" %%% "slinky-hot" % "0.6.4+2-3c8aef65"),
       scalacOptions += "-Ymacro-annotations"
     )
 

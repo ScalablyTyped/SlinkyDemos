@@ -1,12 +1,12 @@
 package hello.world
 
 import org.scalablytyped.runtime.{StringDictionary, TopLevel}
+import slinky.core.facade.Hooks.{useEffect, useState}
 import slinky.core.FunctionalComponent
 import slinky.native.Text
 import typings.expo.components.AppLoading
 import typings.expoFont.fontTypesMod.FontSource
 import typings.expoFont.{mod => Font}
-import typings.react.mod.{useEffect, useState}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js
@@ -32,7 +32,6 @@ object LoadFonts {
 
   sealed trait State
   object State {
-    case object Initial extends State
     case object Loading extends State
     case class Error(msg: String) extends State
     case object Success extends State
@@ -40,27 +39,24 @@ object LoadFonts {
 
   val component = FunctionalComponent[Unit] {
     case () =>
-      val js.Tuple2(state, setState) = useState[State](State.Initial)
+      val (state, setState) = useState(State.Loading: State)
 
-      useEffect { () =>
-        if (state == State.Initial) {
-          setState(State.Loading)
-          Font
-            .loadAsync(Fonts.All)
-            .toFuture
-            .onComplete {
-              case Failure(exception) =>
-                setState(State.Error(exception.toString))
-              case Success(_) =>
-                setState(State.Success)
-            }
-        }
-      }
+      useEffect(() =>
+        Font
+          .loadAsync(Fonts.All)
+          .toFuture
+          .onComplete {
+            case Failure(exception) => setState(State.Error(exception.getMessage))
+            case Success(_) =>         setState(State.Success)
+          }
+        ,
+        Seq()
+      )
 
       state match {
-        case State.Initial | State.Loading => AppLoading.AnonAutoHideSplash()
-        case State.Error(msg)              => Text()(s"Could not load fonts: $msg")
-        case State.Success                 => App()
+        case State.Loading    => AppLoading.AnonAutoHideSplash()
+        case State.Error(msg) => Text()(s"Could not load fonts: $msg")
+        case State.Success    => App()
       }
   }
 }

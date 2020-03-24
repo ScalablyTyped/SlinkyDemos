@@ -1,8 +1,7 @@
 package hello.world
 
-import org.scalablytyped.runtime.TopLevel
+import org.scalablytyped.runtime.{StringDictionary, TopLevel}
 import slinky.core.FunctionalComponent
-import slinky.core.annotations.react
 import slinky.native.Text
 import typings.expo.components.AppLoading
 import typings.expoFont.fontTypesMod.FontSource
@@ -14,37 +13,53 @@ import scala.scalajs.js
 import scala.scalajs.js.annotation.JSImport
 import scala.util.{Failure, Success}
 
-@JSImport("../../node_modules/@ant-design/icons-react-native/fonts/antoutline.ttf", JSImport.Namespace)
-@js.native
-object AntdIconOutline extends TopLevel[FontSource]
-
-@JSImport("../../node_modules/@ant-design/icons-react-native/fonts/antfill.ttf", JSImport.Namespace)
-@js.native
-object AntdIconFill extends TopLevel[FontSource]
-
-@react
 object LoadFonts {
-  type Props = Unit
-  case class State(result: Option[Either[String, Unit]])
-  val initialState = State(None)
+  object Fonts {
+    @JSImport("../../node_modules/@ant-design/icons-react-native/fonts/antoutline.ttf", JSImport.Namespace)
+    @js.native
+    object AntdIconOutline extends TopLevel[FontSource]
+
+    @JSImport("../../node_modules/@ant-design/icons-react-native/fonts/antfill.ttf", JSImport.Namespace)
+    @js.native
+    object AntdIconFill extends TopLevel[FontSource]
+
+    val All: StringDictionary[FontSource] = StringDictionary(
+      "antoutline" -> AntdIconOutline,
+      "antfill" -> AntdIconFill
+    )
+  }
+
+  sealed trait State
+  object State {
+    case object Initial extends State
+    case object Loading extends State
+    case class Error(msg: String) extends State
+    case object Success extends State
+  }
 
   val component = FunctionalComponent[Unit] {
     case () =>
-      val js.Tuple2(state, setState) = useState[State](State(None))
+      val js.Tuple2(state, setState) = useState[State](State.Initial)
+
       useEffect { () =>
-        js.Promise
-          .all(js.Array(Font.loadAsync("antoutline", AntdIconOutline), Font.loadAsync("antfill", AntdIconFill)))
-          .toFuture
-          .onComplete {
-            case Failure(exception) => setState(State(Some(Left(exception.toString))))
-            case Success(_)         => setState(State(Some(Right(()))))
-          }
+        if (state == State.Initial) {
+          setState(State.Loading)
+          Font
+            .loadAsync(Fonts.All)
+            .toFuture
+            .onComplete {
+              case Failure(exception) =>
+                setState(State.Error(exception.toString))
+              case Success(_) =>
+                setState(State.Success)
+            }
+        }
       }
 
-      state.result match {
-        case Some(Right(_))    => App()
-        case Some(Left(value)) => Text()(s"Could not load fonts: $value")
-        case None              => AppLoading.AnonAutoHideSplash()
+      state match {
+        case State.Initial | State.Loading => AppLoading.AnonAutoHideSplash()
+        case State.Error(msg)              => Text()(s"Could not load fonts: $msg")
+        case State.Success                 => App()
       }
   }
 }

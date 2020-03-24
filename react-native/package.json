@@ -15,14 +15,14 @@
     "@types/react-router-native": "^5.1.0",
     "expo": "^36.0.2",
     "expo-font": "8.0.0",
-    "react": "16.13.1",
-    "react-dom": "16.13.1",
+    "react": "16.8.3",
     "react-native": "https://github.com/expo/react-native/archive/sdk-34.0.0.tar.gz",
     "react-proxy": "1.1.8",
     "react-router-native": "5.1.2",
     "typescript": "3.8"
   },
   "devDependencies": {
+    "@babel/core": "^7.9.0",
     "babel-preset-expo": "^8.0.0"
   },
   "private": true

@@ -13,6 +13,7 @@ import scala.scalajs.js
 import scala.scalajs.js.annotation.JSImport
 import scala.util.{Failure, Success}
 
+/* we must load these fonts manually to use antd design */
 object LoadFonts {
   object Fonts {
     @JSImport("../../node_modules/@ant-design/icons-react-native/fonts/antoutline.ttf", JSImport.Namespace)

@@ -14,19 +14,16 @@ import typings.antDesignReactNative.mod.Toast
 import typings.antDesignIconsReactNative.components.{IconFill, IconOutline}
 import typings.antDesignReactNative.modalPropsTypeMod.Action
 import typings.reactNative.mod.ViewStyle
-import typings.reactRouter.mod.`match`
 import typings.reactNative.reactNativeStrings
 
-@react object Antd extends Redirectable {
+@react object Antd {
 
-  case class Props(redirPath: String, `match`: `match`[_])
+  type Props = Unit
 
-  val component = FunctionalComponent[Props] { props =>
-    val (isModalVisible, updateIsModalVisible) = useState(false)
+  val component = FunctionalComponent[Props] {
+    case () =>
+      val (isModalVisible, updateIsModalVisible) = useState(false)
 
-    checkRedirection(
-      props.redirPath,
-      props.`match`.path,
       View(
         Text(style = Styles.title)("Antd components"): ReactElement,
         ScrollView(
@@ -36,7 +33,6 @@ import typings.reactNative.reactNativeStrings
         )(
           AntdList(renderHeader = Text("List header"): ReactElement)(
             ListItem(
-              disabled = true, // todo: modal is current broken?
               arrow = antdStrings.horizontal,
               onPress = e => updateIsModalVisible(true)
             )(
@@ -85,6 +81,5 @@ import typings.reactNative.reactNativeStrings
           )
         )(Text("Some contents..."))
       )
-    )
   }
 }

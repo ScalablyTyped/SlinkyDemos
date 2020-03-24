@@ -8,19 +8,15 @@ import slinky.native.{Text, View}
 import typings.reactRouterNative.components._
 import typings.reactRouter.mod._
 
-@react object ReactRouter extends Redirectable {
+@react object ReactRouter {
 
-  case class Props(redirPath: String, `match`: `match`[_])
+  case class Props(`match`: `match`[_])
 
-  val component = FunctionalComponent[Props] { props =>
-    def link(title: String, path: String): ReactElement =
-      Link(to = props.`match`.url + path, style = Styles.subNavItemStyle)(
-        Text(style = Styles.topicStyle)(title)
-      )
+  val component = FunctionalComponent[Props] {
+    case Props(m) =>
+      def link(title: String, path: String): ReactElement =
+        Link(to = m.url + path, style = Styles.subNavItemStyle)(Text(style = Styles.topicStyle)(title))
 
-    checkRedirection(
-      props.redirPath,
-      props.`match`.path,
       View(
         Text(style = Styles.title)("React Router demo": ReactElement),
         Text(style = Styles.headerStyle)("Topics"),
@@ -31,12 +27,11 @@ import typings.reactRouter.mod._
         ),
         Route(
           RouteProps(
-            path = props.`match`.path + "/:topicId",
+            path = m.path + "/:topicId",
             render = props => Topic(props.`match`.asInstanceOf[`match`[Topic.Param]])
           )
         ),
-        Route(RouteProps(path = props.`match`.path, render = _ => Text("Please select a topic"), exact = true))
+        Route(RouteProps(path = m.path, render = _ => Text("Please select a topic"), exact = true))
       )
-    )
   }
 }

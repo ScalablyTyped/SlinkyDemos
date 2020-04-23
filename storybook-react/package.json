@@ -4,16 +4,18 @@
     "dist": "build-storybook -c .storybook-dist -o ../docs/storybook-react"
   },
   "dependencies": {
-    "@babel/core": "7.1.0",
-    "@storybook/react": "5.2.8",
-    "@types/node": "12.12.14",
-    "@types/react": "16.9.16",
-    "babel-loader": "^8.0.5",
+    "@babel/core": "7.9.0",
+    "@storybook/react": "5.3.18",
+    "@types/node": "13.13.2",
+    "@types/react": "16.9.34",
+    "babel-loader": "^8.1.0",
     "es6-shim": "^0.35.5",
-    "react": "16.8",
-    "react-dom": "16.8",
+    "react": "16.13.1",
+    "react-dom": "16.13.1",
     "source-map-loader": "^0.2.4",
-    "typescript": "3.8",
-    "webpack": "4.29.6"
+    "typescript": "3.8"
+  },
+  "devDependencies": {
+    "webpack": "4.43.0"
   }
 }

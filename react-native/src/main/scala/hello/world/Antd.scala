@@ -1,20 +1,20 @@
 package hello.world
 
-import org.scalablytyped.runtime.StringDictionary
 import slinky.core.FunctionalComponent
 import slinky.core.annotations.react
-import slinky.core.facade.ReactElement
 import slinky.core.facade.Hooks.useState
+import slinky.core.facade.ReactElement
 import slinky.native.ScrollView
-
-import scala.scalajs.js
-import typings.antDesignReactNative.components.{List => AntdList, _}
-import typings.antDesignReactNative.{antDesignReactNativeStrings => antdStrings}
-import typings.antDesignReactNative.mod.Toast
+import typings.antDesignIconsReactNative.antDesignIconsReactNativeStrings.{flag, gift}
 import typings.antDesignIconsReactNative.components.{IconFill, IconOutline}
+import typings.antDesignReactNative.components.{List => AntdList, _}
+import typings.antDesignReactNative.mod.Toast
 import typings.antDesignReactNative.modalPropsTypeMod.Action
+import typings.antDesignReactNative.{antDesignReactNativeStrings => antdStrings}
 import typings.reactNative.mod.ViewStyle
 import typings.reactNative.reactNativeStrings
+
+import scala.scalajs.js
 
 @react object Antd {
 
@@ -63,8 +63,8 @@ import typings.reactNative.reactNativeStrings
               Button(onPress = _ => Toast.fail("Failure!"), `type` = antdStrings.primary)("Launch fail toast")
             ),
             WhiteSpace(size = antdStrings.xl),
-            IconFill(name = "flag", _overrides = StringDictionary("size" -> 40)),
-            IconOutline(name = "gift", _overrides = StringDictionary("size" -> 80)),
+            IconFill(name = flag, size = 40),
+            IconOutline(name = gift, size = 80),
             Icon(name = "experiment", size = antdStrings.lg, color = "#A82")
           )
         ),

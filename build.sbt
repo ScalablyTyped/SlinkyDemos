@@ -44,31 +44,23 @@ lazy val baseSettings: Project => Project =
   _.enablePlugins(ScalaJSPlugin)
     .settings(
       version := "0.1-SNAPSHOT",
-      scalaVersion := "2.13.1",
+      scalaVersion := "2.13.2",
       scalacOptions ++= ScalacOptions.flags,
       scalaJSUseMainModuleInitializer := true,
       scalaJSLinkerConfig ~= (/* disabled because it somehow triggers many warnings */
       _.withSourceMap(false)
         .withModuleKind(ModuleKind.CommonJSModule)),
       /* for slinky */
-      libraryDependencies ++= Seq("me.shadaj" %%% "slinky-hot" % "0.6.4+2-3c8aef65"),
+      libraryDependencies ++= Seq("me.shadaj" %%% "slinky-hot" % "0.6.5"),
       scalacOptions += "-Ymacro-annotations"
-    )
-
-lazy val bundlerSettings: Project => Project =
-  _.enablePlugins(ScalablyTypedConverterPlugin)
-    .settings(
-      Compile / fastOptJS / webpackExtraArgs += "--mode=development",
-      Compile / fullOptJS / webpackExtraArgs += "--mode=production",
-      Compile / fastOptJS / webpackDevServerExtraArgs += "--mode=development",
-      Compile / fullOptJS / webpackDevServerExtraArgs += "--mode=production",
-      useYarn := true
     )
 
 lazy val `react-mobx` =
   project
-    .configure(baseSettings, bundlerSettings, browserProject, reactNpmDeps)
+    .enablePlugins(ScalablyTypedConverterPlugin)
+    .configure(baseSettings, browserProject, reactNpmDeps, bundlerSettings)
     .settings(
+      useYarn := true,
       webpackDevServerPort := 8001,
       stFlavour := Flavour.Slinky,
       stEnableScalaJsDefined := Selection.All,
@@ -76,16 +68,18 @@ lazy val `react-mobx` =
       Compile / npmDependencies ++= Seq(
         "axios" -> "0.19.0",
         "material-ui" -> "0.20.1",
-        "mobx" -> "5.15.0",
-        "mobx-react" -> "6.1.4",
+        "mobx" -> "5.15.4",
+        "mobx-react" -> "6.2.2",
         "@types/material-ui" -> "0.21.7"
       )
     )
 
 lazy val `react-slick` =
   project
-    .configure(baseSettings, bundlerSettings, browserProject, reactNpmDeps)
+    .enablePlugins(ScalablyTypedConverterPlugin)
+    .configure(baseSettings, browserProject, reactNpmDeps, bundlerSettings)
     .settings(
+      useYarn := true,
       webpackDevServerPort := 8002,
       stFlavour := Flavour.Slinky,
       Compile / npmDependencies ++= Seq(
@@ -96,26 +90,29 @@ lazy val `react-slick` =
 
 lazy val `react-big-calendar` =
   project
-    .configure(baseSettings, bundlerSettings, browserProject, withCssLoading, reactNpmDeps)
+    .enablePlugins(ScalablyTypedConverterPlugin)
+    .configure(baseSettings, browserProject, withCssLoading, reactNpmDeps, bundlerSettings)
     .settings(
+      useYarn := true,
       webpackDevServerPort := 8003,
       stFlavour := Flavour.Slinky,
       Compile / npmDependencies ++= Seq(
-        "moment" -> "2.23.0",
-        "react-big-calendar" -> "0.22",
-        "@types/react-big-calendar" -> "0.22.3"
+        "moment" -> "2.24.0",
+        "react-big-calendar" -> "0.24.4",
+        "@types/react-big-calendar" -> "0.24.0"
       )
     )
 
 lazy val `semantic-ui-react-kitchensink` = project
   .enablePlugins(ScalablyTypedConverterPlugin)
-  .configure(baseSettings, bundlerSettings, browserProject, reactNpmDeps)
+  .configure(baseSettings, browserProject, reactNpmDeps, bundlerSettings)
   .settings(
+    useYarn := true,
     webpackDevServerPort := 8004,
     stFlavour := Flavour.Slinky,
     stEnableScalaJsDefined := Selection.All,
     Compile / npmDependencies ++= Seq(
-      "semantic-ui-react" -> "0.88.1"
+      "semantic-ui-react" -> "0.88.2"
     )
   )
 
@@ -135,7 +132,7 @@ lazy val `storybook-react` = project
     /** This is not suitable for development, but effective for demo.
       * Run `yarn storybook` commands yourself, and run `~storybook-react/fastOptJS` from sbt
       */
-    run := {
+    start := {
       (Compile / fastOptJS).value
       Process("yarn storybook", baseDirectory.value).!
     },
@@ -149,59 +146,67 @@ lazy val `storybook-react` = project
 
 lazy val antd =
   project
-    .configure(baseSettings, bundlerSettings, browserProject, withCssLoading, reactNpmDeps)
+    .enablePlugins(ScalablyTypedConverterPlugin)
+    .configure(baseSettings, browserProject, withCssLoading, reactNpmDeps, bundlerSettings)
     .settings(
+      useYarn := true,
       webpackDevServerPort := 8006,
       stFlavour := Flavour.Slinky,
-      Compile / npmDependencies ++= Seq("antd" -> "3.26.0")
+      Compile / npmDependencies ++= Seq("antd" -> "3.26.0") // todo: bump to 4
     )
 
 lazy val `react-router-dom` =
   project
-    .configure(baseSettings, bundlerSettings, browserProject, reactNpmDeps)
+    .enablePlugins(ScalablyTypedConverterPlugin)
+    .configure(baseSettings, browserProject, reactNpmDeps, bundlerSettings)
     .settings(
+      useYarn := true,
       webpackDevServerPort := 8007,
       stFlavour := Flavour.Slinky,
       Compile / npmDependencies ++= Seq(
         "react-router-dom" -> "5.1.2",
-        "@types/react-router-dom" -> "5.1.2"
+        "@types/react-router-dom" -> "5.1.2" // note 5.1.4 did weird things to the Link component
       )
     )
 
 lazy val `material-ui` =
   project
-    .configure(baseSettings, bundlerSettings, browserProject, reactNpmDeps)
+    .enablePlugins(ScalablyTypedConverterPlugin)
+    .configure(baseSettings, browserProject, reactNpmDeps, bundlerSettings)
     .settings(
+      useYarn := true,
       webpackDevServerPort := 8008,
       stFlavour := Flavour.Slinky,
       stEnableScalaJsDefined := Selection.AllExcept("@material-ui/core"),
       stIgnore ++= List("@material-ui/icons"),
       Compile / npmDependencies ++= Seq(
-        "@material-ui/core" -> "3.9.3"
+        "@material-ui/core" -> "3.9.3" // note: version 4 is not supported yet
       )
     )
 
 lazy val `react-leaflet` = project
   .enablePlugins(ScalablyTypedConverterPlugin)
-  .configure(baseSettings, bundlerSettings, browserProject, reactNpmDeps, withCssLoading)
+  .configure(baseSettings, browserProject, reactNpmDeps, withCssLoading, bundlerSettings)
   .settings(
+    useYarn := true,
     webpackDevServerPort := 8009,
     stFlavour := Flavour.Slinky,
     Compile / npmDependencies ++= Seq(
-      "react-leaflet" -> "2.5",
-      "@types/react-leaflet" -> "2.5",
-      "leaflet" -> "1.5"
+      "react-leaflet" -> "2.6.3",
+      "@types/react-leaflet" -> "2.5.1",
+      "leaflet" -> "1.6.0"
     )
   )
 
 lazy val `office-ui-fabric-react` = project
   .enablePlugins(ScalablyTypedConverterPlugin)
-  .configure(baseSettings, bundlerSettings, browserProject, reactNpmDeps)
+  .configure(baseSettings, browserProject, reactNpmDeps, bundlerSettings)
   .settings(
+    useYarn := true,
     webpackDevServerPort := 8010,
     stFlavour := Flavour.Slinky,
     Compile / npmDependencies ++= Seq(
-      "office-ui-fabric-react" -> "7.98.1"
+      "office-ui-fabric-react" -> "7.107.1"
     )
   )
 
@@ -229,10 +234,19 @@ lazy val `react-native` = project
 lazy val reactNpmDeps: Project => Project =
   _.settings(
     Compile / npmDependencies ++= Seq(
-      "react" -> "16.13",
-      "react-dom" -> "16.13",
-      "@types/react" -> "16.9.23"
+      "react" -> "16.13.1",
+      "react-dom" -> "16.13.1",
+      "@types/react" -> "16.9.34",
+      "@types/react-dom" -> "16.9.6"
     )
+  )
+
+lazy val bundlerSettings: Project => Project =
+  _.settings(
+    Compile / fastOptJS / webpackExtraArgs += "--mode=development",
+    Compile / fullOptJS / webpackExtraArgs += "--mode=production",
+    Compile / fastOptJS / webpackDevServerExtraArgs += "--mode=development",
+    Compile / fullOptJS / webpackDevServerExtraArgs += "--mode=production",
   )
 
 lazy val withCssLoading: Project => Project =
@@ -256,9 +270,6 @@ lazy val browserProject: Project => Project =
   _.settings(
     start := {
       (Compile / fastOptJS / startWebpackDevServer).value
-      val indexFrom = baseDirectory.value / "assets/index.html"
-      val indexTo = (Compile / fastOptJS / crossTarget).value / "index.html"
-      Files.copy(indexFrom.toPath, indexTo.toPath, REPLACE_EXISTING)
     },
     dist := {
       val artifacts = (Compile / fullOptJS / webpack).value
@@ -275,7 +286,7 @@ lazy val browserProject: Project => Project =
         Files.copy(artifact.data.toPath, target.toPath, REPLACE_EXISTING)
       }
 
-      val indexFrom = baseDirectory.value / "assets/index.html"
+      val indexFrom = baseDirectory.value / "src/main/js/index.html"
       val indexTo = distFolder / "index.html"
 
       val indexPatchedContent = {

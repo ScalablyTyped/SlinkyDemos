@@ -54,7 +54,7 @@ object LoadFonts {
       )
 
       state match {
-        case State.Loading    => AppLoading.AnonAutoHideSplash()
+        case State.Loading    => AppLoading.AutoHideSplash()
         case State.Error(msg) => Text()(s"Could not load fonts: $msg")
         case State.Success    => App()
       }

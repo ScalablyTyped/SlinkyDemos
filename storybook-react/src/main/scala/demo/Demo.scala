@@ -4,7 +4,7 @@ import org.scalajs.dom.window.alert
 import slinky.core.AttrPair
 import slinky.web.html._
 import typings.storybookReact.mod.storiesOf
-import typings.node.module
+import typings.node.global.module
 
 object Demo {
   def main(args: Array[String]): Unit =

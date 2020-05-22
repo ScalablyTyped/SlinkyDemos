@@ -5,7 +5,7 @@ import slinky.core.annotations.react
 import slinky.core.facade.Hooks.useState
 import slinky.core.facade.ReactElement
 import slinky.native.ScrollView
-import typings.antDesignReactNative.PartialLocale
+import typings.antDesignReactNative.anon.PartialLocale
 import typings.antDesignReactNative.antDesignReactNativeStrings.xl
 import typings.antDesignReactNative.components.{List => AntdList, _}
 import typings.bang88ReactNativeDrawerLayout.mod.DrawerLayout

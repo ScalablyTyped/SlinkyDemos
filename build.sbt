@@ -11,16 +11,11 @@ Global / onLoad := {
       |*
       |* For documentation see https://scalablytyped.org .
       |*
-      |* Note that the first time you import/compile the projects it'll take a while for the dependencies to build
+      |* Note that the first time you import/compile the projects it'll take a while for the dependencies to build.
+      |*
+      |* If you import this the first time in a memory-constrained context like an IDE import, it'll take MUCH longer.
       |*""".stripMargin)
   (Global / onLoad).value
-}
-
-// both intellij and ci needs this to not OOM during initial import since we have so many projects
-Global / concurrentRestrictions ++= {
-  val gigabytes = (java.lang.Runtime.getRuntime.maxMemory) / (1000 * 1000 * 1000)
-  val numParallel = Math.max(1, gigabytes.toInt)
-  List(Tags.limit(ScalablyTypedTag, numParallel))
 }
 
 // Uncomment if you want to remove debug output
@@ -63,7 +58,7 @@ lazy val `react-mobx` =
       useYarn := true,
       webpackDevServerPort := 8001,
       stFlavour := Flavour.Slinky,
-      stEnableScalaJsDefined := Selection.All,
+      stExperimentalEnableImplicitOps := true,
       stIgnore ++= List("material-ui/svg-icons"),
       Compile / npmDependencies ++= Seq(
         "axios" -> "0.19.0",
@@ -82,6 +77,7 @@ lazy val `react-slick` =
       useYarn := true,
       webpackDevServerPort := 8002,
       stFlavour := Flavour.Slinky,
+      stExperimentalEnableImplicitOps := true,
       Compile / npmDependencies ++= Seq(
         "react-slick" -> "0.23",
         "@types/react-slick" -> "0.23.4"
@@ -96,6 +92,7 @@ lazy val `react-big-calendar` =
       useYarn := true,
       webpackDevServerPort := 8003,
       stFlavour := Flavour.Slinky,
+      stExperimentalEnableImplicitOps := true,
       Compile / npmDependencies ++= Seq(
         "moment" -> "2.24.0",
         "react-big-calendar" -> "0.24.4",
@@ -110,7 +107,7 @@ lazy val `semantic-ui-react-kitchensink` = project
     useYarn := true,
     webpackDevServerPort := 8004,
     stFlavour := Flavour.Slinky,
-    stEnableScalaJsDefined := Selection.All,
+    stExperimentalEnableImplicitOps := true,
     Compile / npmDependencies ++= Seq(
       "semantic-ui-react" -> "0.88.2"
     )
@@ -129,6 +126,7 @@ lazy val `storybook-react` = project
       baseDirectory.value
     },
     stFlavour := Flavour.Slinky,
+    stExperimentalEnableImplicitOps := true,
     /** This is not suitable for development, but effective for demo.
       * Run `yarn storybook` commands yourself, and run `~storybook-react/fastOptJS` from sbt
       */
@@ -151,6 +149,7 @@ lazy val antd =
     .settings(
       useYarn := true,
       webpackDevServerPort := 8006,
+      stExperimentalEnableImplicitOps := true,
       stFlavour := Flavour.Slinky,
       Compile / npmDependencies ++= Seq("antd" -> "3.26.0") // todo: bump to 4
     )
@@ -163,6 +162,7 @@ lazy val `react-router-dom` =
       useYarn := true,
       webpackDevServerPort := 8007,
       stFlavour := Flavour.Slinky,
+      stExperimentalEnableImplicitOps := true,
       Compile / npmDependencies ++= Seq(
         "react-router-dom" -> "5.1.2",
         "@types/react-router-dom" -> "5.1.2" // note 5.1.4 did weird things to the Link component
@@ -177,10 +177,11 @@ lazy val `material-ui` =
       useYarn := true,
       webpackDevServerPort := 8008,
       stFlavour := Flavour.Slinky,
-      stEnableScalaJsDefined := Selection.AllExcept("@material-ui/core"),
+      stExperimentalEnableImplicitOps := true,
       stIgnore ++= List("@material-ui/icons"),
       Compile / npmDependencies ++= Seq(
-        "@material-ui/core" -> "3.9.3" // note: version 4 is not supported yet
+        "@material-ui/core" -> "3.9.3", // note: version 4 is not supported yet
+        "@material-ui/styles" -> "3.0.0-alpha.10" // note: version 4 is not supported yet
       )
     )
 
@@ -191,6 +192,7 @@ lazy val `react-leaflet` = project
     useYarn := true,
     webpackDevServerPort := 8009,
     stFlavour := Flavour.Slinky,
+    stExperimentalEnableImplicitOps := true,
     Compile / npmDependencies ++= Seq(
       "react-leaflet" -> "2.6.3",
       "@types/react-leaflet" -> "2.5.1",
@@ -205,6 +207,7 @@ lazy val `office-ui-fabric-react` = project
     useYarn := true,
     webpackDevServerPort := 8010,
     stFlavour := Flavour.Slinky,
+    stExperimentalEnableImplicitOps := true,
     Compile / npmDependencies ++= Seq(
       "office-ui-fabric-react" -> "7.107.1"
     )
@@ -224,6 +227,7 @@ lazy val `react-native` = project
       baseDirectory.value
     },
     stFlavour := Flavour.SlinkyNative,
+    stExperimentalEnableImplicitOps := true,
     stStdlib := List("es5"),
     run := {
       (Compile / fastOptJS).value
@@ -246,7 +250,7 @@ lazy val bundlerSettings: Project => Project =
     Compile / fastOptJS / webpackExtraArgs += "--mode=development",
     Compile / fullOptJS / webpackExtraArgs += "--mode=production",
     Compile / fastOptJS / webpackDevServerExtraArgs += "--mode=development",
-    Compile / fullOptJS / webpackDevServerExtraArgs += "--mode=production",
+    Compile / fullOptJS / webpackDevServerExtraArgs += "--mode=production"
   )
 
 lazy val withCssLoading: Project => Project =

@@ -1,20 +1,27 @@
 package demo
 
+import org.scalablytyped.runtime.StringDictionary
 import org.scalajs.dom
 import slinky.core._
 import slinky.core.annotations.react
 import slinky.core.facade.Hooks
 import slinky.web.ReactDOM
 import slinky.web.html._
-import typings.materialUiCore.{components => Mui}
+import typings.csstype.mod.NamedColor
+import typings.materialUiCore.{stylesMod, components => Mui}
+import typings.std.global.window
+
+import scala.scalajs.js
 
 object Demo {
 
   def main(argv: Array[String]): Unit =
     ReactDOM.render(
       div(
-        ButtonTest("dear user")
-//        SimpleBadge.Component.props(new SimpleBadge.Props("yey"))
+        ButtonTest("dear user"),
+        SelectDemo(List("one", "two", "three")),
+        StyledButtonDemo(()),
+        StyledButtonHooksDemo(())
       ),
       dom.document.getElementById("container")
     )
@@ -28,118 +35,101 @@ object ButtonTest {
     /* use a hook to keep state */
     val (state, setState) = Hooks.useState(1)
 
-    val incrementButton = Mui.Button(onClick := (() => setState(state + 1)))(
+    val incrementButton = Mui.Button.onClick(_ => setState(state + 1))(
       s"Increment it, ${props.name}"
     )
 
     div(
-      /* a cake icon to celebrate */
-//      MuiIcons.CakeOutlined.props(MuiIcons.CakeOutlinedProps(color = MuiStrings.action)),
       /* text field controlled by the value of the state hook above*/
-      Mui.TextField.StandardTextFieldProps(value = state, disabled = true),
+      Mui.TextField.StandardTextFieldProps().value(state).disabled(true),
       incrementButton
     )
   }
 }
-//
-//// https://github.com/mui-org/material-ui/blob/master/docs/src/pages/demos/badges/SimpleBadge.js
-//object SimpleBadge {
-//  trait StyleOverrides[T] extends js.Object {
-//    val margin:  T
-//    val padding: T
-//  }
-//
-//  val styles: js.Function1[Theme, StyleOverrides[CSSProperties]] = theme =>
-//    new StyleOverrides[CSSProperties] {
-//      override val margin = new CSSProperties {
-//        margin = theme.spacing.unit * 2
-//      }
-//      override val padding = new CSSProperties {
-//        padding = s"0 ${theme.spacing.unit * 2}px"
-//      }
-//    }
-//
-//  class Props(val message: String) extends js.Object
-//
-//  val Component: FC[Props] = StyledFC[StyleOverrides, Props](styles) { props =>
-//    div.noprops(
-//      div.noprops(
-//        Mui.Badge.props(
-//          Mui.BadgeProps(
-//            children     = MuiIcons.Mail.noprops(),
-//            className    = props.classes.margin,
-//            badgeContent = 4,
-//            color        = MuiStrings.primary
-//          )
-//        ),
-//        Mui.Badge.props(
-//          Mui.BadgeProps(
-//            children     = MuiIcons.Mail.noprops(),
-//            className    = props.classes.margin,
-//            badgeContent = 10,
-//            color        = MuiStrings.secondary
-//          )
-//        ),
-//        Mui.IconButton.props(
-//          Mui.IconButtonProps(
-//            `aria-label` = s"4 pending messages",
-//            className    = props.classes.margin,
-//            children = Mui.Badge.props(
-//              Mui.BadgeProps(badgeContent = 4, color = MuiStrings.primary, children = MuiIcons.MailOutline.noprops())
-//            )
-//          )
-//        )
-//      ),
-//      Mui.AppBar.props(
-//        Mui.AppBarProps(position = MuiStrings.static, className = props.classes.margin),
-//        Mui.Tabs.props(
-//          Mui.TabsProps(value = 0),
-//          Mui.Tab.props(
-//            Mui.TabProps(
-//              label = Mui.Badge.props(
-//                Mui.BadgeProps(
-//                  children     = s"Item One, ${props.message}",
-//                  className    = props.classes.padding,
-//                  color        = MuiStrings.secondary,
-//                  badgeContent = 4
-//                )
-//              )
-//            )
-//          )
-//        )
-//      ),
-//      Mui.Badge.props(
-//        Mui.BadgeProps(
-//          children     = Mui.Typography.props(Mui.TypographyProps(className = props.classes.padding), "Typography"),
-//          color        = MuiStrings.primary,
-//          badgeContent = 4,
-//          className    = props.classes.margin
-//        )
-//      ),
-//      Mui.Badge.props(
-//        Mui.BadgeProps(
-//          children     = Mui.Button.props(Mui.ButtonProps(variant = MuiStrings.contained), "Button"),
-//          color        = MuiStrings.primary,
-//          badgeContent = 4,
-//          className    = props.classes.margin
-//        )
-//      )
-//    )
-//  }
-//}
-//
-///* A facade to define functional components making use of `withStyles` */
-//object StyledFC {
-//  import scala.language.higherKinds
-//
-//  @inline private def stylesMod = typings.atMaterialUiCore.stylesMod.asInstanceOf[js.Dynamic]
-//
-//  trait GeneratedClassNames[Styles[_] <: js.Object] extends js.Object {
-//    val classes: Styles[String]
-//  }
-//
-//  @inline def apply[Styles[_] <: js.Object, P <: js.Object](
-//      styles: Styles[CSSProperties] | js.Function1[Theme, Styles[CSSProperties]]
-//  )(f:        js.Function1[P with AnonChildren with GeneratedClassNames[Styles], ReactNode]): FC[P] =
-//    stylesMod.withStyles(styles.asInstanceOf[js.Any])(f).asInstanceOf[FC[P]]
-//}
+
+@react
+object SelectDemo {
+  case class Props(values: List[String])
+
+  val component = FunctionalComponent[Props] {
+    case Props(values) =>
+      val (chosen, setChosen) = Hooks.useState[String](values.head)
+
+      val items = values.zipWithIndex.map {
+        case (value, idx) => Mui.MenuItem.value(value).withKey(idx.toString)(value)
+      }
+      div(
+        Mui.Select
+          .value(chosen)
+          .onChange((e, _) => setChosen(e.target_ChangeEvent.value))(items),
+        Mui.TextField
+          .StandardTextFieldProps()
+          .value(chosen)
+          .disabled(true)
+      )
+  }
+}
+
+@react
+object StyledButtonDemo {
+  val component = FunctionalComponent[Unit] {
+    case () =>
+      val usingWithStyles = {
+        import typings.materialUiCore.withStylesMod.{CSSProperties, WithStylesOptions}
+
+        val styleInjector =
+          stylesMod.withStyles(
+            StringDictionary("root" -> CSSProperties().setBackgroundColor(NamedColor.blue)),
+            WithStylesOptions[String]()
+          )
+
+        Mui.Button
+          .withComponent(c => styleInjector(c))
+          .onClick(_ => window.alert("clicked"))("using withStyles")
+      }
+
+      val usingReactCss = {
+        import typings.react.mod.CSSProperties
+        Mui.Button
+          .style(CSSProperties().setBackgroundColor(NamedColor.darkred))
+          .onClick(_ => window.alert("clicked"))("direct css")
+      }
+
+      div(usingWithStyles, usingReactCss)
+  }
+}
+
+// https://v3.material-ui.com/css-in-js/basics/
+@react
+object StyledButtonHooksDemo {
+
+  import typings.materialUiStyles.makeStylesMod.StylesHook
+  import typings.materialUiStyles.mod.makeStyles
+  import typings.materialUiStyles.withStylesMod.{CSSProperties, StyleRules, Styles, WithStylesOptions}
+
+  val useStyles: StylesHook[Styles[js.Object, js.Object, String]] = {
+    val styles: StyleRules[js.Object, String] =
+      StringDictionary(
+        "root" -> CSSProperties()
+          .setBackground("linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)")
+          .setBorder(0)
+          .setBorderRadius(3)
+          .setBoxShadow("0 3px 5px 2px rgba(255, 105, 135, .3)")
+          .setColor(NamedColor.white)
+          .setHeight(48)
+          .setPadding("0 30px")
+      )
+
+    makeStyles(styles, WithStylesOptions())
+  }
+
+  val component = FunctionalComponent[Unit] {
+    case () =>
+      val classes = useStyles(js.undefined)
+      div(
+        Mui.Button
+          .className(classes("root"))
+          .onClick(_ => window.alert("clicked"))("styles module with hook")
+      )
+  }
+}

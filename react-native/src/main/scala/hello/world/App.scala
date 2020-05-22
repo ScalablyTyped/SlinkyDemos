@@ -5,7 +5,7 @@ import slinky.core.annotations.react
 import slinky.core.facade.Hooks.useState
 import slinky.core.facade.ReactElement
 import slinky.native.ScrollView
-import typings.antDesignReactNative.PartialLocale
+import typings.antDesignReactNative.anon.PartialLocale
 import typings.antDesignReactNative.antDesignReactNativeStrings.xl
 import typings.antDesignReactNative.components.{List => AntdList, _}
 import typings.bang88ReactNativeDrawerLayout.mod.DrawerLayout
@@ -46,37 +46,31 @@ import scala.scalajs.js.|
       if (redirPath != stayPath) Redirect(to = redirPath) else elem
 
     val routeLinks = RoutePath.allOrdered.zipWithIndex.map {
-      case (route, index) => ListItem(onPress = navigateTo(route))(Text(route.title)).withKey(index.toString)
+      case (route, index) => ListItem.onPress(navigateTo(route))(Text(route.title)).withKey(index.toString)
     }
 
-    Provider(locale = PartialLocale(locale = "enUS"))(
+    Provider.locale(PartialLocale().setLocale("enUS"))(
       NativeRouter(
-        Drawer(
-          drawerRef = (nullableRef => ref = toOption(nullableRef)),
-          sidebar = ScrollView(WhiteSpace(size = xl), AntdList(routeLinks))
-        )(
-          AntdList(renderHeader = WhiteSpace(size = xl): ReactElement)(
-            ListItem(extra = Icon(name = "menu"), onPress = e => ref.foreach(_.openDrawer()))("React Native demo")
-          )
+        Drawer
+          .drawerRef(nullableRef => ref = toOption(nullableRef))
+          .sidebar(ScrollView(WhiteSpace.size(xl), AntdList(routeLinks)))(
+            AntdList.renderHeaderReactElement(WhiteSpace.size(xl))(
+              ListItem.extra(Icon(name = "menu")).onPress(e => ref.foreach(_.openDrawer()))("React Native demo")
+            )
+          ),
+        Route(
+          RouteProps()
+            .setPath(RoutePath.Home.path)
+            .setRender(props => checkRedirection(props.`match`.path, Home()))
+            .setExact(true)
         ),
         Route(
-          RouteProps(
-            path = RoutePath.Home.path,
-            render = (props => checkRedirection(props.`match`.path, Home())),
-            exact = true
-          )
+          RouteProps().setPath(RoutePath.Antd.path).setRender(props => checkRedirection(props.`match`.path, Antd()))
         ),
         Route(
-          RouteProps(
-            path = RoutePath.Antd.path,
-            render = (props => checkRedirection(props.`match`.path, Antd()))
-          )
-        ),
-        Route(
-          RouteProps(
-            path = RoutePath.ReactRouter.path,
-            render = (props => checkRedirection(props.`match`.path, ReactRouter(props.`match`)))
-          )
+          RouteProps()
+            .setPath(RoutePath.ReactRouter.path)
+            .setRender(props => checkRedirection(props.`match`.path, ReactRouter(props.`match`)))
         )
       )
     )

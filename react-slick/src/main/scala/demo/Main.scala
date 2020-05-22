@@ -35,13 +35,12 @@ object Main {
           style := js.Dynamic.literal(color = "blue"),
           s"Selected image index: ${state.selectedIdx.fold("none")(_.toString)}"
         ),
-        ReactSlick(
-          onInit = () => println("slick init"),
-          dots = true,
-          autoplay = true,
-          autoplaySpeed = 1000,
-          slidesToShow = 2
-        )(images.to(Seq): _*)
+        ReactSlick
+          .onInit(() => println("slick init"))
+          .dots(true)
+          .autoplay(true)
+          .autoplaySpeed(1000)
+          .slidesToShow(2)(images.to(Seq): _*)
       )
     }
 
@@ -50,13 +49,11 @@ object Main {
       SlickTest(
         Props(
           js.Array(
-            "https://img.buzzfeed.com/buzzfeed-static/static/2014-04/enhanced/webdr07/4/16/original-16439-1396642689-17.jpg?downsize=800:*&output-format=auto&output-quality=auto",
-            "https://img.buzzfeed.com/buzzfeed-static/static/2014-04/enhanced/webdr03/4/16/enhanced-26552-1396642701-1.jpg?downsize=800:*&output-format=auto&output-quality=auto",
-            "https://img.buzzfeed.com/buzzfeed-static/static/2014-04/enhanced/webdr07/4/16/enhanced-16354-1396642706-25.jpg?downsize=800:*&output-format=auto&output-quality=auto",
-            "https://img.buzzfeed.com/buzzfeed-static/static/2014-04/enhanced/webdr04/10/12/enhanced-buzz-29081-1397145781-14.jpg?downsize=800:*&output-format=auto&output-quality=auto",
-            "https://img.buzzfeed.com/buzzfeed-static/static/2014-04/enhanced/webdr06/4/16/enhanced-11136-1396643149-13.jpg?downsize=800:*&output-format=auto&output-quality=auto",
-            "https://img.buzzfeed.com/buzzfeed-static/static/2014-04/enhanced/webdr02/9/12/enhanced-buzz-11844-1397060009-22.jpg?downsize=800:*&output-format=auto&output-quality=auto",
-            "https://img.buzzfeed.com/buzzfeed-static/static/2014-04/enhanced/webdr07/9/12/enhanced-buzz-28527-1397060122-10.jpg?downsize=800:*&output-format=auto&output-quality=auto"
+            "https://i.pinimg.com/474x/a8/30/69/a8306979f24cbf615e1cc0a635ceb384.jpg",
+            "https://i.pinimg.com/474x/b0/15/4c/b0154cfc2fe3a664ac8f679df4debf56.jpg",
+            "https://i.imgur.com/FqeTKrS.jpg",
+            "https://static.boredpanda.com/blog/wp-content/uploads/2019/11/cat-fluffy-squirrel-tail-bell-7-5dca63b7b11a8__700.jpg",
+            "https://i.chzbgr.com/full/9428254976/hD3DA6B8F/cat",
           )
         )
       ),

@@ -15,7 +15,7 @@ import typings.reactRouter.mod._
   val component = FunctionalComponent[Props] {
     case Props(m) =>
       def link(title: String, path: String): ReactElement =
-        Link(to = m.url + path, style = Styles.subNavItemStyle)(Text(style = Styles.topicStyle)(title))
+        Link(to = m.url + path).style(Styles.subNavItemStyle)(Text(style = Styles.topicStyle)(title))
 
       View(
         Text(style = Styles.title)("React Router demo": ReactElement),
@@ -26,12 +26,11 @@ import typings.reactRouter.mod._
           link("Props v. State", "/props-v-state")
         ),
         Route(
-          RouteProps(
-            path = m.path + "/:topicId",
-            render = props => Topic(props.`match`.asInstanceOf[`match`[Topic.Param]])
-          )
+          RouteProps()
+            .setPath(m.path + "/:topicId")
+            .setRender(props => Topic(props.`match`.asInstanceOf[`match`[Topic.Param]]))
         ),
-        Route(RouteProps(path = m.path, render = _ => Text("Please select a topic"), exact = true))
+        Route(RouteProps().setPath(m.path).setRender(_ => Text("Please select a topic")).setExact(true))
       )
   }
 }

@@ -32,9 +32,9 @@ import scala.scalajs.js
             li(Link[js.Object](to = "/topics")("Topics"))
           ),
           hr(),
-          Route(RouteProps(exact = true, path = "/", render = _ => home)),
-          Route(RouteProps(path = "/about", render = _ => about)),
-          Route(RouteProps(path = "/topics", render = props => Topics(props.`match`)))
+          Route(RouteProps().setExact(true).setPath("/").setRender(_ => home)),
+          Route(RouteProps().setPath("/about").setRender(_ => about)),
+          Route(RouteProps().setPath("/topics").setRender(props => Topics(props.`match`)))
         )
       )
     )
@@ -55,12 +55,11 @@ import scala.scalajs.js
       ),
       hr(),
       Route(
-        RouteProps(
-          path = m.path + "/:topicId",
-          render = props => Topic(props.`match`.asInstanceOf[`match`[Topic.Param]])
-        )
+        RouteProps()
+          .setPath(m.path + "/:topicId")
+          .setRender(props => Topic(props.`match`.asInstanceOf[`match`[Topic.Param]]))
       ),
-      Route(RouteProps(exact = true, path = m.path, render = _ => h3("Please select a topic")))
+      Route(RouteProps().setExact(true).setPath(m.path).setRender(_ => h3("Please select a topic")))
     )
   }
 }

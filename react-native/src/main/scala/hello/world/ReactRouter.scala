@@ -15,7 +15,7 @@ import typings.reactRouter.mod._
   val component = FunctionalComponent[Props] {
     case Props(m) =>
       def link(title: String, path: String): ReactElement =
-        Link(to = m.url + path, style = Styles.subNavItemStyle)(Text(style = Styles.topicStyle)(title))
+        Link(to = m.url + path).style(Styles.subNavItemStyle)(Text(style = Styles.topicStyle)(title))
 
       View(
         Text(style = Styles.title)("React Router demo": ReactElement),

@@ -46,36 +46,35 @@ import scala.scalajs.js.|
       if (redirPath != stayPath) Redirect(to = redirPath) else elem
 
     val routeLinks = RoutePath.allOrdered.zipWithIndex.map {
-      case (route, index) => ListItem(onPress = navigateTo(route))(Text(route.title)).withKey(index.toString)
+      case (route, index) => ListItem.onPress(navigateTo(route))(Text(route.title)).withKey(index.toString)
     }
 
-    Provider(locale = PartialLocale(locale = "enUS"))(
+    Provider.locale(PartialLocale(locale = "enUS"))(
       NativeRouter(
-        Drawer(
-          drawerRef = (nullableRef => ref = toOption(nullableRef)),
-          sidebar = ScrollView(WhiteSpace(size = xl), AntdList(routeLinks))
-        )(
-          AntdList(renderHeader = WhiteSpace(size = xl): ReactElement)(
-            ListItem(extra = Icon(name = "menu"), onPress = e => ref.foreach(_.openDrawer()))("React Native demo")
-          )
-        ),
+        Drawer
+          .drawerRef(nullableRef => ref = toOption(nullableRef))
+          .sidebar(ScrollView(WhiteSpace.size(xl), AntdList(routeLinks)))(
+            AntdList.renderHeader(WhiteSpace.size(xl): ReactElement)(
+              ListItem.extra(Icon(name = "menu")).onPress(e => ref.foreach(_.openDrawer()))("React Native demo")
+            )
+          ),
         Route(
           RouteProps(
             path = RoutePath.Home.path,
-            render = (props => checkRedirection(props.`match`.path, Home())),
+            render = props => checkRedirection(props.`match`.path, Home()),
             exact = true
           )
         ),
         Route(
           RouteProps(
             path = RoutePath.Antd.path,
-            render = (props => checkRedirection(props.`match`.path, Antd()))
+            render = props => checkRedirection(props.`match`.path, Antd())
           )
         ),
         Route(
           RouteProps(
             path = RoutePath.ReactRouter.path,
-            render = (props => checkRedirection(props.`match`.path, ReactRouter(props.`match`)))
+            render = props => checkRedirection(props.`match`.path, ReactRouter(props.`match`))
           )
         )
       )

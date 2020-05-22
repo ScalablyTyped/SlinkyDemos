@@ -41,15 +41,15 @@ object LoadFonts {
     case () =>
       val (state, setState) = useState(State.Loading: State)
 
-      useEffect(() =>
-        Font
-          .loadAsync(Fonts.All)
-          .toFuture
-          .onComplete {
-            case Failure(exception) => setState(State.Error(exception.getMessage))
-            case Success(_) =>         setState(State.Success)
-          }
-        ,
+      useEffect(
+        () =>
+          Font
+            .loadAsync(Fonts.All)
+            .toFuture
+            .onComplete {
+              case Failure(exception) => setState(State.Error(exception.getMessage))
+              case Success(_)         => setState(State.Success)
+            },
         Seq()
       )
 

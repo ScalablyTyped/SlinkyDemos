@@ -35,13 +35,12 @@ object Main {
           style := js.Dynamic.literal(color = "blue"),
           s"Selected image index: ${state.selectedIdx.fold("none")(_.toString)}"
         ),
-        ReactSlick(
-          onInit = () => println("slick init"),
-          dots = true,
-          autoplay = true,
-          autoplaySpeed = 1000,
-          slidesToShow = 2
-        )(images.to(Seq): _*)
+        ReactSlick
+          .onInit(() => println("slick init"))
+          .dots(true)
+          .autoplay(true)
+          .autoplaySpeed(1000)
+          .slidesToShow(2)(images.to(Seq): _*)
       )
     }
 

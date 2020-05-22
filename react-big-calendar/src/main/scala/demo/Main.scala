@@ -31,13 +31,11 @@ object Main {
   def main(argv: Array[String]): Unit = {
     val container = document.getElementById("container")
     ReactDOM.render(
-      Calendar[Event, js.Object](
-        localizer = Localizer,
-        events = js.Array(someEvent),
-        defaultDate = new js.Date,
-        defaultView = View.week,
-        views = js.Array(View.agenda, View.day, View.week)
-      ),
+      Calendar[Event, js.Object](Localizer)
+        .events(js.Array(someEvent))
+        .defaultDate(new js.Date)
+        .defaultView(View.week)
+        .views(js.Array(View.agenda, View.day, View.week)),
       container
     )
   }

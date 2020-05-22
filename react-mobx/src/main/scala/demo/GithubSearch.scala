@@ -65,7 +65,7 @@ object GithubSearch {
       )
   }
 
-  def gotoRepo(repo: Repository): () => Unit = () => window.location.href = repo.html_url
+  def gotoRepo(repo: Repository): Unit = window.location.href = repo.html_url
 
   /* this is a simple functional component to display a github repo in a table row */
   val RepoRow = FunctionalComponent[Repository](repo =>
@@ -74,9 +74,11 @@ object GithubSearch {
       Mui.TableRowColumn(repo.forks_count),
       Mui.TableRowColumn(repo.stargazers_count),
       Mui.TableRowColumn(
-        Mui.FlatButton(onClick := gotoRepo(repo), disabled := false)(
-          "Go to project"
-        )
+        Mui.FlatButton
+          .onClick(_ => gotoRepo(repo))
+          .disabled(false)(
+            "Go to project"
+          )
       )
     )
   )
@@ -84,17 +86,20 @@ object GithubSearch {
   val component: FunctionalComponent[Props] = ObservingFC[Props] {
     case Props(store) =>
       div(
-        Mui.Paper(rounded = true)(style := new CSSProperties {
-          height = "100px"
-          display = csstypeStrings.flex
-          alignItems = csstypeStrings.center
-          justifyContent = csstypeStrings.center
-        }),
-        Mui.TextField(onChange = (_, newValue) => store.search.set(newValue))(
-          name := "search",
-          value := store.search.get
-        ),
-        Mui.FlatButton(onClick := store.searchForRepos)("Search"),
+        Mui.Paper
+          .rounded(true)
+          .style(new CSSProperties {
+            height = "100px"
+            display = csstypeStrings.flex
+            alignItems = csstypeStrings.center
+            justifyContent = csstypeStrings.center
+          }),
+        Mui.TextField
+          .onChange((_, newValue) => store.search.set(newValue))
+          .name("search")
+          .value(store.search.get),
+        Mui.FlatButton
+          .onClick(_ => store.searchForRepos())("Search"),
         store.result
           .get()
           .fold[TagMod[Any]](div("No result yet"))(repos =>

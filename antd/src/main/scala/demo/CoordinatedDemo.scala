@@ -1,14 +1,15 @@
 package demo
 
-import org.scalajs.dom.{console, Event}
+import org.scalajs.dom.console
+import org.scalajs.dom.raw.HTMLFormElement
 import slinky.core.annotations.react
 import slinky.core.facade.ReactElement
 import slinky.core.{ExternalComponent, SyntheticEvent, TagMod}
-import slinky.web.html._
 import typings.antd.antdStrings
 import typings.antd.components._
 import typings.antd.formFormMod.{FormCreateOption, GetFieldDecoratorOptions, ValidationRule, WrappedFormUtils}
 import typings.antd.gridColMod.ColProps
+import typings.std.Event_
 
 import scala.scalajs.js
 import scala.scalajs.js.{|, JSON}
@@ -46,7 +47,7 @@ object CoordinatedDemo {
 
   val component: ExternalComponent { type Props = CoordinatedDemo.Props } =
     Facade.formComponent(FormCreateOption[Props](name = "coordinated")) { props =>
-      val handleSubmit: SyntheticEvent[form.tag.RefType, Event] => Unit = e => {
+      def handleSubmit(e: SyntheticEvent[HTMLFormElement, Event_]): Unit = {
         e.preventDefault()
         props.form.validateFields { (err, values) =>
           if (err == null) {
@@ -74,22 +75,24 @@ object CoordinatedDemo {
           rules = js.Array(ValidationRule(required = true, message = "Please select your gender!'"))
         )
         Facade.decoratedField(props.form, "gender", options) {
-          Select[String](
-            placeholder = "Select a option and change input text above",
-            onChange = handleSelectChange
-          )(
-            Option()(value := "male")("male"),
-            Option()(value := "female")("female")
-          )
+          Select[String]()
+            .placeholder("Select a option and change input text above")
+            .onChange(handleSelectChange)(
+              Option.value("male")("male"),
+              Option.value("female")("female")
+            )
         }
       }
 
-      Form(labelCol = ColProps(span = 5), wrapperCol = ColProps(span = 12))(onSubmit := handleSubmit)(
-        FormItem(label = props.noteTitle)(noteInput),
-        FormItem(label = "Gender")(genderInput),
-        FormItem(wrapperCol = ColProps(span = 12, offset = 5))(
-          Button(`type` = antdStrings.primary, htmlType = antdStrings.submit)("Submit")
+      Form
+        .labelCol(ColProps(span = 5))
+        .wrapperCol(ColProps(span = 12))
+        .onSubmit(handleSubmit)(
+          FormItem.label(props.noteTitle)(noteInput),
+          FormItem.label("Gender")(genderInput),
+          FormItem.wrapperCol(ColProps(span = 12, offset = 5))(
+            Button.`type`(antdStrings.primary).htmlType(antdStrings.submit)("Submit")
+          )
         )
-      )
     }
 }

@@ -8,7 +8,7 @@ import slinky.web.html._
 import typings.antd.antdStrings
 import typings.antd.components.{List => _, _}
 import typings.antd.iconMod.ThemeType
-import typings.antd.notificationMod.{ArgsProps, default => Notification}
+import typings.antd.notificationMod.{ArgsProps, IconType, default => Notification}
 import typings.antd.tableInterfaceMod.ColumnProps
 
 import scala.scalajs.js
@@ -28,137 +28,144 @@ object CSS extends js.Any
     val (selectValue, updateSelectValue) = Hooks.useState("lucy")
 
     val renderIntro = Row(
-      Col(span = 7),
-      Col(span = 10)(
+      Col.span(7),
+      Col.span(10)(
         header(className := "App-header")(h1(className := "App-title")("Welcome to React (with Scala.js!)")),
         p(className := "App-intro")("To get started, edit ", code("App.scala"), " and save to reload.")
       ),
-      Col(span = 7)
+      Col.span(7)
     )
 
     def renderGrid = section(
       h2("Grid"),
       Row(
-        Col(span = 12)(div(className := "block blue1")("col-12")),
-        Col(span = 12)(div(className := "block blue2")("col-12"))
+        Col.span(12)(div(className := "block blue1")("col-12")),
+        Col.span(12)(div(className := "block blue2")("col-12"))
       ),
       Row(
-        Col(span = 8)(div(className := "block blue1")("col-8")),
-        Col(span = 8)(div(className := "block blue2")("col-8")),
-        Col(span = 8)(div(className := "block blue1")("col-8"))
+        Col.span(8)(div(className := "block blue1")("col-8")),
+        Col.span(8)(div(className := "block blue2")("col-8")),
+        Col.span(8)(div(className := "block blue1")("col-8"))
       ),
       Row(
-        Col(span = 6)(div(className := "block blue1")("col-6")),
-        Col(span = 6)(div(className := "block blue2")("col-6")),
-        Col(span = 6)(div(className := "block blue1")("col-6")),
-        Col(span = 6)(div(className := "block blue2")("col-6"))
+        Col.span(6)(div(className := "block blue1")("col-6")),
+        Col.span(6)(div(className := "block blue2")("col-6")),
+        Col.span(6)(div(className := "block blue1")("col-6")),
+        Col.span(6)(div(className := "block blue2")("col-6"))
       )
     )
 
     def renderTag = section(
       h2("Tag"),
       Tag("Tag 1"),
-      Tag(color = "red")("red")
+      Tag.color("red")("red")
     )
 
     class TableItem(val key: Int, val name: String, val age: Int, val address: String) extends js.Object
 
     def renderTable = section(
       h2("Table"),
-      Table[TableItem](
-        dataSource = js.Array(
-          new TableItem(1, "Mike", 32, "10 Downing St."),
-          new TableItem(2, "John", 42, "10 Downing St.")
-        ),
-        columns = js.Array(
-          ColumnProps[TableItem](
-            title = ReactElement.stringToElement("Name"),
-            dataIndex = "name",
-            key = "name",
-            render = (text, _, _) => Tag(text.toString)
-          ),
-          ColumnProps(title = ReactElement.stringToElement("Age"), dataIndex = "age", key = "age"),
-          ColumnProps(title = ReactElement.stringToElement("Address"), dataIndex = "address", key = "address")
+      Table[TableItem]()
+        .dataSource(
+          js.Array(
+            new TableItem(1, "Mike", 32, "10 Downing St."),
+            new TableItem(2, "John", 42, "10 Downing St.")
+          )
         )
-      )
+        .columns(
+          js.Array(
+            ColumnProps[TableItem](
+              title = ReactElement.stringToElement("Name"),
+              dataIndex = "name",
+              key = "name",
+              render = (text, _, _) => Tag(text.toString)
+            ),
+            ColumnProps(title = "Age": ReactElement, dataIndex = "age", key = "age"),
+            ColumnProps(title = "Address": ReactElement, dataIndex = "address", key = "address")
+          )
+        )
     )
 
     val renderAlert = section(
       h2("Alert"),
-      Alert(
-        message = "Success Tips",
-        description = "Detailed description and advice about successful copywriting.",
-        `type` = antdStrings.success,
-        showIcon = true
-      )
+      Alert
+        .message("Success Tips")
+        .description("Detailed description and advice about successful copywriting.")
+        .`type`(antdStrings.success)
+        .showIcon(true)
     )
 
     val renderButton =
-      section(h2("Button"), Button(icon = "download", `type` = antdStrings.primary)("Download"))
+      section(
+        h2("Button"),
+        Button.icon("download").`type`(antdStrings.primary)(
+          "Download"
+        ))
 
     val renderModal = section(
       h2("Modal"),
-      Button(onClick := (() => updateIsModalVisible(true)))("Open modal"),
-      Modal(
-        visible = isModalVisible,
-        title = "Basic modal",
-        onCancel = _ => updateIsModalVisible(false),
-        onOk = _ => updateIsModalVisible(false)
-      )(p("Some contents..."), p("Some contents..."), p("Some contents..."))
+      Button.onClick(_ => updateIsModalVisible(true))("Open modal"),
+      Modal
+        .visible(isModalVisible)
+        .title("Basic modal")
+        .onCancel(_ => updateIsModalVisible(false))
+        .onOk(_ => updateIsModalVisible(false))(
+          p("Some contents..."),
+          p("Some contents..."),
+          p("Some contents...")
+        )
     )
 
     val renderSelect = section(
       h2("Select"),
-      Select[String](
-        defaultValue = selectValue,
-        onChange = (changedValue, _) => updateSelectValue(changedValue)
-      )(
-        List(
+      Select[String]()
+        .defaultValue(selectValue)
+        .onChange((changedValue, _) => updateSelectValue(changedValue))(
           Option("Jack").withKey("jack"),
           Option("Lucy").withKey("lucy"),
-          Option(disabled := true)("Disabled").withKey("disabled"),
+          Option.disabled(true)("Disabled").withKey("disabled"),
           Option("Yiminghe").withKey("yiminghe")
         )
-      )
     )
 
-    val renderIcon = section(h2("Icon"), Icon(`type` := "home"))
+    val renderIcon = section(h2("Icon"), Icon.`type`("home"))
 
     val renderInput = section(
       h2("Input"),
-      Input(addonBefore = Icon(placeholder := "Basic usage", `type` := "user"))(
-        onChange := (event => console.log(event.target.value))
-      )
+      Input
+        .addonBefore(Icon.freestyle("placeholder", "Basic usage").`type`("user"))
+        .onChange(event => console.log(event.target_ChangeEvent.value))
     )
 
     val renderPassword =
-      section(h2("Password Input"), Password(addonBefore = "Password")(placeholder := "input password"))
+      section(h2("Password Input"), Password.addonBefore("Password").placeholder("input password"))
 
     val renderSpin = section(
       h2("Spin"),
-      Spin(size = antdStrings.large, spinning = true)(
-        Alert(
-          message = "Alert message title",
-          description = "Further details about the context of this alert.",
-          `type` = antdStrings.info,
-          showIcon = true
+      Spin
+        .size(antdStrings.large)
+        .spinning(true)(
+          Alert
+            .message("Alert message title")
+            .description("Further details about the context of this alert.")
+            .`type`(antdStrings.info)
+            .showIcon(true)
         )
-      )
     )
 
     val renderForm = section(
       h2("Form"),
-      Form(onSubmit := ((e: SyntheticEvent[form.tag.RefType, Event]) => {
+      Form.onSubmit { e =>
         e.preventDefault;
         console.log("Form submitted")
-      }))(
+      }(
         FormItem(
-          Input(addonBefore = Icon(theme = ThemeType.twoTone))(`type` := "mail", placeholder := "input email")
+          Input.addonBefore(Icon.theme(ThemeType.twoTone)).`type`("mail").placeholder("input email")
         ),
         FormItem(
-          Password(addonBefore = Icon(theme = antdStrings.twoTone)(`type` := "lock"))(placeholder := "input password")
+          Password.addonBefore(Icon.theme(ThemeType.twoTone)).`type`("lock").placeholder("input password")
         ),
-        FormItem(Button(htmlType = antdStrings.submit, `type` = antdStrings.primary)("Log in"))
+        FormItem(Button.htmlType(antdStrings.submit).`type`(antdStrings.primary))("Log in")
       )
     )
 
@@ -167,25 +174,23 @@ object CSS extends js.Any
 
     val renderNotification = section(
       h2("Notification"),
-      Button()(
-        onClick := { () =>
-          Notification.open(
-            ArgsProps(
-              message = "Notification Title",
-              description =
-                "This is the content of the notification. This is the content of the notification. This is the content of the notification.",
-              `type` = antdStrings.success
-            )
+      Button.onClick(_ =>
+        Notification.open(
+          ArgsProps(
+            message = "Notification Title",
+            description =
+              "This is the content of the notification. This is the content of the notification. This is the content of the notification.",
+            `type` = IconType.success
           )
-        }
+        )
       )("Show notification")
     )
 
     div(className := "App")(
       renderIntro,
       Row(
-        Col(span = 2),
-        Col(span = 20)(
+        Col.span(2),
+        Col.span(20)(
           renderGrid,
           renderTag,
           renderTable,
@@ -201,7 +206,7 @@ object CSS extends js.Any
           renderCoordinated,
           renderNotification
         ),
-        Col(span = 2)
+        Col.span(2)
       )
     )
   }

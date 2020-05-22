@@ -246,7 +246,7 @@ lazy val bundlerSettings: Project => Project =
     Compile / fastOptJS / webpackExtraArgs += "--mode=development",
     Compile / fullOptJS / webpackExtraArgs += "--mode=production",
     Compile / fastOptJS / webpackDevServerExtraArgs += "--mode=development",
-    Compile / fullOptJS / webpackDevServerExtraArgs += "--mode=production",
+    Compile / fullOptJS / webpackDevServerExtraArgs += "--mode=production"
   )
 
 lazy val withCssLoading: Project => Project =

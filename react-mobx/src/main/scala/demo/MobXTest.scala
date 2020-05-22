@@ -32,17 +32,14 @@ object MobXTest {
 
   val component: FunctionalComponent[Props] = ObservingFC[Props] {
     case Props(store) =>
-      val increaseNum = () => {
-        console.log("increase num")
-        store.increaseNum(1)
-      }
-
       div(
-        Mui.Avatar(
-          icon = div(
-            onClick := (e => console.warn(s"icon clicked ${e.nativeEvent}"))
-          )(":D")
-        )(onClick := (e => console.warn(s"avatar clicked ${e.nativeEvent}")))
+        Mui.Avatar
+          .onClick(e => console.warn(s"avatar clicked ${e.nativeEvent}"))
+          .icon(
+            div(
+              onClick := (e => console.warn(s"icon clicked ${e.nativeEvent}"))
+            )(":D")
+          )
       )(
         "Current computed ",
         store.computed.get().strnum,
@@ -51,7 +48,10 @@ object MobXTest {
         " Current value str ",
         store.values.get().str,
         " ",
-        Mui.RaisedButton(onClick := increaseNum)("increase num")
+        Mui.RaisedButton("increase num").onClick { e =>
+          console.log("increase num")
+          store.increaseNum(1)
+        }
       )
   }
 }

@@ -24,7 +24,7 @@ object MainTabs {
         palette = theme.palette
       })
 
-      Mui.MuiThemeProvider(effectiveTheme)(
+      Mui.MuiThemeProvider.muiTheme(effectiveTheme)(
         div(
           onClick := (e => console.warn("onclick", e)),
           style := new CSSProperties {
@@ -34,8 +34,8 @@ object MainTabs {
           }
         )(
           Mui.Tabs(
-            Mui.Tab(label = "Github search")(GithubSearch(githubStore)),
-            Mui.Tab(label = "MobX")(MobXTest(testStore))
+            Mui.Tab.label("Github search")(GithubSearch(githubStore)),
+            Mui.Tab.label("MobX")(MobXTest(testStore))
           )
         )
       )

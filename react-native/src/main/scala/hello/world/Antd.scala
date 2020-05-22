@@ -42,13 +42,12 @@ import scala.scalajs.js
               )
           ),
           View.style(
-            ViewStyle(
-              backgroundColor = "white",
-              flex = 1,
-              flexDirection = reactNativeStrings.column,
-              justifyContent = reactNativeStrings.center,
-              alignItems = FlexAlignType.center
-            )
+            ViewStyle()
+              .setBackgroundColor("white")
+              .setFlex(1)
+              .setFlexDirection(reactNativeStrings.column)
+              .setJustifyContent(reactNativeStrings.center)
+              .setAlignItems(FlexAlignType.center)
           )(
             InputItem.placeholder("input text"),
             InputItem
@@ -76,8 +75,8 @@ import scala.scalajs.js
           .onClose(() => updateIsModalVisible(false))
           .footer(
             js.Array(
-              Action("Cancel", () => updateIsModalVisible(false)),
-              Action("OK", () => updateIsModalVisible(false))
+              Action("Cancel").setOnPress(() => updateIsModalVisible(false)),
+              Action("OK").setOnPress(() => updateIsModalVisible(false))
             )
           )
       )(Text("Some contents..."))

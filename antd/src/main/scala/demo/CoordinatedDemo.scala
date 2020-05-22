@@ -1,5 +1,6 @@
 package demo
 
+import org.scalablytyped.runtime.StringDictionary
 import org.scalajs.dom.console
 import slinky.core.ExternalComponent
 import slinky.core.annotations.react
@@ -25,7 +26,9 @@ object CoordinatedDemo {
       *  written facade. Given an implementation of a component which has a `form` prop which is to be prefilled,
       *  this will generate a ready-to-use `ExternalComponent` for it.
       */
-    def formComponent[P <: js.Object](options: FormCreateOption[P])(f: js.Function1[P with WithForm, ReactElement]): ExternalComponent { type Props = P } =
+    def formComponent[P <: js.Object](
+        options: FormCreateOption[P]
+    )(f: js.Function1[P with WithForm, ReactElement]): ExternalComponent { type Props = P } =
       new ExternalComponent {
         override type Props = P
         override val component: String | js.Object =
@@ -38,38 +41,35 @@ object CoordinatedDemo {
   }
 
   val component: ExternalComponent { type Props = CoordinatedDemo.Props } =
-    Facade.formComponent(FormCreateOption[Props](name = "coordinated")) { props =>
-      val noteInput = {
-        val options = GetFieldDecoratorOptions(
-          rules = js.Array(ValidationRule(required = true, message = "Please input your note!"))
+    Facade.formComponent(FormCreateOption[Props].setName("coordinated")) { props =>
+      val noteInput = props.form
+        .getFieldDecorator(
+          "note",
+          GetFieldDecoratorOptions()
+            .setRules(js.Array(ValidationRule().setRequired(true).setMessage("Please input your note!")))
         )
-
-        props.form.getFieldDecorator("note", options).apply(Input())
-      }
+        .apply(Input())
 
       val genderInput = {
         val select = Select[String]()
           .placeholder("Select a option and change input text above")
           .onChange { (value, _) =>
             console.log(value)
-            props.form.setFieldsValue(new js.Object {
-              val note: String = "Hi, " + {
-                if (value == "male") "man" else "lady"
-              } + "!"
-            })
+            props.form.setFieldsValue(StringDictionary("note" -> s"Hi, ${if (value == "male") "man" else "lady"}!"))
           }(
             Option.value("male")("male"),
             Option.value("female")("female")
           )
-        val options = GetFieldDecoratorOptions(
-          rules = js.Array(ValidationRule(required = true, message = "Please select your gender!'"))
+
+        val options = GetFieldDecoratorOptions().setRules(
+          js.Array(ValidationRule().setRequired(true).setMessage("Please select your gender!'"))
         )
         props.form.getFieldDecorator("gender", options).apply(select)
       }
 
       Form
-        .labelCol(ColProps(span = 5))
-        .wrapperCol(ColProps(span = 12))
+        .labelCol(ColProps().setSpan(5))
+        .wrapperCol(ColProps().setSpan(12))
         .onSubmit { e =>
           e.preventDefault()
           val cb: ValidateCallback[js.Object] = (err, values) =>
@@ -84,7 +84,7 @@ object CoordinatedDemo {
           FormItem.label("Gender")(
             genderInput
           ),
-          FormItem.wrapperCol(ColProps(span = 12, offset = 5))(
+          FormItem.wrapperCol(ColProps().setSpan(12).setOffset(5))(
             Button.`type`(antdStrings.primary).htmlType(antdStrings.submit)("Submit")
           )
         )

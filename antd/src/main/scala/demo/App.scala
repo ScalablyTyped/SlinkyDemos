@@ -1,9 +1,9 @@
 package demo
 
-import org.scalajs.dom.{console, Event}
+import org.scalajs.dom.console
 import slinky.core._
 import slinky.core.annotations.react
-import slinky.core.facade.{Hooks, ReactElement}
+import slinky.core.facade.Hooks
 import slinky.web.html._
 import typings.antd.antdStrings
 import typings.antd.components.{List => _, _}
@@ -65,7 +65,7 @@ object CSS extends js.Any
 
     def renderTable = section(
       h2("Table"),
-      Table[TableItem]()
+      Table[TableItem]
         .dataSource(
           js.Array(
             new TableItem(1, "Mike", 32, "10 Downing St."),
@@ -74,14 +74,13 @@ object CSS extends js.Any
         )
         .columns(
           js.Array(
-            ColumnProps[TableItem](
-              title = ReactElement.stringToElement("Name"),
-              dataIndex = "name",
-              key = "name",
-              render = (text, _, _) => Tag(text.toString)
-            ),
-            ColumnProps(title = "Age": ReactElement, dataIndex = "age", key = "age"),
-            ColumnProps(title = "Address": ReactElement, dataIndex = "address", key = "address")
+            ColumnProps()
+              .setTitleReactElement("Name")
+              .setDataIndex("name")
+              .setKey("name")
+              .setRender((text, _, _) => Tag(text.toString)),
+            ColumnProps().setTitleReactElement("Age").setDataIndex("age").setKey("age"),
+            ColumnProps().setTitleReactElement("Address").setDataIndex("address").setKey("address")
           )
         )
     )
@@ -98,9 +97,8 @@ object CSS extends js.Any
     val renderButton =
       section(
         h2("Button"),
-        Button.icon("download").`type`(antdStrings.primary)(
-          "Download"
-        ))
+        Button.icon("download").`type`(antdStrings.primary)("Download")
+      )
 
     val renderModal = section(
       h2("Modal"),
@@ -118,7 +116,7 @@ object CSS extends js.Any
 
     val renderSelect = section(
       h2("Select"),
-      Select[String]()
+      Select[String]
         .defaultValue(selectValue)
         .onChange((changedValue, _) => updateSelectValue(changedValue))(
           Option("Jack").withKey("jack"),
@@ -133,7 +131,7 @@ object CSS extends js.Any
     val renderInput = section(
       h2("Input"),
       Input
-        .addonBefore(Icon.freestyle("placeholder", "Basic usage").`type`("user"))
+        .addonBefore(Icon.set("placeholder", "Basic usage").`type`("user"))
         .onChange(event => console.log(event.target_ChangeEvent.value))
     )
 
@@ -176,12 +174,12 @@ object CSS extends js.Any
       h2("Notification"),
       Button.onClick(_ =>
         Notification.open(
-          ArgsProps(
-            message = "Notification Title",
-            description =
-              "This is the content of the notification. This is the content of the notification. This is the content of the notification.",
-            `type` = IconType.success
-          )
+          ArgsProps()
+            .setMessage("Notification Title")
+            .setDescription(
+              "This is the content of the notification. This is the content of the notification. This is the content of the notification."
+            )
+            .setType(IconType.success)
         )
       )("Show notification")
     )

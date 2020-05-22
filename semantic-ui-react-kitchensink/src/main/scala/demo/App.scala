@@ -62,7 +62,7 @@ import scala.language.implicitConversions
                 .labelReactElement("I agree to the Cookie Policy")
                 .toggle(true)
             ),
-            Sui.Button.`type`(submit)
+            Sui.Button.`type`(submit)("OK!")
           ),
           Sui.Divider.horizontal(true)(
             Sui.Header.as("h4")(Sui.Icon.name(SemanticICONS.tag), "Card and Image")
@@ -72,7 +72,7 @@ import scala.language.implicitConversions
               .size(SemanticSIZES.medium)
               .wrapped(true)
               .ui(false)
-              .freestyle("src", "https://react.semantic-ui.com/images/avatar/large/matthew.png"),
+              .set("src", "https://react.semantic-ui.com/images/avatar/large/matthew.png"),
             Sui.CardContent(
               Sui.CardHeader("Matthew"),
               Sui.CardMeta(span(className := "date")("Joined in 2015")),
@@ -95,9 +95,10 @@ import scala.language.implicitConversions
           Sui.ModalHeader("Select a Photo"),
           Sui.ModalContent.image(true)(
             Sui.Image
-              .size(SemanticSIZES.medium).fluid(true)
+              .size(SemanticSIZES.medium)
+              .fluid(true)
               .wrapped(true)
-              .freestyle("src", "https://react.semantic-ui.com/images/avatar/large/rachel.png"),
+              .set("src", "https://react.semantic-ui.com/images/avatar/large/rachel.png"),
             Sui.ModalDescription(
               Sui.Header("Default Profile Image"),
               p("We've found the following gravatar image associated with your e-mail address."),

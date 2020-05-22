@@ -55,7 +55,8 @@ object SelectDemo {
         Mui.Select
           .value(chosen)
           .onChange((e, _) => setChosen(e.target_ChangeEvent.value))(items),
-        Mui.TextField.StandardTextFieldProps()
+        Mui.TextField
+          .StandardTextFieldProps()
           .value(chosen)
           .disabled(true)
       )

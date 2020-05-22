@@ -26,12 +26,11 @@ import typings.reactRouter.mod._
           link("Props v. State", "/props-v-state")
         ),
         Route(
-          RouteProps(
-            path = m.path + "/:topicId",
-            render = props => Topic(props.`match`.asInstanceOf[`match`[Topic.Param]])
-          )
+          RouteProps()
+            .setPath(m.path + "/:topicId")
+            .setRender(props => Topic(props.`match`.asInstanceOf[`match`[Topic.Param]]))
         ),
-        Route(RouteProps(path = m.path, render = _ => Text("Please select a topic"), exact = true))
+        Route(RouteProps().setPath(m.path).setRender(_ => Text("Please select a topic")).setExact(true))
       )
   }
 }

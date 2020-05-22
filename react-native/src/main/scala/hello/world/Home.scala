@@ -10,8 +10,8 @@ import typings.reactNative.mod.{TextStyle, ViewStyle}
 
   val component = FunctionalComponent[Props] {
     case () =>
-      View(style = ViewStyle(margin = 20))(
-        Text(style = TextStyle(fontSize = 16))(
+      View(style = ViewStyle().setMargin(20))(
+        Text(style = TextStyle().setFontSize(16))(
           "This is a demo written in Scala through Scala.js, Slinky, ScalablyTyped and Expo.\n\n" +
             "It uses components from Antd Native and React Router Native."
         )

@@ -49,33 +49,28 @@ import scala.scalajs.js.|
       case (route, index) => ListItem.onPress(navigateTo(route))(Text(route.title)).withKey(index.toString)
     }
 
-    Provider.locale(PartialLocale(locale = "enUS"))(
+    Provider.locale(PartialLocale().setLocale("enUS"))(
       NativeRouter(
         Drawer
           .drawerRef(nullableRef => ref = toOption(nullableRef))
           .sidebar(ScrollView(WhiteSpace.size(xl), AntdList(routeLinks)))(
-            AntdList.renderHeader(WhiteSpace.size(xl): ReactElement)(
+            AntdList.renderHeaderReactElement(WhiteSpace.size(xl))(
               ListItem.extra(Icon(name = "menu")).onPress(e => ref.foreach(_.openDrawer()))("React Native demo")
             )
           ),
         Route(
-          RouteProps(
-            path = RoutePath.Home.path,
-            render = props => checkRedirection(props.`match`.path, Home()),
-            exact = true
-          )
+          RouteProps()
+            .setPath(RoutePath.Home.path)
+            .setRender(props => checkRedirection(props.`match`.path, Home()))
+            .setExact(true)
         ),
         Route(
-          RouteProps(
-            path = RoutePath.Antd.path,
-            render = props => checkRedirection(props.`match`.path, Antd())
-          )
+          RouteProps().setPath(RoutePath.Antd.path).setRender(props => checkRedirection(props.`match`.path, Antd()))
         ),
         Route(
-          RouteProps(
-            path = RoutePath.ReactRouter.path,
-            render = props => checkRedirection(props.`match`.path, ReactRouter(props.`match`))
-          )
+          RouteProps()
+            .setPath(RoutePath.ReactRouter.path)
+            .setRender(props => checkRedirection(props.`match`.path, ReactRouter(props.`match`)))
         )
       )
     )

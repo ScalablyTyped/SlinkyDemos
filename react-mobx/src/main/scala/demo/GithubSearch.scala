@@ -1,14 +1,15 @@
 package demo
 
+import org.scalablytyped.runtime.StringDictionary
 import org.scalajs.dom.{console, window}
 import slinky.core.annotations.react
-import slinky.core.{FunctionalComponent, ObservingFC, TagMod}
+import slinky.core.{FunctionalComponent, ObservingFC}
 import slinky.web.html._
 import typings.axios.mod.{AxiosError, AxiosRequestConfig, AxiosResponse, default => Axios}
 import typings.csstype.csstypeStrings
 import typings.materialUi.{components => Mui}
 import typings.mobx.observablevalueMod.IObservableValue
-import typings.mobx.{mod => MobX}
+import typings.mobx.{mod => mobx}
 import typings.react.mod.CSSProperties
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -34,22 +35,21 @@ object GithubSearch {
 
   class Store {
     val search: IObservableValue[String] =
-      MobX.observable.box("ScalablyTyped")
+      mobx.observable.box("ScalablyTyped")
 
-    val result: IObservableValue[js.UndefOr[js.Array[Repository]]] =
-      MobX.observable.box(js.undefined)
+    val result: IObservableValue[Option[js.Array[Repository]]] =
+      mobx.observable.box(None)
 
     val searchForRepos: js.Function0[Unit] =
-      MobX.action(
+      mobx.action(
         "searchForRepos",
         () =>
           Axios
             .get[Response, AxiosResponse[Response]](
               "https://api.github.com/search/repositories",
-              AxiosRequestConfig(
-                params = js.Dynamic.literal(q = search.get(), sort = "stars"),
-                headers = js.Dynamic.literal(Accept = "application/vnd.github.v3+json")
-              )
+              AxiosRequestConfig()
+                .setParams(StringDictionary("q" -> search.get(), "sort" -> "stars"))
+                .setHeaders(StringDictionary("Accept" -> "application/vnd.github.v3+json"))
             )
             .toFuture
             .onComplete {
@@ -60,7 +60,7 @@ object GithubSearch {
                 console.warn("request failed", other.getMessage)
               case Success(res) =>
                 console.warn("got data", res.data.items)
-                result.set(res.data.items)
+                result.set(Some(res.data.items))
             }
       )
   }
@@ -68,7 +68,7 @@ object GithubSearch {
   def gotoRepo(repo: Repository): Unit = window.location.href = repo.html_url
 
   /* this is a simple functional component to display a github repo in a table row */
-  val RepoRow = FunctionalComponent[Repository](repo =>
+  val RepoRow: FunctionalComponent[Repository] = FunctionalComponent(repo =>
     Mui.TableRow(
       Mui.TableRowColumn(repo.name),
       Mui.TableRowColumn(repo.forks_count),
@@ -88,21 +88,21 @@ object GithubSearch {
       div(
         Mui.Paper
           .rounded(true)
-          .style(new CSSProperties {
-            height = "100px"
-            display = csstypeStrings.flex
-            alignItems = csstypeStrings.center
-            justifyContent = csstypeStrings.center
-          }),
+          .style(
+            CSSProperties()
+              .setHeight("100px")
+              .setDisplay(csstypeStrings.flex)
+              .setAlignItems(csstypeStrings.center)
+              .setJustifyContent(csstypeStrings.center)
+          ),
         Mui.TextField
           .onChange((_, newValue) => store.search.set(newValue))
           .name("search")
           .value(store.search.get),
-        Mui.FlatButton
-          .onClick(_ => store.searchForRepos())("Search"),
-        store.result
-          .get()
-          .fold[TagMod[Any]](div("No result yet"))(repos =>
+        Mui.FlatButton.onClick(_ => store.searchForRepos())("Search"),
+        store.result.get() match {
+          case None => div("No result yet")
+          case Some(repos) =>
             Mui.Table(
               Mui.TableHeader(
                 Mui.TableRow(
@@ -112,11 +112,9 @@ object GithubSearch {
                   Mui.TableRowColumn("link")
                 )
               ),
-              Mui.TableBody(
-                repos.to(Seq).map(repo => RepoRow(repo).withKey(repo.name)): _*
-              )
+              Mui.TableBody(repos.to(Seq).map(repo => RepoRow(repo).withKey(repo.name)))
             )
-          )
+        }
       )
   }
 }

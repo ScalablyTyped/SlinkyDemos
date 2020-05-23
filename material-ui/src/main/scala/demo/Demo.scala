@@ -7,7 +7,7 @@ import slinky.core.annotations.react
 import slinky.core.facade.Hooks
 import slinky.web.ReactDOM
 import slinky.web.html._
-import typings.csstype.mod.NamedColor
+import typings.csstype.mod.{ColorProperty, NamedColor}
 import typings.materialUiCore.{stylesMod, components => Mui}
 import typings.std.global.window
 
@@ -107,25 +107,25 @@ object StyledButtonHooksDemo {
   import typings.materialUiStyles.mod.makeStyles
   import typings.materialUiStyles.withStylesMod.{CSSProperties, StyleRules, Styles, WithStylesOptions}
 
-  val useStyles: StylesHook[Styles[js.Object, js.Object, String]] = {
-    val styles: StyleRules[js.Object, String] =
-      StringDictionary(
-        "root" -> CSSProperties()
-          .setBackground("linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)")
-          .setBorder(0)
-          .setBorderRadius(3)
-          .setBoxShadow("0 3px 5px 2px rgba(255, 105, 135, .3)")
-          .setColor(NamedColor.white)
-          .setHeight(48)
-          .setPadding("0 30px")
-      )
+  class Theme(val favouriteColor: ColorProperty) extends js.Object
 
-    makeStyles(styles, WithStylesOptions())
+  val useStyles: StylesHook[Styles[Theme, js.Object, String]] = {
+    val root: js.Function1[Theme, CSSProperties] = theme =>
+      CSSProperties()
+        .setBackground("linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)")
+        .setBorder(0)
+        .setBorderRadius(3)
+        .setBoxShadow("0 3px 5px 2px rgba(255, 105, 135, .3)")
+        .setColor(theme.favouriteColor)
+        .setHeight(48)
+        .setPadding("0 30px")
+
+    makeStyles[StyleRules[Theme, String]](StringDictionary("root" -> root), WithStylesOptions())
   }
 
   val component = FunctionalComponent[Unit] {
     case () =>
-      val classes = useStyles(js.undefined)
+      val classes = useStyles(new Theme(NamedColor.white))
       div(
         Mui.Button
           .className(classes("root"))

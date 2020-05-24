@@ -8,20 +8,27 @@ import slinky.core.facade.Hooks
 import slinky.web.ReactDOM
 import slinky.web.html._
 import typings.csstype.mod.{ColorProperty, NamedColor}
+import typings.materialUiCore.createMuiThemeMod.{Theme, ThemeOptions}
+import typings.materialUiCore.spacingMod.SpacingOptions
 import typings.materialUiCore.{stylesMod, components => Mui}
+import typings.materialUiStyles.components.ThemeProvider
 import typings.std.global.window
 
 import scala.scalajs.js
 
 object Demo {
+  val theme: Theme = stylesMod.createMuiTheme(ThemeOptions().setSpacing(SpacingOptions().setUnit(2)))
 
   def main(argv: Array[String]): Unit =
     ReactDOM.render(
-      div(
-        ButtonTest("dear user"),
-        SelectDemo(List("one", "two", "three")),
-        StyledButtonDemo(()),
-        StyledButtonHooksDemo(())
+      // theme passed through react context and used in StyledButtonHooksDemo
+      ThemeProvider(theme)(
+        div(
+          ButtonTest("dear user"),
+          SelectDemo(List("one", "two", "three")),
+          StyledButtonDemo(()),
+          StyledButtonHooksDemo(())
+        )
       ),
       dom.document.getElementById("container")
     )
@@ -105,28 +112,36 @@ object StyledButtonHooksDemo {
 
   import typings.materialUiStyles.makeStylesMod.StylesHook
   import typings.materialUiStyles.mod.makeStyles
-  import typings.materialUiStyles.withStylesMod.{CSSProperties, StyleRules, Styles, WithStylesOptions}
+  import typings.materialUiStyles.withStylesMod.{CSSProperties, StyleRulesCallback, Styles, WithStylesOptions}
 
-  class Theme(val favouriteColor: ColorProperty) extends js.Object
+  class StyleProps(val favouriteColor: ColorProperty) extends js.Object
 
-  val useStyles: StylesHook[Styles[Theme, js.Object, String]] = {
-    val root: js.Function1[Theme, CSSProperties] = theme =>
+  val useStyles: StylesHook[Styles[Theme, StyleProps, String]] = {
+    val root: js.Function1[StyleProps, CSSProperties] = props =>
       CSSProperties()
         .setBackground("linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)")
         .setBorder(0)
         .setBorderRadius(3)
         .setBoxShadow("0 3px 5px 2px rgba(255, 105, 135, .3)")
-        .setColor(theme.favouriteColor)
+        .setColor(props.favouriteColor)
         .setHeight(48)
         .setPadding("0 30px")
 
-    makeStyles[StyleRules[Theme, String]](StringDictionary("root" -> root), WithStylesOptions())
+    /* If you don't need direct access to theme, this could be `StyleRules[Props, String]` */
+    val stylesCallback: StyleRulesCallback[Theme, StyleProps, String] = theme =>
+      StringDictionary(
+        "root" -> root,
+        "outer" -> CSSProperties().setPadding(theme.spacing.unit * 3 + "px")
+      )
+
+    makeStyles(stylesCallback, WithStylesOptions())
   }
 
   val component = FunctionalComponent[Unit] {
     case () =>
-      val classes = useStyles(new Theme(NamedColor.white))
+      val classes = useStyles(new StyleProps(NamedColor.green))
       div(
+        className := classes("outer"),
         Mui.Button
           .className(classes("root"))
           .onClick(_ => window.alert("clicked"))("styles module with hook")

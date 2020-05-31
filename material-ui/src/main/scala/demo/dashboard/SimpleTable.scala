@@ -1,4 +1,4 @@
-package demo
+package demo.dashboard
 
 import org.scalablytyped.runtime.StringDictionary
 import slinky.core.FunctionalComponent

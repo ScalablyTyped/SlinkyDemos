@@ -1,4 +1,4 @@
-package demo
+package demo.dashboard
 
 import org.scalablytyped.runtime.StringDictionary
 import slinky.core.FunctionalComponent
@@ -19,7 +19,6 @@ import typings.materialUiStyles.mod.makeStyles
 import typings.materialUiStyles.withStylesMod.{CSSProperties, StyleRulesCallback, WithStylesOptions}
 
 import scala.scalajs.js
-
 // https://v3.material-ui.com/getting-started/page-layout-examples/dashboard/
 // https://github.com/mui-org/material-ui/blob/v3.x/docs/src/pages/getting-started/page-layout-examples/dashboard/Dashboard.js
 @react object Dashboard {
@@ -78,7 +77,7 @@ import scala.scalajs.js
         //.setMaxWidth(theme.spacing.unit * 7)
         //.setMinWidth(theme.spacing.unit * 7)
         //.set(theme.breakpoints.up(sm), ) TODO https://github.com/mui-org/material-ui/blob/v3.x/docs/src/pages/getting-started/page-layout-examples/dashboard/Dashboard.js#L77
-        "appBarSpacer" -> theme.mixins.toolbar,
+        //"appBarSpacer" -> theme.mixins.toolbar, // TODO
         "content" -> CSSProperties()
           .setFlexGrow(1)
           .setPadding(theme.spacing.unit * 3)

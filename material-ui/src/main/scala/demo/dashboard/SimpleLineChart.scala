@@ -1,4 +1,4 @@
-package demo
+package demo.dashboard
 
 import slinky.core.FunctionalComponent
 import slinky.core.annotations.react
@@ -68,4 +68,3 @@ import scala.scalajs.js
   }
 
 }
-

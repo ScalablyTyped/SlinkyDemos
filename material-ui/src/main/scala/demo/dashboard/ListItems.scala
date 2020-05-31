@@ -1,8 +1,8 @@
-package demo
+package demo.dashboard
 
 import slinky.web.html._
 import typings.materialUiCore.{components => Mui}
-import typings.materialUiIcons.components._
+import typings.materialUiIcons.components.{ShoppingCart, People, BarChart, Layers, Assignment}
 
 // https://github.com/mui-org/material-ui/blob/v3.x/docs/src/pages/getting-started/page-layout-examples/dashboard/listItems.js
 object ListItems {

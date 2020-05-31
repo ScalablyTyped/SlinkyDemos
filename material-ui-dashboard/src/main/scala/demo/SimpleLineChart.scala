@@ -10,6 +10,7 @@ import scala.scalajs.js
 // https://github.com/mui-org/material-ui/blob/v3.x/docs/src/pages/getting-started/page-layout-examples/dashboard/SimpleLineChart.js
 @react object SimpleLineChart {
 
+  // TODO maybe there is another way to create this
   val data: js.Array[js.Object] = scala.scalajs.js.Array(
     new js.Object {
       val Name   = "Mon"
@@ -60,7 +61,8 @@ import scala.scalajs.js
             Tooltip(),
             Legend(),
             Line("Visits").`type`(monotone).stroke("#82ca9d"),
-            Line("Orders").`type`(monotone).stroke("#8884d8").activeDot(true)
+            Line("Orders").`type`(monotone).stroke("#8884d8")
+              .activeDot(true) // TODO the original is activeDot={{ r: 8 }}
           )
         )
   }

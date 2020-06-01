@@ -8,12 +8,12 @@ import slinky.core.{FunctionalComponent, ReactComponentClass}
 import slinky.web.html._
 import typings.classnames.{mod => classNames}
 import typings.csstype.csstypeStrings.{hidden => _, _}
-import typings.csstype.mod.OverflowXProperty
+import typings.csstype.mod.{Color, OverflowXProperty}
 import typings.materialUiCore.anon.{PartialClassNameMapDrawer, Partialdurationnumberstri}
 import typings.materialUiCore.createBreakpointsMod.Breakpoint
 import typings.materialUiCore.createMuiThemeMod.Theme
 import typings.materialUiCore.materialUiCoreStrings.{absolute, permanent}
-import typings.materialUiCore.mod.PropTypes.Color
+import typings.materialUiCore.mod.PropTypes
 import typings.materialUiCore.typographyTypographyMod.{Style, TypographyProps}
 import typings.materialUiCore.{components => Mui}
 import typings.materialUiIcons.components.{ChevronLeft, Menu, Notifications}
@@ -32,89 +32,98 @@ import scala.scalajs.js
 
   val drawerWidth = 240
 
-  lazy val styles: StylesHook[StyleRulesCallback[Theme, js.Object, String]] = {
-    lazy val styles: StyleRulesCallback[Theme, js.Object, String] = theme =>
-      StringDictionary(
-        "root" -> CSSProperties()
-          .setDisplay(flex),
-        "toolbar" -> CSSProperties()
-          .setPaddingRight(24),
-        "toolbarIcon" -> (CSSProperties()
-          .setDisplay(flex)
-          .setAlignItems(center)
-          .setJustifyContent(`flex-end`)
-          .setPadding("0 8px")
-          .combineWith(theme.mixins.toolbar): CSSProperties)
-        ,
-        "appBar" -> CSSProperties()
-          .set("zIndex", theme.zIndex.drawer + 1)
-          .setTransition(
-            theme.transitions.create(
-              js.Array("width", "margin"),
-              Partialdurationnumberstri()
-                .setEasing(theme.transitions.easing.sharp)
-                .setDuration(theme.transitions.duration.enteringScreen)
-            )
-          ),
-        "appBarShift" -> CSSProperties()
-          .setMarginLeft(drawerWidth)
-          .set("width", s"calc(100% - ${drawerWidth}px)")
-          .setTransition(
-            theme.transitions.create(
-              js.Array("width", "margin"),
-              Partialdurationnumberstri()
-                .setEasing(theme.transitions.easing.sharp)
-                .setDuration(theme.transitions.duration.enteringScreen)
-            )
-          ),
-        "menuButton" -> CSSProperties()
-          .setMarginLeft(12)
-          .setMarginRight(36),
-        "menuButtonHidden" -> CSSProperties()
-          .setDisplay(none)
-          .setMarginRight(36),
-        "title" -> CSSProperties()
-          .setFlexGrow(1),
-        "drawerPaper" -> CSSProperties()
-          .setPosition(relative)
-          .set("whiteSpace", nowrap)
-          .set("width", drawerWidth)
-          .setTransition(
-            theme.transitions.create(
-              "width",
-              Partialdurationnumberstri()
-                .setEasing(theme.transitions.easing.sharp)
-                .setDuration(theme.transitions.duration.enteringScreen)
-            )
-          ),
-        "drawerPaperClose" -> CSSProperties()
-          .setOverflowX(OverflowXProperty.hidden)
-          .setTransition(
-            theme.transitions.create(
-              "width",
-              Partialdurationnumberstri()
-                .setEasing(theme.transitions.easing.sharp)
-                .setDuration(theme.transitions.duration.enteringScreen)
-            )
-          )
-          .set("width", theme.spacing.unit * 7)
-          .set(theme.breakpoints.up(Breakpoint.sm), StringDictionary("width" -> theme.spacing.unit * 9)),
-        "appBarSpacer" -> (CSSProperties().combineWith(theme.mixins.toolbar): CSSProperties),
-        "content" -> CSSProperties()
-          .setFlexGrow(1)
-          .setPadding(theme.spacing.unit * 3)
-          .setHeight("100vh")
-          .setOverflow(auto),
-        "charContainer" -> CSSProperties()
-          .setMarginLeft(-22),
-        "tableContainer" -> CSSProperties()
-          .setHeight(320),
-        "h5" -> CSSProperties()
-          .setMarginBottom(theme.spacing.unit * 2)
+  lazy val styles: StylesHook[StyleRulesCallback[Theme, js.Object, String]] =
+    StyleBuilder[Theme, js.Object]
+      .add("root", CSSProperties().setDisplay(flex))
+      .add("toolbar", CSSProperties().setPaddingRight(24))
+      .add(
+        "toolbarIcon",
+        theme =>
+          CSSProperties()
+            .setDisplay(flex)
+            .setAlignItems(center)
+            .setJustifyContent(`flex-end`)
+            .setPadding("0 8px")
+            .combineWith(theme.mixins.toolbar)
       )
-
-    makeStyles[StyleRulesCallback[Theme, js.Object, String]](styles, WithStylesOptions())
-  }
+      .add(
+        "appBar",
+        theme =>
+          CSSProperties()
+            .set("zIndex", theme.zIndex.drawer + 1)
+            .setTransition(
+              theme.transitions.create(
+                js.Array("width", "margin"),
+                Partialdurationnumberstri()
+                  .setEasing(theme.transitions.easing.sharp)
+                  .setDuration(theme.transitions.duration.enteringScreen)
+              )
+            )
+      )
+      .add(
+        "appBarShift",
+        theme =>
+          CSSProperties()
+            .setMarginLeft(drawerWidth)
+            .set("width", s"calc(100% - ${drawerWidth}px)")
+            .setTransition(
+              theme.transitions.create(
+                js.Array("width", "margin"),
+                Partialdurationnumberstri()
+                  .setEasing(theme.transitions.easing.sharp)
+                  .setDuration(theme.transitions.duration.enteringScreen)
+              )
+            )
+      )
+      .add("menuButton", CSSProperties().setMarginLeft(12).setMarginRight(36))
+      .add("menuButtonHidden", CSSProperties().setDisplay(none).setMarginRight(36))
+      .add("title", CSSProperties().setFlexGrow(1))
+      .add(
+        "drawerPaper",
+        theme =>
+          CSSProperties()
+            .setPosition(relative)
+            .set("whiteSpace", nowrap)
+            .set("width", drawerWidth)
+            .setTransition(
+              theme.transitions.create(
+                "width",
+                Partialdurationnumberstri()
+                  .setEasing(theme.transitions.easing.sharp)
+                  .setDuration(theme.transitions.duration.enteringScreen)
+              )
+            )
+      )
+      .add(
+        "drawerPaperClose",
+        theme =>
+          CSSProperties()
+            .setOverflowX(OverflowXProperty.hidden)
+            .setTransition(
+              theme.transitions.create(
+                "width",
+                Partialdurationnumberstri()
+                  .setEasing(theme.transitions.easing.sharp)
+                  .setDuration(theme.transitions.duration.enteringScreen)
+              )
+            )
+            .set("width", theme.spacing.unit * 7)
+            .set(theme.breakpoints.up(Breakpoint.sm), StringDictionary("width" -> theme.spacing.unit * 9))
+      )
+      .add("appBarSpacer", theme => CSSProperties().combineWith(theme.mixins.toolbar))
+      .add(
+        "content",
+        theme =>
+          CSSProperties()
+            .setFlexGrow(1)
+            .setPadding(theme.spacing.unit * 3)
+            .setHeight("100vh")
+            .setOverflow(auto)
+      )
+      .add("charContainer", CSSProperties().setMarginLeft(-22))
+      .add("tableContainer", CSSProperties().setHeight(320))
+      .add("h5", theme => CSSProperties().setMarginBottom(theme.spacing.unit * 2))
+      .make
 
   type Props = Unit
 
@@ -132,7 +141,7 @@ import scala.scalajs.js
               .disableGutters(!isOpen)
               .className(classes("toolbar"))(
                 Mui.IconButton
-                  .color(Color.inherit)
+                  .color(PropTypes.Color.inherit)
                   .`aria-label`("Open drawer")
                   .className(classes("menuButton"))(
                     Menu()
@@ -140,13 +149,13 @@ import scala.scalajs.js
                 Mui
                   .Typography(h1())
                   .variant(Style.h6)
-                  .color(Color.inherit)
+                  .color(PropTypes.Color.inherit)
                   .noWrap(true)
                   .className(classes("title"))("Dashboard"),
-                Mui.IconButton.color(Color.inherit)(
+                Mui.IconButton.color(PropTypes.Color.inherit)(
                   Mui.Badge
                     .badgeContent(4)
-                    .color(Color.secondary)(
+                    .color(PropTypes.Color.secondary)(
                       Notifications()
                     )
                 )
@@ -163,11 +172,7 @@ import scala.scalajs.js
               )
             )
           )(
-            div()(
-              Mui.IconButton()(
-                ChevronLeft()
-              )
-            ),
+            div()(Mui.IconButton()(ChevronLeft())),
             Mui.Divider(),
             Mui.List(ListItems.mainListItems),
             Mui.Divider(),

@@ -84,30 +84,29 @@ object StyledButtonDemo {
 
   type Props = Unit
 
-  val component: FunctionalComponent[Props] = FunctionalComponent[Props] {
-    _ =>
-      val usingWithStyles = {
-        import typings.materialUiCore.withStylesMod.{CSSProperties, WithStylesOptions}
+  val component: FunctionalComponent[Props] = FunctionalComponent[Props] { _ =>
+    val usingWithStyles = {
+      import typings.materialUiCore.withStylesMod.{CSSProperties, WithStylesOptions}
 
-        val styleInjector =
-          stylesMod.withStyles(
-            StringDictionary("root" -> CSSProperties().setBackgroundColor(NamedColor.blue)),
-            WithStylesOptions[String]()
-          )
+      val styleInjector =
+        stylesMod.withStyles(
+          StringDictionary("root" -> CSSProperties().setBackgroundColor(NamedColor.blue)),
+          WithStylesOptions[String]()
+        )
 
-        Mui.Button
-          .withComponent(c => styleInjector(c))
-          .onClick(_ => window.alert("clicked"))("using withStyles")
-      }
+      Mui.Button
+        .withComponent(c => styleInjector(c))
+        .onClick(_ => window.alert("clicked"))("using withStyles")
+    }
 
-      val usingReactCss = {
-        import typings.react.mod.CSSProperties
-        Mui.Button
-          .style(CSSProperties().setBackgroundColor(NamedColor.darkred))
-          .onClick(_ => window.alert("clicked"))("direct css")
-      }
+    val usingReactCss = {
+      import typings.react.mod.CSSProperties
+      Mui.Button
+        .style(CSSProperties().setBackgroundColor(NamedColor.darkred))
+        .onClick(_ => window.alert("clicked"))("direct css")
+    }
 
-      div(usingWithStyles, usingReactCss)
+    div(usingWithStyles, usingReactCss)
   }
 }
 
@@ -138,20 +137,19 @@ object StyledButtonHooksDemo {
     val stylesCallback: StyleRulesCallback[Theme, StyleProps, String] = theme =>
       StringDictionary(
         "root" -> root,
-        "outer" -> CSSProperties().setPadding(theme.spacing.unit * 3 + "px")
+        "outer" -> CSSProperties().setPadding(s"${theme.spacing.unit * 3}px")
       )
 
     makeStyles(stylesCallback, WithStylesOptions())
   }
 
-  val component: FunctionalComponent[Props] = FunctionalComponent[Props] {
-    _ =>
-      val classes = useStyles(new StyleProps(NamedColor.green))
-      div(
-        className := classes("outer"),
-        Mui.Button
-          .className(classes("root"))
-          .onClick(_ => window.alert("clicked"))("styles module with hook")
-      )
+  val component: FunctionalComponent[Props] = FunctionalComponent[Props] { _ =>
+    val classes = useStyles(new StyleProps(NamedColor.green))
+    div(
+      className := classes("outer"),
+      Mui.Button
+        .className(classes("root"))
+        .onClick(_ => window.alert("clicked"))("styles module with hook")
+    )
   }
 }

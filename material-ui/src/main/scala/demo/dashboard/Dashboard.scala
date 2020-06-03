@@ -1,28 +1,24 @@
 package demo.dashboard
 
-import demo.button.{ButtonTest, SelectDemo, StyledButtonDemo, StyledButtonHooksDemo}
+import demo.StyleBuilder
 import org.scalablytyped.runtime.StringDictionary
+import slinky.core.FunctionalComponent
 import slinky.core.annotations.react
 import slinky.core.facade.Hooks
-import slinky.core.{FunctionalComponent, ReactComponentClass}
 import slinky.web.html._
 import typings.classnames.{mod => classNames}
-import typings.csstype.csstypeStrings.{hidden => _, _}
-import typings.csstype.mod.{Color, OverflowXProperty}
+import typings.csstype.csstypeStrings._
+import typings.csstype.mod.OverflowXProperty
 import typings.materialUiCore.anon.{PartialClassNameMapDrawer, Partialdurationnumberstri}
+import typings.materialUiCore.components._
 import typings.materialUiCore.createBreakpointsMod.Breakpoint
 import typings.materialUiCore.createMuiThemeMod.Theme
 import typings.materialUiCore.materialUiCoreStrings.{absolute, permanent}
 import typings.materialUiCore.mod.PropTypes
-import typings.materialUiCore.typographyTypographyMod.{Style, TypographyProps}
-import typings.materialUiCore.{components => Mui}
-import typings.materialUiIcons.components.{ChevronLeft, Menu, Notifications}
+import typings.materialUiCore.typographyTypographyMod.Style
+import typings.materialUiIcons.{components => Icons}
 import typings.materialUiStyles.makeStylesMod.StylesHook
-import typings.materialUiStyles.mod.makeStyles
-import typings.materialUiStyles.withStylesMod.{CSSProperties, StyleRulesCallback, WithStylesOptions}
-import typings.reactRouter.mod.RouteProps
-import typings.reactRouterDom.components.{BrowserRouter, Route}
-import typings.reactRouterDom.components.Switch
+import typings.materialUiStyles.withStylesMod.{CSSProperties, Styles}
 
 import scala.scalajs.js
 
@@ -32,10 +28,10 @@ import scala.scalajs.js
 
   val drawerWidth = 240
 
-  lazy val styles: StylesHook[StyleRulesCallback[Theme, js.Object, String]] =
+  lazy val styles: StylesHook[Styles[Theme, js.Object, String]] =
     StyleBuilder[Theme, js.Object]
       .add("root", CSSProperties().setDisplay(flex))
-      .add("toolbar", CSSProperties().setPaddingRight(24))
+      .add("toolbar", CSSProperties().setPaddingRight(24)) // keep right padding when drawer closed
       .add(
         "toolbarIcon",
         theme =>
@@ -50,7 +46,7 @@ import scala.scalajs.js
         "appBar",
         theme =>
           CSSProperties()
-            .set("zIndex", theme.zIndex.drawer + 1)
+            .setZIndex(theme.zIndex.drawer + 1)
             .setTransition(
               theme.transitions.create(
                 js.Array("width", "margin"),
@@ -65,7 +61,7 @@ import scala.scalajs.js
         theme =>
           CSSProperties()
             .setMarginLeft(drawerWidth)
-            .set("width", s"calc(100% - ${drawerWidth}px)")
+            .setWidth(s"calc(100% - ${drawerWidth}px)")
             .setTransition(
               theme.transitions.create(
                 js.Array("width", "margin"),
@@ -76,15 +72,15 @@ import scala.scalajs.js
             )
       )
       .add("menuButton", CSSProperties().setMarginLeft(12).setMarginRight(36))
-      .add("menuButtonHidden", CSSProperties().setDisplay(none).setMarginRight(36))
+      .add("menuButtonHidden", CSSProperties().setDisplay(none))
       .add("title", CSSProperties().setFlexGrow(1))
       .add(
         "drawerPaper",
         theme =>
           CSSProperties()
             .setPosition(relative)
-            .set("whiteSpace", nowrap)
-            .set("width", drawerWidth)
+            .setWhiteSpace(nowrap)
+            .setWidth(drawerWidth)
             .setTransition(
               theme.transitions.create(
                 "width",
@@ -107,8 +103,8 @@ import scala.scalajs.js
                   .setDuration(theme.transitions.duration.enteringScreen)
               )
             )
-            .set("width", theme.spacing.unit * 7)
-            .set(theme.breakpoints.up(Breakpoint.sm), StringDictionary("width" -> theme.spacing.unit * 9))
+            .setWidth(theme.spacing.unit * 7)
+            .set(theme.breakpoints.up(Breakpoint.sm), CSSProperties().setWidth(theme.spacing.unit * 9))
       )
       .add("appBarSpacer", theme => CSSProperties().combineWith(theme.mixins.toolbar))
       .add(
@@ -120,107 +116,92 @@ import scala.scalajs.js
             .setHeight("100vh")
             .setOverflow(auto)
       )
-      .add("charContainer", CSSProperties().setMarginLeft(-22))
+      .add("chartContainer", CSSProperties().setMarginLeft(-22))
       .add("tableContainer", CSSProperties().setHeight(320))
       .add("h5", theme => CSSProperties().setMarginBottom(theme.spacing.unit * 2))
-      .make
+      .hook
 
   type Props = Unit
 
   val component: FunctionalComponent[Props] = FunctionalComponent[Props] {
-    _ =>
-      val (isOpen, setIsOpen) = Hooks.useState(true)
+    case () =>
       val classes = styles(js.undefined)
+      val (isOpen, setIsOpen) = Hooks.useState(true)
+      def handleDrawerOpen(): Unit = setIsOpen(true)
+      def handleDrawerClose(): Unit = setIsOpen(false)
 
-      div()(
-        Mui.CssBaseline(),
-        Mui.AppBar
+      div(
+        className := classes("root"),
+        CssBaseline(),
+        AppBar
           .position(absolute)
-          .className(classNames.default(classes("appBar"), if (isOpen) classes("appBarShift") else false))(
-            Mui.Toolbar
+          .className(classNames(StringDictionary[js.Any](classes("appBar") -> true, classes("appBarShift") -> isOpen)))(
+            Toolbar
               .disableGutters(!isOpen)
               .className(classes("toolbar"))(
-                Mui.IconButton
+                IconButton
                   .color(PropTypes.Color.inherit)
                   .`aria-label`("Open drawer")
-                  .className(classes("menuButton"))(
-                    Menu()
-                  ),
-                Mui
-                  .Typography(h1())
+                  .onClick(_ => handleDrawerOpen())
+                  .className(
+                    classNames(
+                      StringDictionary[js.Any](classes("menuButton") -> true, classes("menuButtonHidden") -> isOpen)
+                    )
+                  )(Icons.Menu()),
+                Typography()
+                  .component("h1")
                   .variant(Style.h6)
                   .color(PropTypes.Color.inherit)
                   .noWrap(true)
-                  .className(classes("title"))("Dashboard"),
-                Mui.IconButton.color(PropTypes.Color.inherit)(
-                  Mui.Badge
-                    .badgeContent(4)
-                    .color(PropTypes.Color.secondary)(
-                      Notifications()
-                    )
+                  .className(classes("title"))(
+                    "Dashboard"
+                  ),
+                IconButton.color(PropTypes.Color.inherit)(
+                  Badge.badgeContent(4).color(PropTypes.Color.secondary)(Icons.Notifications())
                 )
               )
           ),
-        Mui.Drawer
+        Drawer
           .variant(permanent)
           .classes(
             PartialClassNameMapDrawer().setPaper(
-              classNames.default(
-                classes("drawerPaper"),
-                if (!isOpen) classes("drawerPaperClose")
-                else false
+              classNames(
+                StringDictionary[js.Any](classes("drawerPaper") -> true, classes("drawerPaperClose") -> !isOpen)
               )
             )
-          )(
-            div()(Mui.IconButton()(ChevronLeft())),
-            Mui.Divider(),
-            Mui.List(ListItems.mainListItems),
-            Mui.Divider(),
-            Mui.List(ListItems.secondaryListItems)
+          )
+          .open(isOpen)(
+            div(className := classes("toolbarIcon"))(
+              IconButton.onClick(_ => handleDrawerClose())(Icons.ChevronLeft())
+            ),
+            Divider(),
+            List(ListItems.mainListItems),
+            Divider(),
+            List(ListItems.secondaryListItems)
           ),
-        div(className := classes("content"))(
-          div(className := classes("appBarSpacer"))(),
-          BrowserRouter(
-              Route(RouteProps()
-                .setExact(true)
-                .setPath("/")
-                .setRender(_ => div(Mui
-                  .Typography()
-                  .variant(Style.h4)
-                  .gutterBottom(true)
-                  .component("h2".asInstanceOf[ReactComponentClass[TypographyProps]])("Products"),
-                  div(className := classes("tableContainer"))(
-                    SimpleTable()
-                  )))),
-            Route(RouteProps()
-                .setExact(true)
-                .setPath("/button")
-                .setRender(_ => div(Mui
-                  .Typography()
-                  .variant(Style.h4)
-                  .gutterBottom(true)
-                  .component("h2".asInstanceOf[ReactComponentClass[TypographyProps]])("Button"),
-                  div(className := classes("tableContainer"))(
-                      ButtonTest("dear user"),
-                      SelectDemo(List("one", "two", "three")),
-                      StyledButtonDemo(),
-                      StyledButtonHooksDemo()
-                  )))),
-            Route(RouteProps()
-                .setExact(true)
-                .setPath("/album")
-                .setRender(_ => div(Mui
-                  .Typography()
-                  .variant(Style.h4)
-                  .gutterBottom(true)
-                  .component("h2".asInstanceOf[ReactComponentClass[TypographyProps]])("Album"),
-                  div(className := classes("tableContainer"))(
-                    SimpleTable()
-                  ))))
-
-          ))
-
+        main(className := classes("content"))(
+          div(className := classes("appBarSpacer")),
+          Typography
+            .variant(Style.h4)
+            .gutterBottom(true)
+            .component("h2")(
+              "Orders"
+            ),
+          Typography()
+            .component("div")
+            .className(classes("chartContainer"))(
+              SimpleLineChart()
+            ),
+          Typography()
+            .variant(Style.h4)
+            .gutterBottom(true)
+            .component("h2")(
+              "Products"
+            ),
+          Typography()
+            .component("div")
+            .className(classes("tableContainer"))(SimpleTable())
+        )
       )
   }
-
 }

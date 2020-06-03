@@ -1,12 +1,15 @@
-package demo.dashboard
+package demo
 
 import org.scalablytyped.runtime.StringDictionary
 import typings.materialUiStyles.makeStylesMod.StylesHook
 import typings.materialUiStyles.mod.makeStyles
-import typings.materialUiStyles.withStylesMod.{CSSProperties, StyleRules, StyleRulesCallback, WithStylesOptions}
+import typings.materialUiStyles.withStylesMod._
 
 import scala.scalajs.js
 
+/* This is an example of a scala facade on top of the generated code.
+ * Note that you can do all this without casting, but type inference is not perfect.
+ */
 object StyleBuilder {
   @inline def apply[Theme, Props <: js.Object]: StyleBuilder[Theme, Props] =
     new StyleBuilder[Theme, Props](_ => StringDictionary.empty)
@@ -29,16 +32,15 @@ object StyleBuilder {
 
   @inline def add(key: String, withThemeProps: (T, P) => CSSProperties): StyleBuilder[T, P] =
     new StyleBuilder[T, P]({ theme =>
-      val ret : StyleRules[P, String] = this.f(theme)
+      val ret: StyleRules[P, String] = this.f(theme)
       val x: js.Function1[P, CSSProperties] = (props: P) => withThemeProps(theme, props)
       ret.update(key, x)
       ret
     })
 
-  @inline def make: StylesHook[StyleRulesCallback[T, P, String]] =
-    make(WithStylesOptions())
+  @inline def hook: StylesHook[Styles[T, P, String]] =
+    makeStyles[Styles[T, P, String]](f)
 
-  @inline def make(opts: WithStylesOptions): StylesHook[StyleRulesCallback[T, P, String]] =
-    makeStyles[StyleRulesCallback[T, P, String]](f, opts)
+  @inline def hook(opts: WithStylesOptions): StylesHook[Styles[T, P, String]] =
+    makeStyles[Styles[T, P, String]](f, opts)
 }
-

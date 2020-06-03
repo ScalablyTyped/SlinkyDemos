@@ -1,34 +1,25 @@
 package demo.dashboard
 
-import org.scalablytyped.runtime.StringDictionary
+import demo.StyleBuilder
 import slinky.core.FunctionalComponent
 import slinky.core.annotations.react
 import slinky.web.html._
 import typings.csstype.csstypeStrings.auto
+import typings.materialUiCore.components._
 import typings.materialUiCore.createMuiThemeMod.Theme
 import typings.materialUiCore.materialUiCoreStrings.right
-import typings.materialUiCore.{ components => Mui }
-import typings.materialUiStyles.makeStylesMod.StylesHook
-import typings.materialUiStyles.mod.makeStyles
-import typings.materialUiStyles.withStylesMod.{ CSSProperties, StyleRulesCallback, WithStylesOptions }
+import typings.materialUiStyles.withStylesMod.CSSProperties
 
 import scala.scalajs.js
 
 // https://github.com/mui-org/material-ui/blob/v3.x/docs/src/pages/getting-started/page-layout-examples/dashboard/SimpleTable.js
 @react object SimpleTable {
 
-  lazy val styles: StylesHook[StyleRulesCallback[Theme, js.Object, String]] = {
-    lazy val styles: StyleRulesCallback[Theme, js.Object, String] = theme =>
-      StringDictionary(
-        "root" -> CSSProperties()
-          .set("width", "100%")
-          .setOverflowX(auto),
-        "table" -> CSSProperties()
-          .setMinWidth(700)
-      )
-
-    makeStyles[StyleRulesCallback[Theme, js.Object, String]](styles, WithStylesOptions())
-  }
+  lazy val styles =
+    StyleBuilder[Theme, js.Object]
+      .add("root", CSSProperties().setWidth("100%").setOverflowX(auto))
+      .add("table", CSSProperties().setMinWidth(700))
+      .hook
 
   case class Data(id: Long, name: String, calories: Double, fat: Double, carbs: Double, protein: Double)
 
@@ -43,32 +34,31 @@ import scala.scalajs.js
   type Props = Unit
 
   val component: FunctionalComponent[Props] = FunctionalComponent[Props] {
-    _ =>
-      val classes = styles()
-      Mui.Paper.className(classes("root"))(
-        Mui.Table(className := classes("table"))(
-          Mui.TableHead()(
-            Mui.TableRow()(
-              Mui.TableCell("Dessert (100g serving)"),
-              Mui.TableCell.align(right)("Calories"),
-              Mui.TableCell.align(right)("Fat (g)"),
-              Mui.TableCell.align(right)("Carbs (g)"),
-              Mui.TableCell.align(right)("Protein (g)")
+    case () =>
+      val classes = styles(js.undefined)
+      Paper.className(classes("root"))(
+        Table(className := classes("table"))(
+          TableHead(
+            TableRow(
+              TableCell("Dessert (100g serving)"),
+              TableCell.align(right)("Calories"),
+              TableCell.align(right)("Fat (g)"),
+              TableCell.align(right)("Carbs (g)"),
+              TableCell.align(right)("Protein (g)")
             )
           ),
-          Mui.TableBody()(
+          TableBody(
             data.map { n =>
-              Mui.TableRow.withKey(n.id.toString)(
-                Mui.TableCell.set("component", "th".asInstanceOf[js.Any]).scope("row")(n.name),
-                Mui.TableCell.align(right)(n.calories),
-                Mui.TableCell.align(right)(n.fat),
-                Mui.TableCell.align(right)(n.carbs),
-                Mui.TableCell.align(right)(n.protein)
+              TableRow.withKey(n.id.toString)(
+                TableCell.set("component", "th").scope("row")(n.name),
+                TableCell.align(right)(n.calories),
+                TableCell.align(right)(n.fat),
+                TableCell.align(right)(n.carbs),
+                TableCell.align(right)(n.protein)
               )
             }
           )
         )
       )
   }
-
 }

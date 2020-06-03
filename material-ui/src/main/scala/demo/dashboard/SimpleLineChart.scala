@@ -1,5 +1,6 @@
 package demo.dashboard
 
+import org.scalablytyped.runtime.StringDictionary
 import slinky.core.FunctionalComponent
 import slinky.core.annotations.react
 import typings.recharts.components._
@@ -19,10 +20,11 @@ import scala.scalajs.js
     new Data("Thu", 4780, 2908),
     new Data("Fri", 5890, 4800),
     new Data("Sat", 4390, 3800),
-    new Data("Sun", 4490, 4300),
+    new Data("Sun", 4490, 4300)
   )
+  type Props = Unit
 
-  val component: FunctionalComponent[Unit] = FunctionalComponent[Unit] {
+  val component: FunctionalComponent[Props] = FunctionalComponent[Props] {
     case () =>
       ResponsiveContainer
         .width("99%")
@@ -34,10 +36,8 @@ import scala.scalajs.js
             Tooltip(),
             Legend(),
             Line("Visits").`type`(monotone).stroke("#82ca9d"),
-            Line("Orders").`type`(monotone).stroke("#8884d8")
-              .activeDot(true) // TODO the original is activeDot={{ r: 8 }}
+            Line("Orders").`type`(monotone).stroke("#8884d8").activeDot(StringDictionary("r" -> 8))
           )
         )
   }
-
 }

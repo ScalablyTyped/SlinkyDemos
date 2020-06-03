@@ -21,8 +21,7 @@ import scala.scalajs.js
     lazy val styles: StyleRulesCallback[Theme, js.Object, String] = theme =>
       StringDictionary(
         "root" -> CSSProperties()
-          .setMinWidth("100%") // TODO the original is  width: '100%'
-          .setMaxWidth("100%")
+          .set("width", "100%")
           .setOverflowX(auto),
         "table" -> CSSProperties()
           .setMinWidth(700)

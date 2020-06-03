@@ -1,17 +1,19 @@
 package demo.dashboard
 
 import org.scalablytyped.runtime.StringDictionary
-import slinky.core.FunctionalComponent
 import slinky.core.annotations.react
 import slinky.core.facade.Hooks
+import slinky.core.{FunctionalComponent, ReactComponentClass}
 import slinky.web.html._
+import typings.classnames.{mod => classNames}
 import typings.csstype.csstypeStrings.{hidden => _, _}
 import typings.csstype.mod.OverflowXProperty
-import typings.materialUiCore.anon.Partialdurationnumberstri
+import typings.materialUiCore.anon.{PartialClassNameMapDrawer, Partialdurationnumberstri}
+import typings.materialUiCore.createBreakpointsMod.Breakpoint
 import typings.materialUiCore.createMuiThemeMod.Theme
 import typings.materialUiCore.materialUiCoreStrings.{absolute, permanent}
 import typings.materialUiCore.mod.PropTypes.Color
-import typings.materialUiCore.typographyTypographyMod.Style
+import typings.materialUiCore.typographyTypographyMod.{Style, TypographyProps}
 import typings.materialUiCore.{components => Mui}
 import typings.materialUiIcons.components.{ChevronLeft, Menu, Notifications}
 import typings.materialUiStyles.makeStylesMod.StylesHook
@@ -32,27 +34,34 @@ import scala.scalajs.js
           .setDisplay(flex),
         "toolbar" -> CSSProperties()
           .setPaddingRight(24),
-        "toolbarIcon" -> CSSProperties()
+        "toolbarIcon" -> (CSSProperties()
           .setDisplay(flex)
           .setAlignItems(center)
           .setJustifyContent(`flex-end`)
           .setPadding("0 8px")
-        // TODO https://github.com/mui-org/material-ui/blob/v3.x/docs/src/pages/getting-started/page-layout-examples/dashboard/Dashboard.js#L35
+          .combineWith(theme.mixins.toolbar): CSSProperties)
         ,
         "appBar" -> CSSProperties()
-          // TODO zIndex ?¿ https://github.com/mui-org/material-ui/blob/v3.x/docs/src/pages/getting-started/page-layout-examples/dashboard/Dashboard.js#L38
-          .setTransition(theme.transitions.create(js.Array("width", "margin"),
-            Partialdurationnumberstri().setEasing(theme.transitions.easing.sharp)
-              .setDuration(theme.transitions.duration.enteringScreen)))
-        ,
+          .set("zIndex", theme.zIndex.drawer + 1)
+          .setTransition(
+            theme.transitions.create(
+              js.Array("width", "margin"),
+              Partialdurationnumberstri()
+                .setEasing(theme.transitions.easing.sharp)
+                .setDuration(theme.transitions.duration.enteringScreen)
+            )
+          ),
         "appBarShift" -> CSSProperties()
           .setMarginLeft(drawerWidth)
-          //.setMaxWidth() TODO https://github.com/mui-org/material-ui/blob/v3.x/docs/src/pages/getting-started/page-layout-examples/dashboard/Dashboard.js#L46
-          //.setMinWidth()
-          .setTransition(theme.transitions.create(js.Array("width", "margin"),
-            Partialdurationnumberstri().setEasing(theme.transitions.easing.sharp)
-              .setDuration(theme.transitions.duration.enteringScreen)))
-        ,
+          .set("width", s"calc(100% - ${drawerWidth}px)")
+          .setTransition(
+            theme.transitions.create(
+              js.Array("width", "margin"),
+              Partialdurationnumberstri()
+                .setEasing(theme.transitions.easing.sharp)
+                .setDuration(theme.transitions.duration.enteringScreen)
+            )
+          ),
         "menuButton" -> CSSProperties()
           .setMarginLeft(12)
           .setMarginRight(36),
@@ -63,21 +72,29 @@ import scala.scalajs.js
           .setFlexGrow(1),
         "drawerPaper" -> CSSProperties()
           .setPosition(relative)
-          //.setWhiteSpace(noWrap) TODO https://github.com/mui-org/material-ui/blob/v3.x/docs/src/pages/getting-started/page-layout-examples/dashboard/Dashboard.js#L64
-          //.setMaxWidth(),
-          //.setMinWidth(),
-          .setTransition(theme.transitions.create("width",
-            Partialdurationnumberstri().setEasing(theme.transitions.easing.sharp)
-              .setDuration(theme.transitions.duration.enteringScreen))),
+          .set("whiteSpace", nowrap)
+          .set("width", drawerWidth)
+          .setTransition(
+            theme.transitions.create(
+              "width",
+              Partialdurationnumberstri()
+                .setEasing(theme.transitions.easing.sharp)
+                .setDuration(theme.transitions.duration.enteringScreen)
+            )
+          ),
         "drawerPaperClose" -> CSSProperties()
           .setOverflowX(OverflowXProperty.hidden)
-          .setTransition(theme.transitions.create("width",
-            Partialdurationnumberstri().setEasing(theme.transitions.easing.sharp)
-              .setDuration(theme.transitions.duration.enteringScreen))),
-        //.setMaxWidth(theme.spacing.unit * 7)
-        //.setMinWidth(theme.spacing.unit * 7)
-        //.set(theme.breakpoints.up(sm), ) TODO https://github.com/mui-org/material-ui/blob/v3.x/docs/src/pages/getting-started/page-layout-examples/dashboard/Dashboard.js#L77
-        //"appBarSpacer" -> theme.mixins.toolbar, // TODO
+          .setTransition(
+            theme.transitions.create(
+              "width",
+              Partialdurationnumberstri()
+                .setEasing(theme.transitions.easing.sharp)
+                .setDuration(theme.transitions.duration.enteringScreen)
+            )
+          )
+          .set("width", theme.spacing.unit * 7)
+          .set(theme.breakpoints.up(Breakpoint.sm), StringDictionary("width" -> theme.spacing.unit * 9)),
+        "appBarSpacer" -> (CSSProperties().combineWith(theme.mixins.toolbar): CSSProperties),
         "content" -> CSSProperties()
           .setFlexGrow(1)
           .setPadding(theme.spacing.unit * 3)
@@ -88,7 +105,7 @@ import scala.scalajs.js
         "tableContainer" -> CSSProperties()
           .setHeight(320),
         "h5" -> CSSProperties()
-          .setMarginBottom(theme.spacing.unit * 2),
+          .setMarginBottom(theme.spacing.unit * 2)
       )
 
     makeStyles[StyleRulesCallback[Theme, js.Object, String]](styles, WithStylesOptions())
@@ -96,18 +113,16 @@ import scala.scalajs.js
 
   val component: FunctionalComponent[Unit] = FunctionalComponent[Unit] {
     case () =>
+      val (isOpen, setIsOpen) = Hooks.useState(true)
+      val classes = styles(js.undefined)
 
-      val (state, setState) = Hooks.useState(true)
-
-      val classes = styles()
       div()(
         Mui.CssBaseline(),
         Mui.AppBar
           .position(absolute)
-          .className(classes("appBar")) // TODO https://github.com/mui-org/material-ui/blob/v3.x/docs/src/pages/getting-started/page-layout-examples/dashboard/Dashboard.js#L121
-          (
+          .className(classNames.default(classes("appBar"), if (isOpen) classes("appBarShift") else false))(
             Mui.Toolbar
-              .disableGutters(!state) // TODO https://github.com/mui-org/material-ui/blob/v3.x/docs/src/pages/getting-started/page-layout-examples/dashboard/Dashboard.js#L123
+              .disableGutters(!isOpen)
               .className(classes("toolbar"))(
                 Mui.IconButton
                   .color(Color.inherit)
@@ -115,7 +130,8 @@ import scala.scalajs.js
                   .className(classes("menuButton"))(
                     Menu()
                   ),
-                Mui.Typography(h1())
+                Mui
+                  .Typography(h1())
                   .variant(Style.h6)
                   .color(Color.inherit)
                   .noWrap(true)
@@ -131,27 +147,34 @@ import scala.scalajs.js
           ),
         Mui.Drawer
           .variant(permanent)
-          //.classes() TODO https://github.com/mui-org/material-ui/blob/v3.x/docs/src/pages/getting-started/page-layout-examples/dashboard/Dashboard.js#L153
-          (
+          .classes(
+            PartialClassNameMapDrawer().setPaper(
+              classNames.default(
+                classes("drawerPaper"),
+                if (!isOpen) classes("drawerPaperClose")
+                else false
+              )
+            )
+          )(
             div()(
               Mui.IconButton()(
                 ChevronLeft()
               )
             ),
-            // Mui.Divider(), TODO this doesn't work
+            Mui.Divider(),
             Mui.List(ListItems.mainListItems),
-            // Mui.Divider(), TODO this doesn't work
+             Mui.Divider(),
             Mui.List(ListItems.secondaryListItems)
           ),
         div(className := classes("content"))(
           div(className := classes("appBarSpacer"))(),
-          Mui.Typography()
+          Mui
+            .Typography()
             .variant(Style.h4)
             .gutterBottom(true)
-            //.component() TODO https://github.com/mui-org/material-ui/blob/v3.x/docs/src/pages/getting-started/page-layout-examples/dashboard/Dashboard.js#L176
-            ("Products"),
+            .component("h2".asInstanceOf[ReactComponentClass[TypographyProps]])("Products"),
           div(className := classes("tableContainer"))(
-            SimpleTable {}
+            SimpleTable(())
           )
         )
       )

@@ -10,43 +10,16 @@ import scala.scalajs.js
 // https://github.com/mui-org/material-ui/blob/v3.x/docs/src/pages/getting-started/page-layout-examples/dashboard/SimpleLineChart.js
 @react object SimpleLineChart {
 
-  // TODO maybe there is another way to create this
-  val data: js.Array[js.Object] = scala.scalajs.js.Array(
-    new js.Object {
-      val Name   = "Mon"
-      val Visits = 200
-      val Orders = 3400
-    },
-    new js.Object {
-      val Name   = "Tue"
-      val Visits = 128
-      val Orders = 2398
-    },
-    new js.Object {
-      val Name   = "Wed"
-      val Visits = 5000
-      val Orders = 4300
-    },
-    new js.Object {
-      val Name   = "Thu"
-      val Visits = 4780
-      val Orders = 2908
-    },
-    new js.Object {
-      val Name   = "Fri"
-      val Visits = 5890
-      val Orders = 4800
-    },
-    new js.Object {
-      val Name   = "Sat"
-      val Visits = 4390
-      val Orders = 3800
-    },
-    new js.Object {
-      val Name   = "Sun"
-      val Visits = 4490
-      val Orders = 4300
-    }
+  class Data(val Name: String, val Visits: Int, val Orders: Int) extends js.Object
+
+  val data: js.Array[js.Object] = js.Array(
+    new Data("Mon", 200, 3400),
+    new Data("Tue", 128, 2398),
+    new Data("Wed", 5000, 4300),
+    new Data("Thu", 4780, 2908),
+    new Data("Fri", 5890, 4800),
+    new Data("Sat", 4390, 3800),
+    new Data("Sun", 4490, 4300),
   )
 
   val component: FunctionalComponent[Unit] = FunctionalComponent[Unit] {

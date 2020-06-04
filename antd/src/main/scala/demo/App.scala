@@ -1,15 +1,15 @@
 package demo
 
-import org.scalajs.dom.console
 import slinky.core._
 import slinky.core.annotations.react
 import slinky.core.facade.Hooks
 import slinky.web.html._
+import typings.antDesignIcons.{components => Icons}
 import typings.antd.antdStrings
-import typings.antd.components.{List => _, _}
-import typings.antd.iconMod.ThemeType
+import typings.antd.components._
 import typings.antd.notificationMod.{ArgsProps, IconType, default => Notification}
-import typings.antd.tableInterfaceMod.ColumnProps
+import typings.antd.tableInterfaceMod.ColumnType
+import typings.std.global.console
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSImport
@@ -58,7 +58,7 @@ object CSS extends js.Any
     def renderTag = section(
       h2("Tag"),
       Tag("Tag 1"),
-      Tag.color("red")("red")
+      Tag.color(antdStrings.red)("red")
     )
 
     class TableItem(val key: Int, val name: String, val age: Int, val address: String) extends js.Object
@@ -74,13 +74,13 @@ object CSS extends js.Any
         )
         .columns(
           js.Array(
-            ColumnProps()
+            ColumnType[TableItem]()
               .setTitleReactElement("Name")
               .setDataIndex("name")
               .setKey("name")
-              .setRender((text, _, _) => Tag(text.toString)),
-            ColumnProps().setTitleReactElement("Age").setDataIndex("age").setKey("age"),
-            ColumnProps().setTitleReactElement("Address").setDataIndex("address").setKey("address")
+              .setRender((_, tableItem, _) => Tag(tableItem.name): TagMod[Any]),
+            ColumnType[TableItem].setTitleReactElement("Age").setDataIndex("age").setKey("age"),
+            ColumnType[TableItem].setTitleReactElement("Address").setDataIndex("address").setKey("address")
           )
         )
     )
@@ -97,7 +97,7 @@ object CSS extends js.Any
     val renderButton =
       section(
         h2("Button"),
-        Button.icon("download").`type`(antdStrings.primary)("Download")
+        Button.icon(Icons.DownloadOutlined()).`type`(antdStrings.primary)("Download")
       )
 
     val renderModal = section(
@@ -119,19 +119,20 @@ object CSS extends js.Any
       Select[String]
         .defaultValue(selectValue)
         .onChange((changedValue, _) => updateSelectValue(changedValue))(
-          Option("Jack").withKey("jack"),
-          Option("Lucy").withKey("lucy"),
-          Option.disabled(true)("Disabled").withKey("disabled"),
-          Option("Yiminghe").withKey("yiminghe")
+          Option("jack")("Jack"),
+          Option("lucy")("Lucy"),
+          Option("disabled")("Disabled").disabled(true),
+          Option("yiminghe")("Yiminghe")
         )
     )
 
-    val renderIcon = section(h2("Icon"), Icon.`type`("home"))
+    val renderIcon = section(h2("Icon"), Icons.HomeOutlined())
 
     val renderInput = section(
       h2("Input"),
       Input
-        .addonBefore(Icon.set("placeholder", "Basic usage").`type`("user"))
+        .addonBefore(Icons.UserOutlined())
+        .placeholder("Basic usage")
         .onChange(event => console.log(event.target_ChangeEvent.value))
     )
 
@@ -153,22 +154,21 @@ object CSS extends js.Any
 
     val renderForm = section(
       h2("Form"),
-      Form.onSubmit { e =>
-        e.preventDefault;
-        console.log("Form submitted")
+      Form.onFinish { store =>
+        console.log("Form submitted", store)
       }(
         FormItem(
-          Input.addonBefore(Icon.theme(ThemeType.twoTone)).`type`("mail").placeholder("input email")
+          Input.addonBefore(Icons.MailTwoTone()).`type`(antdStrings.email).placeholder("input email")
         ),
         FormItem(
-          Password.addonBefore(Icon.theme(ThemeType.twoTone)).`type`("lock").placeholder("input password")
+          Password.addonBefore(Icons.LockTwoTone()).`type`(antdStrings.password).placeholder("input password")
         ),
         FormItem(Button.htmlType(antdStrings.submit).`type`(antdStrings.primary))("Log in")
       )
     )
 
     val renderCoordinated =
-      section(h2("Form coordinated controls"), CoordinatedDemo.component(new CoordinatedDemo.Props("write note here")))
+      section(h2("Form coordinated controls"), CoordinatedDemo("write note here"))
 
     val renderNotification = section(
       h2("Notification"),

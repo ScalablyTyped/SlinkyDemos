@@ -185,6 +185,8 @@ lazy val `material-ui` =
         "recharts" -> "1.8.5",
         "@types/recharts" -> "1.8.10",
         "@types/classnames" -> "2.2.10",
+        "react-router-dom" -> "5.1.2",
+        "@types/react-router-dom" -> "5.1.2"
       )
     )
 

@@ -2,7 +2,8 @@ package demo.dashboard
 
 import slinky.web.html._
 import typings.materialUiCore.{components => Mui}
-import typings.materialUiIcons.components.{Dashboard, ShoppingCart, People, BarChart, Layers, Assignment}
+import typings.materialUiIcons.components.{Assignment, BarChart, Dashboard, Layers, People, ShoppingCart}
+import typings.reactRouterDom.components.{BrowserRouter, Link}
 
 // https://github.com/mui-org/material-ui/blob/v3.x/docs/src/pages/getting-started/page-layout-examples/dashboard/listItems.js
 object ListItems {
@@ -42,21 +43,24 @@ object ListItems {
     )
   }
 
-  val secondaryListItems = {
-    div()(
+  val secondaryListItems =
+    BrowserRouter(
       Mui.ListSubheader.inset(true)(""),
-      Mui.ListItem.button(true)(
-        Mui.ListItemIcon()(
-          Assignment()
-        ),
-        Mui.ListItemText.primary("Current month")
+      Link[String](to = "/button")(
+        Mui.ListItem.button(true)(
+          Mui.ListItemIcon()(
+            Assignment()
+          ),
+          Mui.ListItemText.primary("Button")
+        )
       ),
-      Mui.ListItem.button(true)(
-        Mui.ListItemIcon()(
-          Assignment()
-        ),
-        Mui.ListItemText.primary("Last quarter")
-      ),
+      Link[String](to = "/album")(
+        Mui.ListItem.button(true)(
+          Mui.ListItemIcon()(
+            Assignment()
+          ),
+          Mui.ListItemText.primary("Album")
+        )),
       Mui.ListItem.button(true)(
         Mui.ListItemIcon()(
           Assignment()
@@ -64,6 +68,5 @@ object ListItems {
         Mui.ListItemText.primary("Year-end sale")
       )
     )
-  }
 
 }

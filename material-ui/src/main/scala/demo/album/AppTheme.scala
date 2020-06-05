@@ -43,20 +43,20 @@ import scala.scalajs.js
                   )
 
   val component: FunctionalComponent[Props] = FunctionalComponent[Props] {
-    case props =>
+    (props: Props) =>
       Fragment()(
         props.children,
         Mui.Typography()
           .color(textSecondary)
           .align(center)
-          .className(classNames.default(props.classes("credit"), StringDictionary(props.classes("hideCredit") -> props.hideCredit)))(
-          "Built with "
-          span(role := "img", aria := "Love")("❤"️),
+          //.className(classNames.default(props.classes("credit"), StringDictionary((props.classes("hideCredit") -> props.hideCredit)))) TODO
+          (
+          "Built with ",
           Mui.Link()
             .color(Color.inherit)
             .href("/")(
               "ScalablyTyped Material-UI"
-            )
+            ),
           " team."
         )
       )

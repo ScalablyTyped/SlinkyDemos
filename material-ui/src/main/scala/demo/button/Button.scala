@@ -26,8 +26,8 @@ object Button {
       div(
         ButtonTest("dear user"),
         SelectDemo(List("one", "two", "three")),
-        StyledButtonDemo(()),
-        StyledButtonHooksDemo(())
+        StyledButtonDemo(),
+        StyledButtonHooksDemo()
       )
     ),
     dom.document.getElementById("container")
@@ -81,8 +81,11 @@ object SelectDemo {
 
 @react
 object StyledButtonDemo {
-  val component = FunctionalComponent[Unit] {
-    case () =>
+
+  type Props = Unit
+
+  val component: FunctionalComponent[Props] = FunctionalComponent[Props] {
+    _ =>
       val usingWithStyles = {
         import typings.materialUiCore.withStylesMod.{CSSProperties, WithStylesOptions}
 
@@ -116,6 +119,8 @@ object StyledButtonHooksDemo {
   import typings.materialUiStyles.mod.makeStyles
   import typings.materialUiStyles.withStylesMod.{CSSProperties, StyleRulesCallback, Styles, WithStylesOptions}
 
+  type Props = Unit
+
   class StyleProps(val favouriteColor: ColorProperty) extends js.Object
 
   val useStyles: StylesHook[Styles[Theme, StyleProps, String]] = {
@@ -139,8 +144,8 @@ object StyledButtonHooksDemo {
     makeStyles(stylesCallback, WithStylesOptions())
   }
 
-  val component = FunctionalComponent[Unit] {
-    case () =>
+  val component: FunctionalComponent[Props] = FunctionalComponent[Props] {
+    _ =>
       val classes = useStyles(new StyleProps(NamedColor.green))
       div(
         className := classes("outer"),

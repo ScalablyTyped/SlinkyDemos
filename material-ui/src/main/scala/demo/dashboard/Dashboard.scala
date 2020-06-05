@@ -1,5 +1,6 @@
 package demo.dashboard
 
+import demo.button.{ButtonTest, SelectDemo, StyledButtonDemo, StyledButtonHooksDemo}
 import org.scalablytyped.runtime.StringDictionary
 import slinky.core.annotations.react
 import slinky.core.facade.Hooks
@@ -19,8 +20,12 @@ import typings.materialUiIcons.components.{ChevronLeft, Menu, Notifications}
 import typings.materialUiStyles.makeStylesMod.StylesHook
 import typings.materialUiStyles.mod.makeStyles
 import typings.materialUiStyles.withStylesMod.{CSSProperties, StyleRulesCallback, WithStylesOptions}
+import typings.reactRouter.mod.RouteProps
+import typings.reactRouterDom.components.{BrowserRouter, Route}
+import typings.reactRouterDom.components.Switch
 
 import scala.scalajs.js
+
 // https://v3.material-ui.com/getting-started/page-layout-examples/dashboard/
 // https://github.com/mui-org/material-ui/blob/v3.x/docs/src/pages/getting-started/page-layout-examples/dashboard/Dashboard.js
 @react object Dashboard {
@@ -111,8 +116,10 @@ import scala.scalajs.js
     makeStyles[StyleRulesCallback[Theme, js.Object, String]](styles, WithStylesOptions())
   }
 
-  val component: FunctionalComponent[Unit] = FunctionalComponent[Unit] {
-    case () =>
+  type Props = Unit
+
+  val component: FunctionalComponent[Props] = FunctionalComponent[Props] {
+    _ =>
       val (isOpen, setIsOpen) = Hooks.useState(true)
       val classes = styles(js.undefined)
 
@@ -163,20 +170,51 @@ import scala.scalajs.js
             ),
             Mui.Divider(),
             Mui.List(ListItems.mainListItems),
-             Mui.Divider(),
+            Mui.Divider(),
             Mui.List(ListItems.secondaryListItems)
           ),
         div(className := classes("content"))(
           div(className := classes("appBarSpacer"))(),
-          Mui
-            .Typography()
-            .variant(Style.h4)
-            .gutterBottom(true)
-            .component("h2".asInstanceOf[ReactComponentClass[TypographyProps]])("Products"),
-          div(className := classes("tableContainer"))(
-            SimpleTable(())
-          )
-        )
+          BrowserRouter(
+              Route(RouteProps()
+                .setExact(true)
+                .setPath("/")
+                .setRender(_ => div(Mui
+                  .Typography()
+                  .variant(Style.h4)
+                  .gutterBottom(true)
+                  .component("h2".asInstanceOf[ReactComponentClass[TypographyProps]])("Products"),
+                  div(className := classes("tableContainer"))(
+                    SimpleTable()
+                  )))),
+            Route(RouteProps()
+                .setExact(true)
+                .setPath("/button")
+                .setRender(_ => div(Mui
+                  .Typography()
+                  .variant(Style.h4)
+                  .gutterBottom(true)
+                  .component("h2".asInstanceOf[ReactComponentClass[TypographyProps]])("Button"),
+                  div(className := classes("tableContainer"))(
+                      ButtonTest("dear user"),
+                      SelectDemo(List("one", "two", "three")),
+                      StyledButtonDemo(),
+                      StyledButtonHooksDemo()
+                  )))),
+            Route(RouteProps()
+                .setExact(true)
+                .setPath("/album")
+                .setRender(_ => div(Mui
+                  .Typography()
+                  .variant(Style.h4)
+                  .gutterBottom(true)
+                  .component("h2".asInstanceOf[ReactComponentClass[TypographyProps]])("Album"),
+                  div(className := classes("tableContainer"))(
+                    SimpleTable()
+                  ))))
+
+          ))
+
       )
   }
 

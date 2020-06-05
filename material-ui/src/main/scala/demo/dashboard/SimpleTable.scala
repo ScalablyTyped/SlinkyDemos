@@ -40,8 +40,10 @@ import scala.scalajs.js
     Data(5, "Gingerbread", 356, 16.0, 49, 3.9)
   )
 
-  val component: FunctionalComponent[Unit] = FunctionalComponent[Unit] {
-    case () =>
+  type Props = Unit
+
+  val component: FunctionalComponent[Props] = FunctionalComponent[Props] {
+    _ =>
       val classes = styles()
       Mui.Paper.className(classes("root"))(
         Mui.Table(className := classes("table"))(

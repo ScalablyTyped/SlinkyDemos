@@ -69,8 +69,10 @@ import scala.scalajs.js
 
   val cards = 1 to 12
 
+  type Props = Unit
+
   val component: FunctionalComponent[Unit] = FunctionalComponent[Unit] {
-    case () =>
+    _ =>
       val classes = styles(js.undefined)
 
       Fragment()(

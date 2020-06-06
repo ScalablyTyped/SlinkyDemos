@@ -178,10 +178,15 @@ lazy val `material-ui` =
       webpackDevServerPort := 8008,
       stFlavour := Flavour.Slinky,
       stExperimentalEnableImplicitOps := true,
-      stIgnore ++= List("@material-ui/icons"),
       Compile / npmDependencies ++= Seq(
         "@material-ui/core" -> "3.9.3", // note: version 4 is not supported yet
-        "@material-ui/styles" -> "3.0.0-alpha.10" // note: version 4 is not supported yet
+        "@material-ui/styles" -> "3.0.0-alpha.10", // note: version 4 is not supported yet
+        "@material-ui/icons" -> "3.0.2",
+        "recharts" -> "1.8.5",
+        "@types/recharts" -> "1.8.10",
+        "@types/classnames" -> "2.2.10",
+        "react-router-dom" -> "5.1.2",
+        "@types/react-router-dom" -> "5.1.2"
       )
     )
 

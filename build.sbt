@@ -218,6 +218,20 @@ lazy val `office-ui-fabric-react` = project
     )
   )
 
+lazy val `react-dnd` = project
+  .enablePlugins(ScalablyTypedConverterPlugin)
+  .configure(baseSettings, browserProject, reactNpmDeps, bundlerSettings)
+  .settings(
+    useYarn := true,
+    webpackDevServerPort := 8011,
+    stFlavour := Flavour.Slinky,
+    stExperimentalEnableImplicitOps := true,
+    Compile / npmDependencies ++= Seq(
+      "react-dnd" -> "11.1.3",
+      "react-dnd-html5-backend" -> "11.1.3",
+    )
+  )
+
 /** Note: This can't use scalajs-bundler (at least I don't know how),
   *  so we run yarn ourselves with an external package.json.
   **/

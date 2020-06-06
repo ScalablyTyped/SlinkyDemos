@@ -151,7 +151,7 @@ lazy val antd =
       webpackDevServerPort := 8006,
       stExperimentalEnableImplicitOps := true,
       stFlavour := Flavour.Slinky,
-      Compile / npmDependencies ++= Seq("antd" -> "3.26.0") // todo: bump to 4
+      Compile / npmDependencies ++= Seq("antd" -> "4.3.1")
     )
 
 lazy val `react-router-dom` =

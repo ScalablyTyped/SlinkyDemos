@@ -1,4 +1,4 @@
-package demo.album
+package demo.components
 
 import demo.StyleBuilder
 import org.scalablytyped.runtime.StringDictionary
@@ -42,8 +42,9 @@ import scala.scalajs.js
           classNames(StringDictionary[js.Any](classes("credit") -> true, classes("hideCredit") -> props.hideCredit))
         )(
           "Built with ",
-          span(role := "img", aria := "Love")("❤"),
-          Link.color(Color.inherit).href("/")("ScalablyTyped Material-UI"),
+          span(role := "img", aria-"label" := "Love")("❤️"),
+          " by the ",
+          Link.color(Color.inherit).href("www.scalablytyped.org")("ScalablyTyped Material-UI"),
           " team."
         )
     )

@@ -34,7 +34,7 @@ object ListItems {
 
   val secondaryListItems: ReactElement =
     div(
-      ListSubheader.inset(true)(""),
+      ListSubheader.inset(true)("Saved reports"),
       ListItem.button(true)(
         ListItemIcon(Icon.Assignment()),
         ListItemText.primary("Current month")

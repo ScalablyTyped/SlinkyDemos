@@ -179,7 +179,7 @@ lazy val `material-ui` =
       stFlavour := Flavour.Slinky,
       stExperimentalEnableImplicitOps := true,
       Compile / npmDependencies ++= Seq(
-        "@material-ui/core" -> "3.9.3", // note: version 4 is not supported yet
+        "@material-ui/core" -> "3.9.4", // note: version 4 is not supported yet
         "@material-ui/styles" -> "3.0.0-alpha.10", // note: version 4 is not supported yet
         "@material-ui/icons" -> "3.0.2",
         "recharts" -> "1.8.5",

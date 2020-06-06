@@ -22,10 +22,13 @@ object Demo {
 
   type Props = Unit
 
+  /* the production build is deployed at github pages under /material-ui , while dev build is server from root of webpack-dev-server */
+  val basename = if (scala.scalajs.runtime.linkingInfo.productionMode) "material-ui" else ""
+
   val Main: FunctionalComponent[Props] = FunctionalComponent[Props] {
     case () =>
       ThemeProvider(theme)(
-        BrowserRouter(
+        BrowserRouter.basename(basename)(
           Route(
             RouteProps()
               .setExact(true)
@@ -85,9 +88,11 @@ object Demo {
       )
   }
 
-  def main(argv: Array[String]): Unit =
+  def main(argv: Array[String]): Unit = {
+    println("starting")
     ReactDOM.render(
       Main(()),
       dom.document.getElementById("container")
     )
+  }
 }

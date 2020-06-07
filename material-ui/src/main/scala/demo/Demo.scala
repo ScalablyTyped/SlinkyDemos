@@ -3,6 +3,7 @@ package demo
 import demo.album.Album
 import demo.button.{ButtonTest, SelectDemo, StyledButtonDemo, StyledButtonHooksDemo}
 import demo.components.AppTheme
+import demo.customization.{DarkTheme, Palette}
 import demo.dashboard.Dashboard
 import org.scalajs.dom
 import slinky.core.FunctionalComponent
@@ -55,6 +56,9 @@ object Demo {
                   ),
                   Link[String](to = "/select")(
                     ListItem.button(true)(ListItemIcon(Icon.Assignment()), ListItemText.primary("Select"))
+                  ),
+                  Link[String](to = "/customization")(
+                    ListItem.button(true)(ListItemIcon(Icon.Assignment()), ListItemText.primary("Customization"))
                   )
                 )
               )
@@ -88,6 +92,17 @@ object Demo {
                 Fragment(
                   Typography.variant(Style.h4).gutterBottom(true).component("h2")("Select"),
                   SelectDemo(scala.List("one", "two", "three"))
+                )
+              )
+          ),
+          Route(
+            RouteProps()
+              .setPath("/customization")
+              .setRender(_ =>
+                Fragment(
+                  Typography.variant(Style.h4).gutterBottom(true).component("h2")("Customization"),
+                  DarkTheme(),
+                  Palette()
                 )
               )
           )

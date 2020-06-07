@@ -2,14 +2,20 @@ package demo
 
 import demo.album.Album
 import demo.button.{ButtonTest, SelectDemo, StyledButtonDemo, StyledButtonHooksDemo}
+import demo.components.AppTheme
+import demo.customization.{DarkTheme, Palette}
 import demo.dashboard.Dashboard
 import org.scalajs.dom
 import slinky.core.FunctionalComponent
 import slinky.core.facade.Fragment
 import slinky.web.ReactDOM
+import typings.materialUiCore.colorManipulatorMod.darken
+import typings.materialUiCore.colorsMod.{blue, pink}
 import typings.materialUiCore.components.{List, ListItem, ListItemIcon, ListItemText, ListSubheader, Typography}
-import typings.materialUiCore.createMuiThemeMod.{Theme, ThemeOptions}
-import typings.materialUiCore.spacingMod.SpacingOptions
+import typings.materialUiCore.createMuiThemeMod.{Direction, Theme, ThemeOptions}
+import typings.materialUiCore.createPaletteMod.{ColorPartial, PaletteOptions, SimplePaletteColorOptions}
+import typings.materialUiCore.createTypographyMod.TypographyOptions
+import typings.materialUiCore.mod.PaletteType
 import typings.materialUiCore.stylesMod.createMuiTheme
 import typings.materialUiCore.typographyTypographyMod.Style
 import typings.materialUiIcons.{components => Icon}
@@ -18,7 +24,10 @@ import typings.reactRouter.mod.RouteProps
 import typings.reactRouterDom.components.{BrowserRouter, Link, Route}
 
 object Demo {
-  val theme: Theme = createMuiTheme(ThemeOptions().setSpacing(SpacingOptions().setUnit(2)))
+
+  val theme: Theme = createMuiTheme(ThemeOptions()
+    .setTypography(TypographyOptions().setUseNextVariants(true)) // https://v3.material-ui.com/style/typography/#migration-to-typography-v2
+  )
 
   type Props = Unit
 
@@ -47,18 +56,20 @@ object Demo {
                   ),
                   Link[String](to = "/select")(
                     ListItem.button(true)(ListItemIcon(Icon.Assignment()), ListItemText.primary("Select"))
+                  ),
+                  Link[String](to = "/customization")(
+                    ListItem.button(true)(ListItemIcon(Icon.Assignment()), ListItemText.primary("Customization"))
                   )
                 )
               )
           ),
-          Route(RouteProps().setPath("/dashboard").setRender(_ => Dashboard())),
+          Route(RouteProps().setPath("/dashboard").setRender(_ => AppTheme(title = "Dashboard page layout example - Material-UI", description = "An example layout for creating an albumn.", hideCredit = true)(Dashboard()))),
           Route(
             RouteProps()
               .setPath("/album")
               .setRender(_ =>
                 Fragment(
-                  Typography().variant(Style.h4).gutterBottom(true).component("h2")("Album"),
-                  Album()
+                  AppTheme(title = "Album page layout - Material-UI", description = "An example layout for creating an album or gallery.")(Album())
                 )
               )
           ),
@@ -81,6 +92,17 @@ object Demo {
                 Fragment(
                   Typography.variant(Style.h4).gutterBottom(true).component("h2")("Select"),
                   SelectDemo(scala.List("one", "two", "three"))
+                )
+              )
+          ),
+          Route(
+            RouteProps()
+              .setPath("/customization")
+              .setRender(_ =>
+                Fragment(
+                  Typography.variant(Style.h4).gutterBottom(true).component("h2")("Customization"),
+                  DarkTheme(),
+                  Palette()
                 )
               )
           )

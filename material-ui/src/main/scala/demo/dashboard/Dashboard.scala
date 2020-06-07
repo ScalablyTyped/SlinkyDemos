@@ -100,7 +100,7 @@ import scala.scalajs.js
                 "width",
                 Partialdurationnumberstri()
                   .setEasing(theme.transitions.easing.sharp)
-                  .setDuration(theme.transitions.duration.enteringScreen)
+                  .setDuration(theme.transitions.duration.leavingScreen)
               )
             )
             .setWidth(theme.spacing.unit * 7)

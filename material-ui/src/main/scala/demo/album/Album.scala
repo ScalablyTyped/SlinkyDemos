@@ -12,8 +12,9 @@ import typings.materialUiCore.components._
 import typings.materialUiCore.createMuiThemeMod.Theme
 import typings.materialUiCore.materialUiCoreNumbers._
 import typings.materialUiCore.materialUiCoreStrings.{center, contained, small, static, textSecondary}
+import typings.materialUiCore.materialUiCoreStrings.outlined
 import typings.materialUiCore.mod.PropTypes.Color
-import typings.materialUiCore.typographyTypographyMod.Style
+import typings.materialUiCore.typographyTypographyMod.{Style, TypographyProps}
 import typings.materialUiIcons.{components => Icons}
 import typings.materialUiStyles.makeStylesMod.StylesHook
 import typings.materialUiStyles.withStylesMod.{CSSProperties, Styles}
@@ -26,7 +27,7 @@ import scala.scalajs.js
   lazy val styles: StylesHook[Styles[Theme, js.Object, String]] = {
     StyleBuilder[Theme, js.Object]
       .add("appBar", CSSProperties().setPosition(relative))
-      .add("icon", theme => CSSProperties().setMarginLeft(theme.spacing.unit * 2))
+      .add("icon", theme => CSSProperties().setMarginRight(theme.spacing.unit * 2))
       .add("heroUnit", theme => CSSProperties().setBackgroundColor(theme.palette.background.paper))
       .add(
         "heroContent",
@@ -63,7 +64,7 @@ import scala.scalajs.js
       .hook
   }
 
-  val cards = 1 to 12
+  val cards: Seq[Int] = 1 to 12
 
   type Props = Unit
 
@@ -76,33 +77,42 @@ import scala.scalajs.js
         .position(static)
         .className(classes("appBar"))(
           Toolbar(
-            Icons.Camera.className(classes("icon"))(),
+            Icons.PhotoCamera.className(classes("icon"))(),
             Typography.variant(Style.h6).color(Color.inherit)("Album layout")
           )
         ),
       main(
         div(className := classes("heroUnit"))(
           div(className := classes("heroContent"))(
-            Typography(h1())
+            Typography
               .variant(Style.h2)
               .align(center)
               .color(textSecondary)
+              .gutterBottom(true)
+              .component("h1")(
+                "Album Layout"
+              ),
+            Typography
+              .variant(Style.h6)
+              .align(center)
+              .color(textSecondary)
               .paragraph(true)(
-                """Something short and leading about the collection below—its contents, the creator, etc.
-                  |Make it short and sweet, but not too short so folks don&apos;t simply skip over it
-                  |entirely.""".stripMargin
+                """Something short and leading about the collection below—its
+                  |contents, the creator, etc. Make it short and sweet, but not too
+                  |short so folks don't simply skip over it entirely.""".stripMargin
               ),
             div(className := classes("heroButtons"))(
               Grid
                 .container(true)
                 .spacing(`16`)
                 .justify(center)(
-                  Grid.item(true)(Button.variant(contained).color(Color.primary)("Secondary action"))
+                  Grid.item(true)(Button.variant(contained).color(Color.primary)("Main call to action")),
+                  Grid.item(true)(Button.variant(outlined).color(Color.primary)("Secondary action"))
                 )
             )
           )
         ),
-        div(className := classNames(StringDictionary[js.Any](classes("appBar") -> true, classes("cardGrid") -> true)))(
+        div(className := classNames(StringDictionary[js.Any](classes("layout") -> true, classes("cardGrid") -> true)))(
           Grid
             .container(true)
             .spacing(`40`)(cards.map { card =>

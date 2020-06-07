@@ -5,17 +5,14 @@ import demo.button.{ButtonTest, SelectDemo, StyledButtonDemo, StyledButtonHooksD
 import demo.components.AppTheme
 import demo.customization.{DarkTheme, Palette}
 import demo.dashboard.Dashboard
+import demo.signin.SignIn
 import org.scalajs.dom
 import slinky.core.FunctionalComponent
 import slinky.core.facade.Fragment
 import slinky.web.ReactDOM
-import typings.materialUiCore.colorManipulatorMod.darken
-import typings.materialUiCore.colorsMod.{blue, pink}
 import typings.materialUiCore.components.{List, ListItem, ListItemIcon, ListItemText, ListSubheader, Typography}
-import typings.materialUiCore.createMuiThemeMod.{Direction, Theme, ThemeOptions}
-import typings.materialUiCore.createPaletteMod.{ColorPartial, PaletteOptions, SimplePaletteColorOptions}
+import typings.materialUiCore.createMuiThemeMod.{Theme, ThemeOptions}
 import typings.materialUiCore.createTypographyMod.TypographyOptions
-import typings.materialUiCore.mod.PaletteType
 import typings.materialUiCore.stylesMod.createMuiTheme
 import typings.materialUiCore.typographyTypographyMod.Style
 import typings.materialUiIcons.{components => Icon}
@@ -51,6 +48,9 @@ object Demo {
                   Link[String](to = "/album")(
                     ListItem.button(true)(ListItemIcon(Icon.Assignment()), ListItemText.primary("Album"))
                   ),
+                  Link[String](to = "/signin")(
+                    ListItem.button(true)(ListItemIcon(Icon.Assignment()), ListItemText.primary("Sign In"))
+                  ),
                   Link[String](to = "/button")(
                     ListItem.button(true)(ListItemIcon(Icon.Assignment()), ListItemText.primary("Buttons"))
                   ),
@@ -70,6 +70,15 @@ object Demo {
               .setRender(_ =>
                 Fragment(
                   AppTheme(title = "Album page layout - Material-UI", description = "An example layout for creating an album or gallery.")(Album())
+                )
+              )
+          ),
+          Route(
+            RouteProps()
+              .setPath("/signin")
+              .setRender(_ =>
+                Fragment(
+                  AppTheme(title = "Sign-in page layout example - Material-UI", description = "An example layout for creating a sign-in page.")(SignIn())
                 )
               )
           ),

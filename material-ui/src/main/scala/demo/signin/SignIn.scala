@@ -21,22 +21,39 @@ import scala.scalajs.js
 
   lazy val styles: StylesHook[Styles[Theme, js.Object, String]] =
     StyleBuilder[Theme, js.Object]
-      .add("main", theme => CSSProperties()
-        .setWidth("auto")
-        .setDisplay(block).setMarginLeft(theme.spacing.unit * 3)
-        .setMarginRight(theme.spacing.unit * 3)
-        .set(theme.breakpoints.up(400 + theme.spacing.unit * 2 * 2), CSSProperties()
-          .setWidth(400)
-          .setMarginLeft("auto")
-          .setMarginRight("auto")))
-      .add("paper", theme => CSSProperties()
-        .setMarginTop(theme.spacing.unit * 8).setDisplay(flex)
-        .setFlexDirection(column).setAlignItems(center)
-        .setPadding(s"${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px")
+      .add(
+        "main",
+        theme =>
+          CSSProperties()
+            .setWidth("auto")
+            .setDisplay(block)
+            .setMarginLeft(theme.spacing.unit * 3)
+            .setMarginRight(theme.spacing.unit * 3)
+            .set(
+              theme.breakpoints.up(400 + theme.spacing.unit * 2 * 2),
+              CSSProperties()
+                .setWidth(400)
+                .setMarginLeft("auto")
+                .setMarginRight("auto")
+            )
       )
-      .add("avatar", theme => CSSProperties()
-        .setMargin(theme.spacing.unit)
-        .setBackgroundColor(theme.palette.secondary.main))
+      .add(
+        "paper",
+        theme =>
+          CSSProperties()
+            .setMarginTop(theme.spacing.unit * 8)
+            .setDisplay(flex)
+            .setFlexDirection(column)
+            .setAlignItems(center)
+            .setPadding(s"${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px")
+      )
+      .add(
+        "avatar",
+        theme =>
+          CSSProperties()
+            .setMargin(theme.spacing.unit)
+            .setBackgroundColor(theme.palette.secondary.main)
+      )
       .add("form", theme => CSSProperties().setWidth("100%").setMarginTop(theme.spacing.unit))
       .add("submit", theme => CSSProperties().setMarginTop(theme.spacing.unit * 3))
       .hook
@@ -49,30 +66,33 @@ import scala.scalajs.js
 
       main(className := classes("main"))(
         CssBaseline(),
-        Paper().className(classes("paper"))(
-          Avatar().className(classes("avatar"))(
-            Icons.LockOutlined()
-          ),
-          Typography()
-            .variant(Style.h5)
-            .component("h1")("Sign in"),
+        Paper.className(classes("paper"))(
+          Avatar.className(classes("avatar"))(Icons.LockOutlined()),
+          Typography.variant(Style.h5).component("h1")("Sign in"),
           form(className := classes("form"))(
-            FormControl().margin(normal).required(true).fullWidth(true)(
-              InputLabel().htmlFor("email")("Email Address"),
-              Input().id("email").name("email").autoComplete("email").autoFocus(true)
-            ),
-            FormControl().margin(normal).required(true).fullWidth(true)(
-              InputLabel().htmlFor("password")("Password"),
-              Input().id("password").name("password").autoComplete("current-password")
-            ),
-            FormControlLabel(Checkbox().value("remember").color(primary)).label("Remember Me"),
-            Button().`type`(submit)
+            FormControl
+              .margin(normal)
+              .required(true)
+              .fullWidth(true)(
+                InputLabel.htmlFor("email")("Email Address"),
+                Input.id("email").name("email").autoComplete("email").autoFocus(true)
+              ),
+            FormControl
+              .margin(normal)
+              .required(true)
+              .fullWidth(true)(
+                InputLabel.htmlFor("password")("Password"),
+                Input.id("password").name("password").autoComplete("current-password")
+              ),
+            FormControlLabel(Checkbox.value("remember").color(primary)).label("Remember Me"),
+            Button
+              .`type`(submit)
               .fullWidth(true)
               .variant(contained)
-              .color(primary).className(classes("submit"))("Sign in")
+              .color(primary)
+              .className(classes("submit"))("Sign in")
           )
         )
       )
   }
 }
-

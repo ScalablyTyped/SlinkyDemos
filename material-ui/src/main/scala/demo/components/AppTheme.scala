@@ -16,7 +16,7 @@ import typings.materialUiCore.createPaletteMod.{ColorPartial, PaletteColorOption
 import typings.materialUiCore.createTypographyMod.TypographyOptions
 import typings.materialUiCore.materialUiCoreStrings.{center, textSecondary}
 import typings.materialUiCore.mod.PropTypes.Color
-import typings.materialUiCore.stylesMod
+import typings.materialUiCore.stylesMod.createMuiTheme
 import typings.materialUiStyles.makeStylesMod.StylesHook
 import typings.materialUiStyles.withStylesMod._
 
@@ -26,15 +26,16 @@ import scala.scalajs.js
 @react object AppTheme {
 
   // https://github.com/mui-org/material-ui/blob/v3.x/docs/src/modules/styles/themeInitialState.js
-  val theme: Theme = stylesMod
-    .createMuiTheme(
-      ThemeOptions().setDirection(Direction.ltr)
-        .setTypography(TypographyOptions().setUseNextVariants(true))
-        .setPalette(PaletteOptions()
+  val theme: Theme = createMuiTheme(
+    ThemeOptions()
+      .setDirection(Direction.ltr)
+      .setTypography(TypographyOptions().setUseNextVariants(true))
+      .setPalette(
+        PaletteOptions()
           .setPrimary(ColorPartial().combineWith(blue))
           .setSecondary(PaletteColorOptions.SimplePaletteColorOptions(darken(pink.A400, 0.08))) // Darken so we reach the AA contrast ratio level.
-        ))
-
+      )
+  )
 
   lazy val styles: StylesHook[Styles[Theme, js.Object, String]] =
     StyleBuilder[Theme, js.Object]
@@ -49,7 +50,7 @@ import scala.scalajs.js
 
   val component: FunctionalComponent[Props] = FunctionalComponent[Props] { props =>
     val classes = styles(js.undefined)
-    MuiThemeProvider(theme)(Fragment(
+    MuiThemeProvider(theme)(
       props.children,
       Typography
         .color(textSecondary)
@@ -63,6 +64,6 @@ import scala.scalajs.js
           Link.color(Color.inherit).href("www.scalablytyped.org")("ScalablyTyped Material-UI"),
           " team."
         )
-    ))
+    )
   }
 }

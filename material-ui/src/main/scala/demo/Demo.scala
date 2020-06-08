@@ -22,8 +22,9 @@ import typings.reactRouterDom.components.{BrowserRouter, Link, Route}
 
 object Demo {
 
-  val theme: Theme = createMuiTheme(ThemeOptions()
-    .setTypography(TypographyOptions().setUseNextVariants(true)) // https://v3.material-ui.com/style/typography/#migration-to-typography-v2
+  val theme: Theme = createMuiTheme(
+    ThemeOptions()
+      .setTypography(TypographyOptions().setUseNextVariants(true)) // https://v3.material-ui.com/style/typography/#migration-to-typography-v2
   )
 
   type Props = Unit
@@ -63,13 +64,26 @@ object Demo {
                 )
               )
           ),
-          Route(RouteProps().setPath("/dashboard").setRender(_ => AppTheme(title = "Dashboard page layout example - Material-UI", description = "An example layout for creating an albumn.", hideCredit = true)(Dashboard()))),
+          Route(
+            RouteProps()
+              .setPath("/dashboard")
+              .setRender(_ =>
+                AppTheme(
+                  title = "Dashboard page layout example - Material-UI",
+                  description = "An example layout for creating an albumn.",
+                  hideCredit = true
+                )(Dashboard())
+              )
+          ),
           Route(
             RouteProps()
               .setPath("/album")
               .setRender(_ =>
                 Fragment(
-                  AppTheme(title = "Album page layout - Material-UI", description = "An example layout for creating an album or gallery.")(Album())
+                  AppTheme(
+                    title = "Album page layout - Material-UI",
+                    description = "An example layout for creating an album or gallery."
+                  )(Album())
                 )
               )
           ),
@@ -78,7 +92,10 @@ object Demo {
               .setPath("/signin")
               .setRender(_ =>
                 Fragment(
-                  AppTheme(title = "Sign-in page layout example - Material-UI", description = "An example layout for creating a sign-in page.")(SignIn())
+                  AppTheme(
+                    title = "Sign-in page layout example - Material-UI",
+                    description = "An example layout for creating a sign-in page."
+                  )(SignIn())
                 )
               )
           ),

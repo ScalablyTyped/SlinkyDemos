@@ -11,10 +11,9 @@ import typings.csstype.csstypeStrings.{auto, column, flex, relative}
 import typings.materialUiCore.components._
 import typings.materialUiCore.createMuiThemeMod.Theme
 import typings.materialUiCore.materialUiCoreNumbers._
-import typings.materialUiCore.materialUiCoreStrings.{center, contained, small, static, textSecondary}
-import typings.materialUiCore.materialUiCoreStrings.outlined
 import typings.materialUiCore.mod.PropTypes.Color
-import typings.materialUiCore.typographyTypographyMod.{Style, TypographyProps}
+import typings.materialUiCore.typographyTypographyMod.Style
+import typings.materialUiCore.{materialUiCoreStrings => strings}
 import typings.materialUiIcons.{components => Icons}
 import typings.materialUiStyles.makeStylesMod.StylesHook
 import typings.materialUiStyles.withStylesMod.{CSSProperties, Styles}
@@ -74,7 +73,7 @@ import scala.scalajs.js
     Fragment(
       CssBaseline(),
       AppBar
-        .position(static)
+        .position(strings.static)
         .className(classes("appBar"))(
           Toolbar(
             Icons.PhotoCamera.className(classes("icon"))(),
@@ -86,16 +85,16 @@ import scala.scalajs.js
           div(className := classes("heroContent"))(
             Typography
               .variant(Style.h2)
-              .align(center)
-              .color(textSecondary)
+              .align(strings.center)
+              .color(strings.textSecondary)
               .gutterBottom(true)
               .component("h1")(
                 "Album Layout"
               ),
             Typography
               .variant(Style.h6)
-              .align(center)
-              .color(textSecondary)
+              .align(strings.center)
+              .color(strings.textSecondary)
               .paragraph(true)(
                 """Something short and leading about the collection below—its
                   |contents, the creator, etc. Make it short and sweet, but not too
@@ -105,9 +104,9 @@ import scala.scalajs.js
               Grid
                 .container(true)
                 .spacing(`16`)
-                .justify(center)(
-                  Grid.item(true)(Button.variant(contained).color(Color.primary)("Main call to action")),
-                  Grid.item(true)(Button.variant(outlined).color(Color.primary)("Secondary action"))
+                .justify(strings.center)(
+                  Grid.item(true)(Button.variant(strings.contained).color(Color.primary)("Main call to action")),
+                  Grid.item(true)(Button.variant(strings.outlined).color(Color.primary)("Secondary action"))
                 )
             )
           )
@@ -140,8 +139,8 @@ import scala.scalajs.js
                         )
                       ),
                     CardActions(
-                      Button.size(small).color(Color.primary)("View"),
-                      Button.size(small).color(Color.primary)("Edit")
+                      Button.size(strings.small).color(Color.primary)("View"),
+                      Button.size(strings.small).color(Color.primary)("Edit")
                     )
                   )
                 )
@@ -152,14 +151,14 @@ import scala.scalajs.js
       footer(className := classes("footer"))(
         Typography
           .variant(Style.h6)
-          .align(center)
+          .align(strings.center)
           .gutterBottom(true)(
             "Footer"
           ),
         Typography
           .variant(Style.subtitle1)
-          .align(center)
-          .color(textSecondary)
+          .align(strings.center)
+          .color(strings.textSecondary)
           .component("p")(
             "Something here to give the footer a purpose!"
           )

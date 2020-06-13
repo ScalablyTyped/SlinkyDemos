@@ -9,24 +9,12 @@ var local = {
                 use: ['style-loader', 'css-loader']
             },
             {
-                test: /\.(ttf|eot|woff|png|glb)$/,
+                test: /\.(ttf|eot|woff|png|glb|svg)$/,
                 use: 'file-loader'
             },
             {
                 test: /\.(eot)$/,
                 use: 'url-loader'
-            },
-            // "file" loader for svg
-            {
-                test: /\.svg\$/,
-                use: [
-                    {
-                        loader: 'file-loader',
-                        query: {
-                            name: 'static/media/[name].[hash:8].[ext]'
-                        }
-                    }
-                ]
             }
         ]
     }

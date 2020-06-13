@@ -5,6 +5,7 @@ import demo.button.{ButtonTest, SelectDemo, StyledButtonDemo, StyledButtonHooksD
 import demo.components.AppTheme
 import demo.customization.{DarkTheme, Palette}
 import demo.dashboard.Dashboard
+import demo.login.Login
 import demo.signin.SignIn
 import org.scalajs.dom
 import slinky.core.FunctionalComponent
@@ -52,6 +53,9 @@ object Demo {
                   Link[String](to = "/signin")(
                     ListItem.button(true)(ListItemIcon(Icon.Assignment()), ListItemText.primary("Sign In"))
                   ),
+                  Link[String](to = "/login")(
+                    ListItem.button(true)(ListItemIcon(Icon.Assignment()), ListItemText.primary("Login"))
+                  ),
                   Link[String](to = "/button")(
                     ListItem.button(true)(ListItemIcon(Icon.Assignment()), ListItemText.primary("Buttons"))
                   ),
@@ -96,6 +100,18 @@ object Demo {
                     title = "Sign-in page layout example - Material-UI",
                     description = "An example layout for creating a sign-in page."
                   )(SignIn())
+                )
+              )
+          ),
+          Route(
+            RouteProps()
+              .setPath("/login")
+              .setRender(_ =>
+                Fragment(
+                  AppTheme(
+                    title = "Login page layout example - Material-UI",
+                    description = "An example layout for creating a login page."
+                  )(Login())
                 )
               )
           ),

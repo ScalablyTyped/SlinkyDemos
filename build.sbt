@@ -59,13 +59,9 @@ lazy val `react-mobx` =
       webpackDevServerPort := 8001,
       stFlavour := Flavour.Slinky,
       stExperimentalEnableImplicitOps := true,
-      stIgnore ++= List("material-ui/svg-icons"),
       Compile / npmDependencies ++= Seq(
-        "axios" -> "0.19.0",
-        "material-ui" -> "0.20.1",
         "mobx" -> "5.15.4",
         "mobx-react" -> "6.2.2",
-        "@types/material-ui" -> "0.21.7"
       )
     )
 

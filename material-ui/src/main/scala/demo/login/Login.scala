@@ -27,7 +27,6 @@ object Logo extends js.Object
 @js.native
 object GoogleLogo extends js.Object
 
-
 // https://github.com/flatlogic/react-material-admin/blob/master/src/pages/login/Login.js
 @react object Login {
 
@@ -36,20 +35,18 @@ object GoogleLogo extends js.Object
   val component: FunctionalComponent[Props] = FunctionalComponent[Props] { _ =>
     val classes = styles(js.undefined)
 
-    val (isLoading, setIsLoading)         = Hooks.useState(false);
-    val (error, setError)                 = Hooks.useState(false);
-    val (activeTabId, setActiveTabId)     = Hooks.useState(0);
-    val (nameValue, setNameValue)         = Hooks.useState("");
-    val (loginValue, setLoginValue)       = Hooks.useState("");
+    val (isLoading, setIsLoading) = Hooks.useState(false);
+    val (error, setError) = Hooks.useState(false);
+    val (activeTabId, setActiveTabId) = Hooks.useState(0);
+    val (nameValue, setNameValue) = Hooks.useState("");
+    val (loginValue, setLoginValue) = Hooks.useState("");
     val (passwordValue, setPasswordValue) = Hooks.useState("");
 
     Grid
       .container(true)
       .className(classes("container"))(
         div(className := classes("logotypeContainer"))(
-          img(src := Logo.asInstanceOf[String],
-            alt := "logo",
-            className := classes("logotypeImage")),
+          img(src := Logo.asInstanceOf[String], alt := "logo", className := classes("logotypeImage")),
           Typography.className(classes("logotypeText"))("Material Admin")
         ),
         div(className := classes("formContainer"))(
@@ -139,7 +136,9 @@ object GoogleLogo extends js.Object
                     .className(classes("greeting"))("Welcome"),
                   Typography.variant(Style.h2).className(classes("subGreeting"))("Create your account"),
                   Fade.in(error)(
-                    Typography.color(secondary).className(classes("errorMessage"))("Something is wrong with your login or password :(")
+                    Typography
+                      .color(secondary)
+                      .className(classes("errorMessage"))("Something is wrong with your login or password :(")
                   ),
                   TextField.StandardTextFieldProps
                     .id("name")
@@ -197,7 +196,8 @@ object GoogleLogo extends js.Object
                         .disabled(loginValue.length == 0 || passwordValue.length == 0)
                         .size(large)
                         .variant(contained)
-                        .color(primary).fullWidth(true)
+                        .color(primary)
+                        .fullWidth(true)
                         .className(classes("createAccountButton"))("Create your account")
                     }
                   ),
@@ -209,8 +209,14 @@ object GoogleLogo extends js.Object
                   Button
                     .color(primary)
                     .size(large)
-                    .className(classNames(StringDictionary[js.Any](classes("googleButton") -> true, classes("googleButtonCreating") -> true)))
-                    (
+                    .className(
+                      classNames(
+                        StringDictionary[js.Any](
+                          classes("googleButton") -> true,
+                          classes("googleButtonCreating") -> true
+                        )
+                      )
+                    )(
                       img(src := GoogleLogo.asInstanceOf[String], alt := "google", className := classes("googleIcon")),
                       "Sign in with Google"
                     )

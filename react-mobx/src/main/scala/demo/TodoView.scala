@@ -18,15 +18,11 @@ import slinky.web.html._
           case task           => rename(task)
         }
 
-      val onToggleCompleted = () => {
-        toggle()
-      }
-
       li(onDoubleClick := onRename)(
         input(
           `type` := "checkbox",
           checked := todo.completed,
-          onChange := onToggleCompleted
+          onChange := (() => toggle())
         ),
         todo.task,
         todo.assignee match {

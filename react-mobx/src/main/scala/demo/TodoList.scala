@@ -38,7 +38,7 @@ import slinky.web.html._
       }
 
       val todoViews = {
-        val ts = store.todos.get().l
+        val ts = store.todos.get().todos
         ts.indices.map(index =>
           TodoView(
             ts(index),

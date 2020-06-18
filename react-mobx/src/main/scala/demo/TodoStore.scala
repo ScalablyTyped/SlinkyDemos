@@ -22,13 +22,13 @@ object Todo {
 
 }
 
-case class Todos(l: List[Todo]) {
+case class Todos(todos: List[Todo]) {
 
-  def completedCount(): Int = l.count(_.completed == true)
+  def completedCount(): Int = todos.count(_.completed == true)
 
-  def findUncompleted(): Option[Todo] = l.find(_.completed == false)
+  def findUncompleted(): Option[Todo] = todos.find(_.completed == false)
 
-  def addNewTask(task: String): Todos = Todos(l :+ Todo.fromTask(task))
+  def addNewTask(task: String): Todos = Todos(todos :+ Todo.fromTask(task))
 
 }
 
@@ -54,13 +54,13 @@ class TodoStore {
       "Next todo: " + (ts.findUncompleted() match {
         case Some(nextTodo) => nextTodo.task
         case None           => "<none>"
-      }) + ". Progress: " + ts.completedCount() + "/" + ts.l.length
+      }) + ". Progress: " + ts.completedCount() + "/" + ts.todos.length
     }
 
   def changeTodos(f: Todos => Todos): Unit = todos.set(f(todos.get()))
 
   def updateTodo(index: Int, f: Todo => Todo): Unit =
-    changeTodos(t => Todos(t.l.updated(index, f(todos.get().l(index)))))
+    changeTodos(t => Todos(t.todos.updated(index, f(todos.get().todos(index)))))
 
   val addTodo: js.Function1[String, Unit] =
     MobX.action("addTodo", (task: String) => changeTodos(_.addNewTask(task)))

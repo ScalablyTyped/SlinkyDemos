@@ -1,9 +1,9 @@
 package slinky.core
 
-import slinky.core.facade.ReactElement
 import typings.mobxReact.mod.observer
+import slinky.core.facade.ReactElement
 
-object ObservingFC {
+object ObserverComponent {
   def apply[P](fn: P => ReactElement)(implicit name: FunctionalComponentName): FunctionalComponent[P] = {
     val base = FunctionalComponent(fn)
     new FunctionalComponent(observer(base.component))

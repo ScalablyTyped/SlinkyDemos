@@ -74,31 +74,37 @@ object Demo {
             RouteProps()
               .setPath("/dashboard")
               .setRender(_ =>
-                AppTheme(
-                  title = "Dashboard page layout example - Material-UI",
-                  description = "An example layout for creating an albumn.",
-                  hideCredit = true
-                )(Dashboard())
+                Fragment(
+                  AppTheme(
+                    title = "Dashboard page layout example - Material-UI",
+                    description = "An example layout for creating an albumn.",
+                    hideCredit = true
+                  )(Dashboard())
+                )
               )
           ),
           Route(
             RouteProps()
               .setPath("/album")
               .setRender(_ =>
-                AppTheme(
-                  title = "Album page layout - Material-UI",
-                  description = "An example layout for creating an album or gallery."
-                )(Album())
+                Fragment(
+                  AppTheme(
+                    title = "Album page layout - Material-UI",
+                    description = "An example layout for creating an album or gallery."
+                  )(Album())
+                )
               )
           ),
           Route(
             RouteProps()
               .setPath("/signin")
               .setRender(_ =>
-                AppTheme(
-                  title = "Sign-in page layout example - Material-UI",
-                  description = "An example layout for creating a sign-in page."
-                )(SignIn())
+                Fragment(
+                  AppTheme(
+                    title = "Sign-in page layout example - Material-UI",
+                    description = "An example layout for creating a sign-in page."
+                  )(SignIn())
+                )
               )
           ),
           Route(

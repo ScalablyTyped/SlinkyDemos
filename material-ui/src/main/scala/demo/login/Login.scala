@@ -15,6 +15,7 @@ import typings.materialUiCore.materialUiCoreStrings.contained
 import typings.materialUiCore.materialUiCoreStrings.secondary
 import typings.materialUiCore.typographyTypographyMod.Style
 import typings.classnames.{mod => classNames}
+import typings.std.{HTMLInputElement, HTMLTextAreaElement}
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSImport
@@ -92,7 +93,7 @@ object GoogleLogo extends js.Object
                         )
                     )
                     .value(loginValue)
-                    .onChange(e => setLoginValue(e.target.toString))
+                    .onChange(e => setLoginValue(e.currentTarget.asInstanceOf[HTMLInputElement].value))
                     .margin(normal)
                     .placeholder("Email Address")
                     .`type`("email")
@@ -108,7 +109,7 @@ object GoogleLogo extends js.Object
                         )
                     )
                     .value(passwordValue)
-                    .onChange(e => setPasswordValue(e.target.toString))
+                    .onChange(e => setPasswordValue(e.currentTarget.asInstanceOf[HTMLInputElement].value))
                     .margin(normal)
                     .placeholder("Password")
                     .`type`("password")
@@ -151,7 +152,7 @@ object GoogleLogo extends js.Object
                         )
                     )
                     .value(nameValue)
-                    .onChange(e => setNameValue(e.target.toString))
+                    .onChange(e => setNameValue(e.currentTarget.asInstanceOf[HTMLInputElement].value))
                     .margin(normal)
                     .placeholder("Full Name")
                     .`type`("text")
@@ -167,7 +168,7 @@ object GoogleLogo extends js.Object
                         )
                     )
                     .value(loginValue)
-                    .onChange(e => setLoginValue(e.target.toString))
+                    .onChange(e => setLoginValue(e.currentTarget.asInstanceOf[HTMLInputElement].value))
                     .margin(normal)
                     .placeholder("Email Address")
                     .`type`("email")
@@ -183,7 +184,7 @@ object GoogleLogo extends js.Object
                         )
                     )
                     .value(passwordValue)
-                    .onChange(e => setPasswordValue(e.target.toString))
+                    .onChange(e => setPasswordValue(e.currentTarget.asInstanceOf[HTMLInputElement].value))
                     .margin(normal)
                     .placeholder("Password")
                     .`type`("password")

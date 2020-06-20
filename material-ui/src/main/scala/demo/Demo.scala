@@ -83,37 +83,26 @@ object Demo {
             RouteProps()
               .setPath("/album")
               .setRender(_ =>
-                Fragment(
-                  AppTheme(
-                    title = "Album page layout - Material-UI",
-                    description = "An example layout for creating an album or gallery."
-                  )(Album())
-                )
+                AppTheme(
+                  title = "Album page layout - Material-UI",
+                  description = "An example layout for creating an album or gallery."
+                )(Album())
               )
           ),
           Route(
             RouteProps()
               .setPath("/signin")
               .setRender(_ =>
-                Fragment(
-                  AppTheme(
-                    title = "Sign-in page layout example - Material-UI",
-                    description = "An example layout for creating a sign-in page."
-                  )(SignIn())
-                )
+                AppTheme(
+                  title = "Sign-in page layout example - Material-UI",
+                  description = "An example layout for creating a sign-in page."
+                )(SignIn())
               )
           ),
           Route(
             RouteProps()
               .setPath("/login")
-              .setRender(_ =>
-                Fragment(
-                  AppTheme(
-                    title = "Login page layout example - Material-UI",
-                    description = "An example layout for creating a login page."
-                  )(Login())
-                )
-              )
+              .setRender(_ => Login())
           ),
           Route(
             RouteProps()

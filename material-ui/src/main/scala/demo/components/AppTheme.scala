@@ -33,7 +33,9 @@ import scala.scalajs.js
       .setPalette(
         PaletteOptions()
           .setPrimary(ColorPartial().combineWith(blue))
-          .setSecondary(PaletteColorOptions.SimplePaletteColorOptions(darken(pink.A400, 0.08))) // Darken so we reach the AA contrast ratio level.
+          .setSecondary(
+            PaletteColorOptions.SimplePaletteColorOptions(darken(pink.A400, 0.08))
+          ) // Darken so we reach the AA contrast ratio level.
       )
   )
 

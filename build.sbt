@@ -168,7 +168,7 @@ lazy val `react-router-dom` =
 lazy val `material-ui` =
   project
     .enablePlugins(ScalablyTypedConverterPlugin)
-    .configure(baseSettings, browserProject, reactNpmDeps, bundlerSettings)
+    .configure(baseSettings, browserProject, reactNpmDeps, withCssLoading, bundlerSettings)
     .settings(
       useYarn := true,
       webpackDevServerPort := 8008,

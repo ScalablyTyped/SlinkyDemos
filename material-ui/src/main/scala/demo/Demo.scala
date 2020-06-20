@@ -5,6 +5,7 @@ import demo.button.{ButtonTest, SelectDemo, StyledButtonDemo, StyledButtonHooksD
 import demo.components.AppTheme
 import demo.customization.{DarkTheme, Palette}
 import demo.dashboard.Dashboard
+import demo.login.Login
 import demo.signin.SignIn
 import org.scalajs.dom
 import slinky.core.FunctionalComponent
@@ -24,7 +25,9 @@ object Demo {
 
   val theme: Theme = createMuiTheme(
     ThemeOptions()
-      .setTypography(TypographyOptions().setUseNextVariants(true)) // https://v3.material-ui.com/style/typography/#migration-to-typography-v2
+      .setTypography(
+        TypographyOptions().setUseNextVariants(true)
+      ) // https://v3.material-ui.com/style/typography/#migration-to-typography-v2
   )
 
   type Props = Unit
@@ -51,6 +54,9 @@ object Demo {
                   ),
                   Link[String](to = "/signin")(
                     ListItem.button(true)(ListItemIcon(Icon.Assignment()), ListItemText.primary("Sign In"))
+                  ),
+                  Link[String](to = "/login")(
+                    ListItem.button(true)(ListItemIcon(Icon.Assignment()), ListItemText.primary("Login"))
                   ),
                   Link[String](to = "/button")(
                     ListItem.button(true)(ListItemIcon(Icon.Assignment()), ListItemText.primary("Buttons"))
@@ -79,25 +85,26 @@ object Demo {
             RouteProps()
               .setPath("/album")
               .setRender(_ =>
-                Fragment(
-                  AppTheme(
-                    title = "Album page layout - Material-UI",
-                    description = "An example layout for creating an album or gallery."
-                  )(Album())
-                )
+                AppTheme(
+                  title = "Album page layout - Material-UI",
+                  description = "An example layout for creating an album or gallery."
+                )(Album())
               )
           ),
           Route(
             RouteProps()
               .setPath("/signin")
               .setRender(_ =>
-                Fragment(
-                  AppTheme(
-                    title = "Sign-in page layout example - Material-UI",
-                    description = "An example layout for creating a sign-in page."
-                  )(SignIn())
-                )
+                AppTheme(
+                  title = "Sign-in page layout example - Material-UI",
+                  description = "An example layout for creating a sign-in page."
+                )(SignIn())
               )
+          ),
+          Route(
+            RouteProps()
+              .setPath("/login")
+              .setRender(_ => Login())
           ),
           Route(
             RouteProps()

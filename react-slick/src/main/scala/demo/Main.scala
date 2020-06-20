@@ -18,10 +18,11 @@ object Main {
     FunctionalComponent[Props] { props =>
       val (state, setState) = Hooks.useState(State(None))
 
-      def myOnClick(idx: Int): () => Unit = () => {
-        println(s"clicked image $idx")
-        setState(State(Some(idx)))
-      }
+      def myOnClick(idx: Int): () => Unit =
+        () => {
+          println(s"clicked image $idx")
+          setState(State(Some(idx)))
+        }
 
       val images: js.Array[ReactElement] =
         props.images.zipWithIndex.map {
@@ -53,7 +54,7 @@ object Main {
             "https://i.pinimg.com/474x/b0/15/4c/b0154cfc2fe3a664ac8f679df4debf56.jpg",
             "https://i.imgur.com/FqeTKrS.jpg",
             "https://static.boredpanda.com/blog/wp-content/uploads/2019/11/cat-fluffy-squirrel-tail-bell-7-5dca63b7b11a8__700.jpg",
-            "https://i.chzbgr.com/full/9428254976/hD3DA6B8F/cat",
+            "https://i.chzbgr.com/full/9428254976/hD3DA6B8F/cat"
           )
         )
       ),

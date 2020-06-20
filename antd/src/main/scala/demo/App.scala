@@ -36,54 +36,57 @@ object CSS extends js.Any
       Col.span(7)
     )
 
-    def renderGrid = section(
-      h2("Grid"),
-      Row(
-        Col.span(12)(div(className := "block blue1")("col-12")),
-        Col.span(12)(div(className := "block blue2")("col-12"))
-      ),
-      Row(
-        Col.span(8)(div(className := "block blue1")("col-8")),
-        Col.span(8)(div(className := "block blue2")("col-8")),
-        Col.span(8)(div(className := "block blue1")("col-8"))
-      ),
-      Row(
-        Col.span(6)(div(className := "block blue1")("col-6")),
-        Col.span(6)(div(className := "block blue2")("col-6")),
-        Col.span(6)(div(className := "block blue1")("col-6")),
-        Col.span(6)(div(className := "block blue2")("col-6"))
+    def renderGrid =
+      section(
+        h2("Grid"),
+        Row(
+          Col.span(12)(div(className := "block blue1")("col-12")),
+          Col.span(12)(div(className := "block blue2")("col-12"))
+        ),
+        Row(
+          Col.span(8)(div(className := "block blue1")("col-8")),
+          Col.span(8)(div(className := "block blue2")("col-8")),
+          Col.span(8)(div(className := "block blue1")("col-8"))
+        ),
+        Row(
+          Col.span(6)(div(className := "block blue1")("col-6")),
+          Col.span(6)(div(className := "block blue2")("col-6")),
+          Col.span(6)(div(className := "block blue1")("col-6")),
+          Col.span(6)(div(className := "block blue2")("col-6"))
+        )
       )
-    )
 
-    def renderTag = section(
-      h2("Tag"),
-      Tag("Tag 1"),
-      Tag.color(antdStrings.red)("red")
-    )
+    def renderTag =
+      section(
+        h2("Tag"),
+        Tag("Tag 1"),
+        Tag.color(antdStrings.red)("red")
+      )
 
     class TableItem(val key: Int, val name: String, val age: Int, val address: String) extends js.Object
 
-    def renderTable = section(
-      h2("Table"),
-      Table[TableItem]
-        .dataSource(
-          js.Array(
-            new TableItem(1, "Mike", 32, "10 Downing St."),
-            new TableItem(2, "John", 42, "10 Downing St.")
+    def renderTable =
+      section(
+        h2("Table"),
+        Table[TableItem]
+          .dataSource(
+            js.Array(
+              new TableItem(1, "Mike", 32, "10 Downing St."),
+              new TableItem(2, "John", 42, "10 Downing St.")
+            )
           )
-        )
-        .columns(
-          js.Array(
-            ColumnType[TableItem]()
-              .setTitleReactElement("Name")
-              .setDataIndex("name")
-              .setKey("name")
-              .setRender((_, tableItem, _) => Tag(tableItem.name): TagMod[Any]),
-            ColumnType[TableItem].setTitleReactElement("Age").setDataIndex("age").setKey("age"),
-            ColumnType[TableItem].setTitleReactElement("Address").setDataIndex("address").setKey("address")
+          .columns(
+            js.Array(
+              ColumnType[TableItem]()
+                .setTitleReactElement("Name")
+                .setDataIndex("name")
+                .setKey("name")
+                .setRender((_, tableItem, _) => Tag(tableItem.name): TagMod[Any]),
+              ColumnType[TableItem].setTitleReactElement("Age").setDataIndex("age").setKey("age"),
+              ColumnType[TableItem].setTitleReactElement("Address").setDataIndex("address").setKey("address")
+            )
           )
-        )
-    )
+      )
 
     val renderAlert = section(
       h2("Alert"),

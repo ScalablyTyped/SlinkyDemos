@@ -19,7 +19,9 @@ import typings.materialUiCore.stylesMod
         .setTypography(TypographyOptions().setUseNextVariants(true))
         .setPalette(
           PaletteOptions()
-            .setPrimary(PaletteColorOptions.SimplePaletteColorOptions(purple.`500`)) // Purple and green play nicely together.
+            .setPrimary(
+              PaletteColorOptions.SimplePaletteColorOptions(purple.`500`)
+            ) // Purple and green play nicely together.
             .setSecondary(PaletteColorOptions.SimplePaletteColorOptions("#11cb5f")) // This is just green.A700 as hex.
         )
     )

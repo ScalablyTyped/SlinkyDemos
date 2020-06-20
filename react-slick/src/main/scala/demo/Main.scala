@@ -18,10 +18,11 @@ object Main {
     FunctionalComponent[Props] { props =>
       val (state, setState) = Hooks.useState(State(None))
 
-      def myOnClick(idx: Int): () => Unit = () => {
-        println(s"clicked image $idx")
-        setState(State(Some(idx)))
-      }
+      def myOnClick(idx: Int): () => Unit =
+        () => {
+          println(s"clicked image $idx")
+          setState(State(Some(idx)))
+        }
 
       val images: js.Array[ReactElement] =
         props.images.zipWithIndex.map {

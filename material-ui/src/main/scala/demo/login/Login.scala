@@ -115,15 +115,14 @@ object GoogleLogo extends js.Object
                     .`type`("password")
                     .fullWidth(true),
                   div(className := classes("formButtons"))(
-                    if (isLoading) {
+                    if (isLoading)
                       CircularProgress.size(26).className(classes("loginLoader"))
-                    } else {
+                    else
                       Button
                         .disabled(loginValue.length == 0 || passwordValue.length == 0)
                         .variant(contained)
                         .color(primary)
-                        .size(large)("Login")
-                    },
+                        .size(large)("Login"),
                     Button
                       .color(primary)
                       .size(large)
@@ -190,9 +189,9 @@ object GoogleLogo extends js.Object
                     .`type`("password")
                     .fullWidth(true),
                   div(className := classes("formButtons"))(
-                    if (isLoading) {
+                    if (isLoading)
                       CircularProgress.size(26).className(classes("loginLoader"))
-                    } else {
+                    else
                       Button
                         .disabled(loginValue.length == 0 || passwordValue.length == 0)
                         .size(large)
@@ -200,7 +199,6 @@ object GoogleLogo extends js.Object
                         .color(primary)
                         .fullWidth(true)
                         .className(classes("createAccountButton"))("Create your account")
-                    }
                   ),
                   div(className := classes("formDividerContainer"))(
                     div(className := classes("formDivider")),

@@ -23,7 +23,7 @@ import scala.scalajs.js
 // https://v3.material-ui.com/getting-started/page-layout-examples/album/
 // https://github.com/mui-org/material-ui/blob/v3.x/docs/src/pages/getting-started/page-layout-examples/album/Album.js
 @react object Album {
-  lazy val styles: StylesHook[Styles[Theme, js.Object, String]] = {
+  lazy val styles: StylesHook[Styles[Theme, js.Object, String]] =
     StyleBuilder[Theme, js.Object]
       .add("appBar", CSSProperties().setPosition(relative))
       .add("icon", theme => CSSProperties().setMarginRight(theme.spacing.unit * 2))
@@ -61,7 +61,6 @@ import scala.scalajs.js
         theme => CSSProperties().setBackgroundColor(theme.palette.background.paper).setPadding(theme.spacing.unit * 6)
       )
       .hook
-  }
 
   val cards: Seq[Int] = 1 to 12
 

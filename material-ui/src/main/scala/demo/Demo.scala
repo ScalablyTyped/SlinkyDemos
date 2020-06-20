@@ -25,7 +25,9 @@ object Demo {
 
   val theme: Theme = createMuiTheme(
     ThemeOptions()
-      .setTypography(TypographyOptions().setUseNextVariants(true)) // https://v3.material-ui.com/style/typography/#migration-to-typography-v2
+      .setTypography(
+        TypographyOptions().setUseNextVariants(true)
+      ) // https://v3.material-ui.com/style/typography/#migration-to-typography-v2
   )
 
   type Props = Unit

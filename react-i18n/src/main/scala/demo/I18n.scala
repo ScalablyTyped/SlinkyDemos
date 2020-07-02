@@ -14,7 +14,7 @@ object I18n {
 
   val en = "en"
   private val enTexts = StringDictionary[js.Any](
-    "To get started, edit <1>src/App.js</1> and save to reload." -> ("To get started, edit <1>src/App.js</1> and save to reload."),
+    "To get started, edit <1>src/App.js</1> and save to reload." -> "To get started, edit <1>src/App.js</1> and save to reload.",
     "Welcome to React" -> "Welcome to React and react-i18next",
     "welcome" -> "Hello <br/> <strong>World</strong>"
   )
@@ -26,21 +26,22 @@ object I18n {
     "welcome" -> "Hello <br/> <strong>World</strong>"
   )
 
-  def initialize() = i18n
-    .use(new LanguageDetector)
-    .use(initReactI18next)
-    .init(
-      InitOptions()
-        .setResources(
-          StringDictionary(
-            en -> StringDictionary(namespace -> enTexts),
-            de -> StringDictionary(namespace -> deTexts)
+  def initialize() =
+    i18n
+      .use(new LanguageDetector)
+      .use(initReactI18next)
+      .init(
+        InitOptions()
+          .setResources(
+            StringDictionary(
+              en -> StringDictionary(namespace -> enTexts),
+              de -> StringDictionary(namespace -> deTexts)
+            )
           )
-        )
-        .setFallbackLng(en)
-        .setDebug(true)
-        .setDefaultNS(namespace)
-        .setKeySeparator(`false`)
-        .setInterpolation(InterpolationOptions().setEscapeValue(false))
-    )
+          .setFallbackLng(en)
+          .setDebug(true)
+          .setDefaultNS(namespace)
+          .setKeySeparator(`false`)
+          .setInterpolation(InterpolationOptions().setEscapeValue(false))
+      )
 }

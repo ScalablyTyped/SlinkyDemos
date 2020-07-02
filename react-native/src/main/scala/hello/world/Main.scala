@@ -7,9 +7,8 @@ import scala.scalajs.LinkingInfo
 import scala.scalajs.js.annotation.JSExportTopLevel
 
 object Main {
-  if (LinkingInfo.developmentMode) {
+  if (LinkingInfo.developmentMode)
     hot.initialize()
-  }
 
   @JSExportTopLevel("app")
   val app: ReactComponentClass[_] = LoadFonts.component

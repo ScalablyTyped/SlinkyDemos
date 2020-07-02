@@ -58,10 +58,9 @@ lazy val `react-mobx` =
       useYarn := true,
       webpackDevServerPort := 8001,
       stFlavour := Flavour.Slinky,
-      stExperimentalEnableImplicitOps := true,
       Compile / npmDependencies ++= Seq(
         "mobx" -> "5.15.4",
-        "mobx-react" -> "6.2.2",
+        "mobx-react" -> "6.2.2"
       )
     )
 
@@ -73,7 +72,6 @@ lazy val `react-slick` =
       useYarn := true,
       webpackDevServerPort := 8002,
       stFlavour := Flavour.Slinky,
-      stExperimentalEnableImplicitOps := true,
       Compile / npmDependencies ++= Seq(
         "react-slick" -> "0.23",
         "@types/react-slick" -> "0.23.4"
@@ -88,7 +86,6 @@ lazy val `react-big-calendar` =
       useYarn := true,
       webpackDevServerPort := 8003,
       stFlavour := Flavour.Slinky,
-      stExperimentalEnableImplicitOps := true,
       Compile / npmDependencies ++= Seq(
         "moment" -> "2.24.0",
         "react-big-calendar" -> "0.24.4",
@@ -103,7 +100,6 @@ lazy val `semantic-ui-react-kitchensink` = project
     useYarn := true,
     webpackDevServerPort := 8004,
     stFlavour := Flavour.Slinky,
-    stExperimentalEnableImplicitOps := true,
     Compile / npmDependencies ++= Seq(
       "semantic-ui-react" -> "0.88.2"
     )
@@ -111,7 +107,7 @@ lazy val `semantic-ui-react-kitchensink` = project
 
 /** Note: This can't use scalajs-bundler (at least I don't know how),
   *  so we run yarn ourselves with an external package.json.
-  **/
+  */
 lazy val `storybook-react` = project
   .enablePlugins(ScalablyTypedConverterExternalNpmPlugin)
   .configure(baseSettings)
@@ -122,7 +118,6 @@ lazy val `storybook-react` = project
       baseDirectory.value
     },
     stFlavour := Flavour.Slinky,
-    stExperimentalEnableImplicitOps := true,
     /** This is not suitable for development, but effective for demo.
       * Run `yarn storybook` commands yourself, and run `~storybook-react/fastOptJS` from sbt
       */
@@ -145,7 +140,6 @@ lazy val antd =
     .settings(
       useYarn := true,
       webpackDevServerPort := 8006,
-      stExperimentalEnableImplicitOps := true,
       stFlavour := Flavour.Slinky,
       Compile / npmDependencies ++= Seq("antd" -> "4.3.1")
     )
@@ -158,7 +152,6 @@ lazy val `react-router-dom` =
       useYarn := true,
       webpackDevServerPort := 8007,
       stFlavour := Flavour.Slinky,
-      stExperimentalEnableImplicitOps := true,
       Compile / npmDependencies ++= Seq(
         "react-router-dom" -> "5.1.2",
         "@types/react-router-dom" -> "5.1.2" // note 5.1.4 did weird things to the Link component
@@ -173,7 +166,6 @@ lazy val `material-ui` =
       useYarn := true,
       webpackDevServerPort := 8008,
       stFlavour := Flavour.Slinky,
-      stExperimentalEnableImplicitOps := true,
       Compile / npmDependencies ++= Seq(
         "@material-ui/core" -> "3.9.4", // note: version 4 is not supported yet
         "@material-ui/styles" -> "3.0.0-alpha.10", // note: version 4 is not supported yet
@@ -193,7 +185,6 @@ lazy val `react-leaflet` = project
     useYarn := true,
     webpackDevServerPort := 8009,
     stFlavour := Flavour.Slinky,
-    stExperimentalEnableImplicitOps := true,
     Compile / npmDependencies ++= Seq(
       "react-leaflet" -> "2.6.3",
       "@types/react-leaflet" -> "2.5.1",
@@ -208,7 +199,6 @@ lazy val `office-ui-fabric-react` = project
     useYarn := true,
     webpackDevServerPort := 8010,
     stFlavour := Flavour.Slinky,
-    stExperimentalEnableImplicitOps := true,
     Compile / npmDependencies ++= Seq(
       "office-ui-fabric-react" -> "7.107.1"
     )
@@ -221,10 +211,9 @@ lazy val `react-dnd` = project
     useYarn := true,
     webpackDevServerPort := 8011,
     stFlavour := Flavour.Slinky,
-    stExperimentalEnableImplicitOps := true,
     Compile / npmDependencies ++= Seq(
       "react-dnd" -> "11.1.3",
-      "react-dnd-html5-backend" -> "11.1.3",
+      "react-dnd-html5-backend" -> "11.1.3"
     )
   )
 
@@ -235,17 +224,16 @@ lazy val `react-i18n` = project
     useYarn := true,
     webpackDevServerPort := 8012,
     stFlavour := Flavour.Slinky,
-    stExperimentalEnableImplicitOps := true,
     Compile / npmDependencies ++= Seq(
       "i18next" -> "19.5.2",
       "i18next-browser-languagedetector" -> "5.0.0",
       "react-i18next" -> "11.7.0"
     )
   )
-                                                                      
+
 /** Note: This can't use scalajs-bundler (at least I don't know how),
   *  so we run yarn ourselves with an external package.json.
-  **/
+  */
 lazy val `react-native` = project
   .enablePlugins(ScalablyTypedConverterExternalNpmPlugin)
   .configure(baseSettings)
@@ -257,7 +245,6 @@ lazy val `react-native` = project
       baseDirectory.value
     },
     stFlavour := Flavour.SlinkyNative,
-    stExperimentalEnableImplicitOps := true,
     stStdlib := List("es5"),
     run := {
       (Compile / fastOptJS).value

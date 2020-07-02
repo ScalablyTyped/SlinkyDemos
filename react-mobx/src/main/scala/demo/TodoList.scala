@@ -30,10 +30,13 @@ import slinky.web.html._
 
       val onLoadTodo = () => {
         store.increasePending()
-        window.setTimeout(() => {
-          store.addTodo("Random Todo " + Math.random())
-          store.decreasePending()
-        }, 2000)
+        window.setTimeout(
+          () => {
+            store.addTodo("Random Todo " + Math.random())
+            store.decreasePending()
+          },
+          2000
+        )
         ()
       }
 

@@ -228,6 +228,21 @@ lazy val `react-dnd` = project
     )
   )
 
+lazy val `react-i18n` = project
+  .enablePlugins(ScalablyTypedConverterPlugin)
+  .configure(baseSettings, browserProject, reactNpmDeps, bundlerSettings)
+  .settings(
+    useYarn := true,
+    webpackDevServerPort := 8012,
+    stFlavour := Flavour.Slinky,
+    stExperimentalEnableImplicitOps := true,
+    Compile / npmDependencies ++= Seq(
+      "i18next" -> "15.0.6",
+      "i18next-browser-languagedetector" -> "2.2.0",
+      "react-i18next" -> "10.5.1",
+    )
+  )
+                                                                      
 /** Note: This can't use scalajs-bundler (at least I don't know how),
   *  so we run yarn ourselves with an external package.json.
   **/

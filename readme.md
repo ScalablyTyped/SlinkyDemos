@@ -67,6 +67,11 @@ This is a collection of tiny demo projects to show off how we can use react libr
 
 `sbt> react-i18n/start` starts a webpack-dev-server at http://localhost:8012 .
 
+### @nivo/line 
+[Demo](https://scalablytyped.github.io/SlinkyDemos/nivo/)
+
+`sbt> nivo/start` starts a webpack-dev-server at http://localhost:8013 .
+
 ## React-native 
 [Expo demo you can run on your phone](https://expo.io/@scalablytyped/scalably-typed-react-native)
 

@@ -42,9 +42,8 @@ lazy val baseSettings: Project => Project =
       scalaVersion := "2.13.2",
       scalacOptions ++= ScalacOptions.flags,
       scalaJSUseMainModuleInitializer := true,
-      scalaJSLinkerConfig ~= (/* disabled because it somehow triggers many warnings */
-      _.withSourceMap(false)
-        .withModuleKind(ModuleKind.CommonJSModule)),
+      /* disabled because it somehow triggers many warnings */
+      scalaJSLinkerConfig := scalaJSLinkerConfig.value.withSourceMap(false),
       /* for slinky */
       libraryDependencies ++= Seq("me.shadaj" %%% "slinky-hot" % "0.6.5"),
       scalacOptions += "-Ymacro-annotations"
@@ -228,6 +227,18 @@ lazy val `react-i18n` = project
       "i18next" -> "19.5.2",
       "i18next-browser-languagedetector" -> "5.0.0",
       "react-i18next" -> "11.7.0"
+    )
+  )
+
+lazy val `nivo` = project
+  .enablePlugins(ScalablyTypedConverterPlugin)
+  .configure(baseSettings, browserProject, reactNpmDeps, bundlerSettings)
+  .settings(
+    useYarn := true,
+    webpackDevServerPort := 8013,
+    stFlavour := Flavour.Slinky,
+    Compile / npmDependencies ++= Seq(
+      "@nivo/line" -> "0.62.0"
     )
   )
 

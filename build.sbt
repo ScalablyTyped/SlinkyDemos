@@ -237,9 +237,9 @@ lazy val `react-i18n` = project
     stFlavour := Flavour.Slinky,
     stExperimentalEnableImplicitOps := true,
     Compile / npmDependencies ++= Seq(
-      "i18next" -> "15.0.6",
-      "i18next-browser-languagedetector" -> "2.2.0",
-      "react-i18next" -> "10.5.1",
+      "i18next" -> "19.5.2",
+      "i18next-browser-languagedetector" -> "5.0.0",
+      "react-i18next" -> "11.7.0"
     )
   )
                                                                       

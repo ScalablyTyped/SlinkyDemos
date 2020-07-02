@@ -2,7 +2,7 @@ package demo
 
 import slinky.core._
 import slinky.core.annotations.react
-import slinky.core.facade.Hooks
+import slinky.core.facade.{Hooks, ReactElement}
 import slinky.web.html._
 import typings.antDesignIcons.{components => Icons}
 import typings.antd.antdStrings
@@ -81,7 +81,7 @@ object CSS extends js.Any
                 .setTitleReactElement("Name")
                 .setDataIndex("name")
                 .setKey("name")
-                .setRender((_, tableItem, _) => Tag(tableItem.name): TagMod[Any]),
+                .setRender((_, tableItem, _) => Tag(tableItem.name): ReactElement),
               ColumnType[TableItem].setTitleReactElement("Age").setDataIndex("age").setKey("age"),
               ColumnType[TableItem].setTitleReactElement("Address").setDataIndex("address").setKey("address")
             )

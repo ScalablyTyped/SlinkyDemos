@@ -8,3 +8,4 @@ local.properties
 .expo/
 .metals/
 project/metals.sbt
+out/

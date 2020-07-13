@@ -263,13 +263,17 @@ lazy val `react-native` = project
     }
   )
 
+// specify versions for all of reacts dependencies to compile less since we have many demos here
 lazy val reactNpmDeps: Project => Project =
   _.settings(
+    stTypescriptVersion := "3.9.3",
     Compile / npmDependencies ++= Seq(
       "react" -> "16.13.1",
       "react-dom" -> "16.13.1",
-      "@types/react" -> "16.9.34",
-      "@types/react-dom" -> "16.9.6"
+      "@types/react" -> "16.9.42",
+      "@types/react-dom" -> "16.9.8",
+      "csstype" -> "2.6.11",
+      "@types/prop-types" -> "15.7.3"
     )
   )
 

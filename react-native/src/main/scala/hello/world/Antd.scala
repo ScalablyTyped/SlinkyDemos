@@ -73,11 +73,9 @@ import scala.scalajs.js
           .closable(false)
           .title("Basic modal")
           .onClose(() => updateIsModalVisible(false))
-          .footer(
-            js.Array(
-              Action("Cancel").setOnPress(() => updateIsModalVisible(false)),
-              Action("OK").setOnPress(() => updateIsModalVisible(false))
-            )
+          .footerVarargs(
+            Action("Cancel").setOnPress(() => updateIsModalVisible(false)),
+            Action("OK").setOnPress(() => updateIsModalVisible(false))
           )
       )(Text("Some contents..."))
   }

@@ -69,22 +69,18 @@ object CSS extends js.Any
       section(
         h2("Table"),
         Table[TableItem]
-          .dataSource(
-            js.Array(
-              new TableItem(1, "Mike", 32, "10 Downing St."),
-              new TableItem(2, "John", 42, "10 Downing St.")
-            )
+          .dataSourceVarargs(
+            new TableItem(1, "Mike", 32, "10 Downing St."),
+            new TableItem(2, "John", 42, "10 Downing St.")
           )
-          .columns(
-            js.Array(
-              ColumnType[TableItem]()
-                .setTitleReactElement("Name")
-                .setDataIndex("name")
-                .setKey("name")
-                .setRender((_, tableItem, _) => Tag(tableItem.name): ReactElement),
-              ColumnType[TableItem].setTitleReactElement("Age").setDataIndex("age").setKey("age"),
-              ColumnType[TableItem].setTitleReactElement("Address").setDataIndex("address").setKey("address")
-            )
+          .columnsVarargs(
+            ColumnType[TableItem]()
+              .setTitleReactElement("Name")
+              .setDataIndex("name")
+              .setKey("name")
+              .setRender((_, tableItem, _) => Tag(tableItem.name): ReactElement),
+            ColumnType[TableItem].setTitleReactElement("Age").setDataIndex("age").setKey("age"),
+            ColumnType[TableItem].setTitleReactElement("Address").setDataIndex("address").setKey("address")
           )
       )
 

@@ -63,31 +63,29 @@ object App {
         .pointLabel("y")
         .pointLabelYOffset(-12)
         .useMesh(true)
-        .legends(
-          js.Array(
-            LegendProps(
-              anchor = LegendAnchor.`bottom-right`,
-              direction = LegendDirection.column,
-              itemHeight = 20,
-              itemWidth = 80
-            ).setJustify(false)
-              .setTranslateX(100)
-              .setTranslateY(0)
-              .setItemsSpacing(0)
-              .setItemDirection(LegendItemDirection.`left-to-right`)
-              .setItemOpacity(0.75)
-              .setSymbolSize(12)
-              .setSymbolShape(LegendSymbolShape.circle)
-              .setSymbolBorderColor("rgba(0, 0, 0, .5)")
-              .setEffects(
-                js.Array(
-                  LegendEffect(
-                    nivoLegendsStrings.hover,
-                    PartialitemTextColorstrin().setItemBackground("rgba(0, 0, 0, .03)").setItemOpacity(1)
-                  )
+        .legendsVarargs(
+          LegendProps(
+            anchor = LegendAnchor.`bottom-right`,
+            direction = LegendDirection.column,
+            itemHeight = 20,
+            itemWidth = 80
+          ).setJustify(false)
+            .setTranslateX(100)
+            .setTranslateY(0)
+            .setItemsSpacing(0)
+            .setItemDirection(LegendItemDirection.`left-to-right`)
+            .setItemOpacity(0.75)
+            .setSymbolSize(12)
+            .setSymbolShape(LegendSymbolShape.circle)
+            .setSymbolBorderColor("rgba(0, 0, 0, .5)")
+            .setEffects(
+              js.Array(
+                LegendEffect(
+                  nivoLegendsStrings.hover,
+                  PartialitemTextColorstrin().setItemBackground("rgba(0, 0, 0, .03)").setItemOpacity(1)
                 )
               )
-          )
+            )
         )
   }
 }

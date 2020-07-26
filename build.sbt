@@ -3,6 +3,11 @@ import java.nio.file.StandardCopyOption.REPLACE_EXISTING
 
 import scala.sys.process.Process
 
+Global / stRemoteCache := RemoteCache.Rsync(
+  push = "tso@olvind.com:/usr/share/nginx/html/st-cache",
+  pull = new java.net.URI("https://olvind.com/st-cache")
+)
+
 Global / onLoad := {
   println("""*
       |* Welcome to ScalablyTyped demos!

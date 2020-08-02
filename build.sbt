@@ -16,9 +16,9 @@ Global / onLoad := {
       |*
       |* For documentation see https://scalablytyped.org .
       |*
-      |* Note that the first time you import/compile the projects it'll take a while for the dependencies to build.
-      |*
-      |* If you import this the first time in a memory-constrained context like an IDE import, it'll take MUCH longer.
+      |* Note that when you change any conversion options or add/remove libraries a new conversion will be triggered.
+      |* This is somewhat slow (could be minutes, depending) but it'll only happen once for a given conversion.
+      |* If the conversion runs in a memory-constrained context like an IDE import, it might take MUCH longer.
       |*""".stripMargin)
   (Global / onLoad).value
 }

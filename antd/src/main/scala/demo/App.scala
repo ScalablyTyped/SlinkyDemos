@@ -4,7 +4,8 @@ import slinky.core._
 import slinky.core.annotations.react
 import slinky.core.facade.{Hooks, ReactElement}
 import slinky.web.html._
-import typings.antDesignIcons.{components => Icons}
+import typings.antDesignIcons.components.AntdIcon
+import typings.antDesignIconsSvg.{mod => Icons}
 import typings.antd.antdStrings
 import typings.antd.components._
 import typings.antd.notificationMod.{ArgsProps, IconType, default => Notification}
@@ -96,7 +97,7 @@ object CSS extends js.Any
     val renderButton =
       section(
         h2("Button"),
-        Button.icon(Icons.DownloadOutlined()).`type`(antdStrings.primary)("Download")
+        Button.icon(AntdIcon(Icons.DownloadOutlined)).`type`(antdStrings.primary)("Download")
       )
 
     val renderModal = section(
@@ -125,12 +126,12 @@ object CSS extends js.Any
         )
     )
 
-    val renderIcon = section(h2("Icon"), Icons.HomeOutlined())
+    val renderIcon = section(h2("Icon"), AntdIcon(Icons.HomeOutlined))
 
     val renderInput = section(
       h2("Input"),
       Input
-        .addonBefore(Icons.UserOutlined())
+        .addonBefore(AntdIcon(Icons.UserOutlined))
         .placeholder("Basic usage")
         .onChange(event => console.log(event.target_ChangeEvent.value))
     )
@@ -157,10 +158,10 @@ object CSS extends js.Any
         console.log("Form submitted", store)
       }(
         FormItem(
-          Input.addonBefore(Icons.MailTwoTone()).`type`(antdStrings.email).placeholder("input email")
+          Input.addonBefore(AntdIcon(Icons.MailTwoTone)).`type`(antdStrings.email).placeholder("input email")
         ),
         FormItem(
-          Password.addonBefore(Icons.LockTwoTone()).`type`(antdStrings.password).placeholder("input password")
+          Password.addonBefore(AntdIcon(Icons.LockTwoTone)).`type`(antdStrings.password).placeholder("input password")
         ),
         FormItem(Button.htmlType(antdStrings.submit).`type`(antdStrings.primary))("Log in")
       )

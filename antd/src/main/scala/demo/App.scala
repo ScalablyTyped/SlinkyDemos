@@ -8,9 +8,11 @@ import slinky.web.html._
 import typings.antDesignIcons.components.AntdIcon
 import typings.antDesignIconsSvg.{mod => Icons}
 import typings.antd.antdStrings
-import typings.antd.components._
+import typings.antd.components.{List => AntList, _}
 import typings.antd.notificationMod.{ArgsProps, IconType, default => Notification}
+import typings.antd.tableInterfaceMod.{ColumnGroupType, ColumnType}
 import typings.antd.tableInterfaceMod.ColumnType
+import typings.react.mod.CSSProperties
 import typings.std.global.console
 
 import scala.scalajs.js
@@ -64,7 +66,8 @@ object CSS extends js.Any
       section(
         h2("Tag"),
         Tag("Tag 1"),
-        Tag.color(antdStrings.red)("red")
+        Tag.color(antdStrings.red)("red"),
+        Tag.CheckableTag(true)("Checkable")
       )
 
     class TableItem(val key: Int, val name: String, val age: Int, val address: String) extends js.Object
@@ -73,6 +76,7 @@ object CSS extends js.Any
       section(
         h2("Table"),
         Table[TableItem]
+          .bordered(true)
           .dataSourceVarargs(
             new TableItem(1, "Mike", 32, "10 Downing St."),
             new TableItem(2, "John", 42, "10 Downing St.")
@@ -83,8 +87,12 @@ object CSS extends js.Any
               .setDataIndex("name")
               .setKey("name")
               .setRender((_, tableItem, _) => Tag(tableItem.name): ReactElement),
-            ColumnType[TableItem].setTitleReactElement("Age").setDataIndex("age").setKey("age"),
-            ColumnType[TableItem].setTitleReactElement("Address").setDataIndex("address").setKey("address")
+            ColumnGroupType[TableItem](
+              scala.scalajs.js.Array(
+                ColumnType[TableItem].setTitle("Age").setDataIndex("age").setKey("age"),
+                ColumnType[TableItem].setTitle("Address").setDataIndex("address").setKey("address")
+              )
+            ).setTitleReactElement("Age & Address")
           )
       )
 
@@ -187,9 +195,9 @@ object CSS extends js.Any
       )("Show notification")
     )
 
-        def menu: ReactElement = 
-      Menu.onClick(
-        mi => Notification.open(
+    def menu: ReactElement =
+      Menu.onClick(mi =>
+        Notification.open(
           ArgsProps()
             .setMessage("Selected menu item")
             .setDescription(
@@ -198,55 +206,189 @@ object CSS extends js.Any
             .setType(IconType.success)
         )
       )(
-        MenuItem.withKey("1")("Option 1"), MenuItem.withKey("2")("Option 2"), MenuItem.withKey("3")("Option 3")
+        MenuItem.withKey("1")("Option 1"),
+        MenuItem.withKey("2")("Option 2"),
+        MenuItem.withKey("3")("Option 3")
       )
-        
-    def renderDropdown: ReactElement = 
+
+    def renderDropdown: ReactElement =
       section(
         h2("Dropdown with Menu"),
-
         Dropdown(menu).className("spaced")(
           Button("Dropdown Button", AntdIcon(Icons.DownOutlined))
         ),
-          
-        Dropdown(menu).triggerVarargs(antdStrings.click).className("spaced")(
-          Button("Dropdown Button, responds to click", AntdIcon(Icons.DownOutlined))
-        )
+        Dropdown(menu)
+          .triggerVarargs(antdStrings.click)
+          .className("spaced")(
+            Button("Dropdown Button, responds to click", AntdIcon(Icons.DownOutlined))
+          )
       )
 
-    def renderMenu: ReactElement = 
+    def renderMenu: ReactElement =
       section(
         h2("Menu"),
         menu
       )
 
-    val autoCompleteComponent: FunctionalComponent[Unit] = FunctionalComponent[Unit] {
-      _ => {
-        val (text, setText) = useState("")
-        AutoComplete
-          .style(CSSProperties().setWidth("100%"))
-          .value(text)
-          .filterOption(true)               // Filter options by input
-          .defaultActiveFirstOption(true)   // Make first option active - enter to select
-          .options(js.Array(
-            OptionData("Alphabet"), 
-            OptionData("Baguette").set("label", span(AntdIcon(Icons.ShopOutlined), " Baguette")),   // Set label as a ReactElement for customised display
-            OptionData("Bicycle"), 
-            OptionData("Croissant"))
-          ).onChange{ case(text, _) => setText(text)}
-      }
+    val autoCompleteComponent: FunctionalComponent[Unit] = FunctionalComponent[Unit] { _ =>
+      val (text, setText) = useState("")
+      AutoComplete
+        .style(CSSProperties().setWidth("100%"))
+        .value(text)
+        .filterOption(true) // Filter options by input
+        .defaultActiveFirstOption(true) // Make first option active - enter to select
+        .options(
+          js.Array(
+            OptionData("Alphabet"),
+            OptionData("Baguette").set(
+              "label",
+              span(AntdIcon(Icons.ShopOutlined), " Baguette")
+            ), // Set label as a ReactElement for customised display
+            OptionData("Bicycle"),
+            OptionData("Croissant")
+          )
+        )
+        .onChange { case (text, _) => setText(text) }
     }
 
-    def renderAutocomplete: ReactElement = 
+    def renderAutocomplete: ReactElement =
       section(
         h2("Autocomplete"),
-
         autoCompleteComponent(())
       )
 
-    def renderFooter: ReactElement = 
+    def renderFooter: ReactElement =
       div(style := js.Dynamic.literal(height = "100px"))
-    
+
+    val renderAvatar = section(
+      h2("Avatar"),
+      Avatar.size(antdStrings.large).icon(AntdIcon(Icons.UserOutlined))
+    )
+
+    val renderBadge = section(
+      h2("Badge"),
+      Badge.count(5)(Button("badge"))
+    )
+
+    val renderComment = section(
+      h2("Comment"),
+      Comment
+        .author("Author")
+        .avatar(Avatar.size(antdStrings.large).icon(AntdIcon(Icons.UserOutlined)))
+        .content("Comment")
+        .actionsVarargs(Button("Like"))
+    )
+
+    val renderCollapse = section(
+      h2("Collapse"),
+      Collapse(
+        Collapse.Panel.header("Panel1")("Collapsable Content"),
+        Collapse.Panel.header("Panel2")("Collapsable Content"),
+        Collapse.Panel.header("Panel3")("Collapsable Content")
+      )
+    )
+
+    val renderCarousel = section(
+      h2("Carousel"),
+      Carousel(
+        h3(1),
+        h3(2),
+        h3(3)
+      )
+    )
+
+    val renderCard = section(
+      h2("Card"),
+      Space(
+        Card
+          .title("Card With Meta")
+          .cover(
+            img(
+              src := "https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png",
+              style := CSSProperties().setMaxWidth("200px")
+            )
+          )(
+            Card.Meta.title("Meta Title").description("Meta Description")
+          ),
+        Card.title("Card With Grid")(
+          Card.Grid("Content"),
+          Card.Grid("Content"),
+          Card.Grid("Content")
+        )
+      )
+    )
+
+    val renderCalendar = section(
+      h2("Calendar"),
+      Calendar()
+    )
+
+    val renderDescriptions = section(
+      h2("Descriptions"),
+      Descriptions
+        .title("Descriptions")
+        .bordered(true)(
+          Descriptions.Item.label("Product")("Cloud Database"),
+          Descriptions.Item.label("Billing Mode")("Prepaid")
+        )
+    )
+
+    val renderEmpty = section(
+      h2("Empty"),
+      Empty()
+    )
+
+    val renderList = section(
+      h2("List"), {
+        def item: ReactElement =
+          AntList.Item(
+            AntList.Item.Meta
+              .avatar(Avatar.icon(AntdIcon(Icons.UserOutlined)))
+              .title("Title")
+              .description("Description")
+          )
+
+        AntList()(Seq.fill(3)(item): _*)
+      }
+    )
+
+    val renderPopover = section(
+      h2("Popover"),
+      Popover
+        .titleReactElement("Title")
+        .contentReactElement("Content")(
+          Button("Hover Me")
+        )
+    )
+
+    val renderStatistic = section(
+      h2("Statistic"),
+      Statistic.title("Statistic").value(12.345).precision(2),
+      Countdown.title("Countdown").value(456)
+    )
+
+    val renderTooltip = section(
+      h2("Tooltip"),
+      Tooltip.TooltipPropsWithOverlayRefAttributes.titleReactElement("Tooltip")(span("Hover me"))
+    )
+
+    val renderTimeline = section(
+      h2("Timeline"),
+      Timeline(
+        Timeline.Item("Item 1"),
+        Timeline.Item("Item 2"),
+        Timeline.Item("Item 3")
+      )
+    )
+
+    val renderTabs = section(
+      h2("Tabs"),
+      Tabs(
+        Tabs.TabPane.tab("Tab 1").withKey("tab1")("Content 1"),
+        Tabs.TabPane.tab("Tab 2").withKey("tab2")("Content 2"),
+        Tabs.TabPane.tab("Tab 3").withKey("tab3")("Content 3")
+      )
+    )
     div(className := "App")(
       renderIntro,
       Row(
@@ -269,7 +411,22 @@ object CSS extends js.Any
           renderDropdown,
           renderMenu,
           renderAutocomplete,
-          renderFooter
+          renderFooter,
+          renderAvatar,
+          renderBadge,
+          renderComment,
+          renderCollapse,
+          renderCarousel,
+          renderCard,
+          renderCalendar,
+          renderDescriptions,
+          renderEmpty,
+          renderList,
+          renderPopover,
+          renderStatistic,
+          renderTooltip,
+          renderTimeline,
+          renderTabs
         ),
         Col.span(2)
       )

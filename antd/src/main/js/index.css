@@ -28,3 +28,7 @@ div.blue2 {
 section {
   margin-top: 20px;
 }
+
+.spaced {
+  margin: 0 8px 8px 0;
+}

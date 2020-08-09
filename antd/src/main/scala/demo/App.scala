@@ -3,6 +3,7 @@ package demo
 import slinky.core._
 import slinky.core.annotations.react
 import slinky.core.facade.{Hooks, ReactElement}
+import slinky.core.facade.Hooks._
 import slinky.web.html._
 import typings.antDesignIcons.components.AntdIcon
 import typings.antDesignIconsSvg.{mod => Icons}
@@ -14,6 +15,8 @@ import typings.std.global.console
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSImport
+import typings.rcSelect.interfaceMod.OptionData
+import typings.react.mod.CSSProperties
 
 @JSImport("antd/dist/antd.css", JSImport.Default)
 @js.native
@@ -119,10 +122,10 @@ object CSS extends js.Any
       Select[String]
         .defaultValue(selectValue)
         .onChange((changedValue, _) => updateSelectValue(changedValue))(
-          Option("jack")("Jack"),
-          Option("lucy")("Lucy"),
-          Option("disabled")("Disabled").disabled(true),
-          Option("yiminghe")("Yiminghe")
+          Select.Option("jack")("Jack"),
+          Select.Option("lucy")("Lucy"),
+          Select.Option("disabled")("Disabled").disabled(true),
+          Select.Option("yiminghe")("Yiminghe")
         )
     )
 
@@ -184,6 +187,66 @@ object CSS extends js.Any
       )("Show notification")
     )
 
+        def menu: ReactElement = 
+      Menu.onClick(
+        mi => Notification.open(
+          ArgsProps()
+            .setMessage("Selected menu item")
+            .setDescription(
+              s"Menu Item with key '${mi.key}' was selected"
+            )
+            .setType(IconType.success)
+        )
+      )(
+        MenuItem.withKey("1")("Option 1"), MenuItem.withKey("2")("Option 2"), MenuItem.withKey("3")("Option 3")
+      )
+        
+    def renderDropdown: ReactElement = 
+      section(
+        h2("Dropdown with Menu"),
+
+        Dropdown(menu).className("spaced")(
+          Button("Dropdown Button", AntdIcon(Icons.DownOutlined))
+        ),
+          
+        Dropdown(menu).triggerVarargs(antdStrings.click).className("spaced")(
+          Button("Dropdown Button, responds to click", AntdIcon(Icons.DownOutlined))
+        )
+      )
+
+    def renderMenu: ReactElement = 
+      section(
+        h2("Menu"),
+        menu
+      )
+
+    val autoCompleteComponent: FunctionalComponent[Unit] = FunctionalComponent[Unit] {
+      _ => {
+        val (text, setText) = useState("")
+        AutoComplete
+          .style(CSSProperties().setWidth("100%"))
+          .value(text)
+          .filterOption(true)               // Filter options by input
+          .defaultActiveFirstOption(true)   // Make first option active - enter to select
+          .options(js.Array(
+            OptionData("Alphabet"), 
+            OptionData("Baguette").set("label", span(AntdIcon(Icons.ShopOutlined), " Baguette")),   // Set label as a ReactElement for customised display
+            OptionData("Bicycle"), 
+            OptionData("Croissant"))
+          ).onChange{ case(text, _) => setText(text)}
+      }
+    }
+
+    def renderAutocomplete: ReactElement = 
+      section(
+        h2("Autocomplete"),
+
+        autoCompleteComponent(())
+      )
+
+    def renderFooter: ReactElement = 
+      div(style := js.Dynamic.literal(height = "100px"))
+    
     div(className := "App")(
       renderIntro,
       Row(
@@ -202,7 +265,11 @@ object CSS extends js.Any
           renderSpin,
           renderForm,
           renderCoordinated,
-          renderNotification
+          renderNotification,
+          renderDropdown,
+          renderMenu,
+          renderAutocomplete,
+          renderFooter
         ),
         Col.span(2)
       )

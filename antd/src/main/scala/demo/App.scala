@@ -2,23 +2,27 @@ package demo
 
 import slinky.core._
 import slinky.core.annotations.react
-import slinky.core.facade.{Hooks, ReactElement}
 import slinky.core.facade.Hooks._
+import slinky.core.facade.{Hooks, ReactElement}
 import slinky.web.html._
 import typings.antDesignIcons.components.AntdIcon
-import typings.antDesignIconsSvg.{mod => Icons}
+import typings.antDesignIconsSvg.downOutlinedMod.{default => DownOutlinedIcon}
+import typings.antDesignIconsSvg.downloadOutlinedMod.{default => DownloadOutlinedIcon}
+import typings.antDesignIconsSvg.homeOutlinedMod.{default => HomeOutlinedIcon}
+import typings.antDesignIconsSvg.lockTwoToneMod.{default => LockTwoToneIcon}
+import typings.antDesignIconsSvg.mailTwoToneMod.{default => MailTwoToneIcon}
+import typings.antDesignIconsSvg.shopOutlinedMod.{default => ShopOutlinedIcon}
+import typings.antDesignIconsSvg.userOutlinedMod.{default => UserOutlinedIcon}
 import typings.antd.antdStrings
 import typings.antd.components.{List => AntList, _}
 import typings.antd.notificationMod.{ArgsProps, IconType, default => Notification}
 import typings.antd.tableInterfaceMod.{ColumnGroupType, ColumnType}
-import typings.antd.tableInterfaceMod.ColumnType
+import typings.rcSelect.interfaceMod.OptionData
 import typings.react.mod.CSSProperties
 import typings.std.global.console
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSImport
-import typings.rcSelect.interfaceMod.OptionData
-import typings.react.mod.CSSProperties
 
 @JSImport("antd/dist/antd.css", JSImport.Default)
 @js.native
@@ -108,7 +112,7 @@ object CSS extends js.Any
     val renderButton =
       section(
         h2("Button"),
-        Button.icon(AntdIcon(Icons.DownloadOutlined)).`type`(antdStrings.primary)("Download")
+        Button.icon(AntdIcon(DownloadOutlinedIcon)).`type`(antdStrings.primary)("Download")
       )
 
     val renderModal = section(
@@ -137,12 +141,12 @@ object CSS extends js.Any
         )
     )
 
-    val renderIcon = section(h2("Icon"), AntdIcon(Icons.HomeOutlined))
+    val renderIcon = section(h2("Icon"), AntdIcon(HomeOutlinedIcon))
 
     val renderInput = section(
       h2("Input"),
       Input
-        .addonBefore(AntdIcon(Icons.UserOutlined))
+        .addonBefore(AntdIcon(UserOutlinedIcon))
         .placeholder("Basic usage")
         .onChange(event => console.log(event.target_ChangeEvent.value))
     )
@@ -169,10 +173,10 @@ object CSS extends js.Any
         console.log("Form submitted", store)
       }(
         FormItem(
-          Input.addonBefore(AntdIcon(Icons.MailTwoTone)).`type`(antdStrings.email).placeholder("input email")
+          Input.addonBefore(AntdIcon(MailTwoToneIcon)).`type`(antdStrings.email).placeholder("input email")
         ),
         FormItem(
-          Password.addonBefore(AntdIcon(Icons.LockTwoTone)).`type`(antdStrings.password).placeholder("input password")
+          Password.addonBefore(AntdIcon(LockTwoToneIcon)).`type`(antdStrings.password).placeholder("input password")
         ),
         FormItem(Button.htmlType(antdStrings.submit).`type`(antdStrings.primary))("Log in")
       )
@@ -215,12 +219,12 @@ object CSS extends js.Any
       section(
         h2("Dropdown with Menu"),
         Dropdown(menu).className("spaced")(
-          Button("Dropdown Button", AntdIcon(Icons.DownOutlined))
+          Button("Dropdown Button", AntdIcon(DownOutlinedIcon))
         ),
         Dropdown(menu)
           .triggerVarargs(antdStrings.click)
           .className("spaced")(
-            Button("Dropdown Button, responds to click", AntdIcon(Icons.DownOutlined))
+            Button("Dropdown Button, responds to click", AntdIcon(DownOutlinedIcon))
           )
       )
 
@@ -242,7 +246,7 @@ object CSS extends js.Any
             OptionData("Alphabet"),
             OptionData("Baguette").set(
               "label",
-              span(AntdIcon(Icons.ShopOutlined), " Baguette")
+              span(AntdIcon(ShopOutlinedIcon), " Baguette")
             ), // Set label as a ReactElement for customised display
             OptionData("Bicycle"),
             OptionData("Croissant")
@@ -262,7 +266,7 @@ object CSS extends js.Any
 
     val renderAvatar = section(
       h2("Avatar"),
-      Avatar.size(antdStrings.large).icon(AntdIcon(Icons.UserOutlined))
+      Avatar.size(antdStrings.large).icon(AntdIcon(UserOutlinedIcon))
     )
 
     val renderBadge = section(
@@ -274,7 +278,7 @@ object CSS extends js.Any
       h2("Comment"),
       Comment
         .author("Author")
-        .avatar(Avatar.size(antdStrings.large).icon(AntdIcon(Icons.UserOutlined)))
+        .avatar(Avatar.size(antdStrings.large).icon(AntdIcon(UserOutlinedIcon)))
         .content("Comment")
         .actionsVarargs(Button("Like"))
     )
@@ -343,7 +347,7 @@ object CSS extends js.Any
         def item: ReactElement =
           AntList.Item(
             AntList.Item.Meta
-              .avatar(Avatar.icon(AntdIcon(Icons.UserOutlined)))
+              .avatar(Avatar.icon(AntdIcon(UserOutlinedIcon)))
               .title("Title")
               .description("Description")
           )
@@ -411,7 +415,6 @@ object CSS extends js.Any
           renderDropdown,
           renderMenu,
           renderAutocomplete,
-          renderFooter,
           renderAvatar,
           renderBadge,
           renderComment,
@@ -428,6 +431,7 @@ object CSS extends js.Any
           renderTimeline,
           renderTabs
         ),
+        renderFooter,
         Col.span(2)
       )
     )

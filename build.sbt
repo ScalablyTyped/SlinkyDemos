@@ -3,10 +3,7 @@ import java.nio.file.StandardCopyOption.REPLACE_EXISTING
 
 import scala.sys.process.Process
 
-Global / stRemoteCache := RemoteCache.Rsync(
-  push = "tso@olvind.com:/usr/share/nginx/html/st-cache",
-  pull = new java.net.URI("https://olvind.com/st-cache")
-)
+Global / stRemoteCache := RemoteCache.S3Aws(bucket = "scalablytyped-demos", region = "eu-central-1", prefix = Some("st-cache"))
 
 Global / onLoad := {
   println("""*
@@ -51,7 +48,7 @@ lazy val baseSettings: Project => Project =
       scalaJSLinkerConfig := scalaJSLinkerConfig.value.withSourceMap(false),
       /* for slinky */
       libraryDependencies ++= Seq("me.shadaj" %%% "slinky-hot" % "0.6.5"),
-      scalacOptions += "-Ymacro-annotations"
+      scalacOptions += "-Ymacro-annotations",
     )
 
 lazy val `react-mobx` =
@@ -104,6 +101,7 @@ lazy val `semantic-ui-react-kitchensink` = project
     useYarn := true,
     webpackDevServerPort := 8004,
     stFlavour := Flavour.Slinky,
+    stReactEnableTreeShaking := Selection.All,
     Compile / npmDependencies ++= Seq(
       "semantic-ui-react" -> "0.88.2"
     )
@@ -171,6 +169,7 @@ lazy val `material-ui` =
       useYarn := true,
       webpackDevServerPort := 8008,
       stFlavour := Flavour.Slinky,
+      stReactEnableTreeShaking := Selection.All,
       Compile / npmDependencies ++= Seq(
         "@material-ui/core" -> "3.9.4", // note: version 4 is not supported yet
         "@material-ui/styles" -> "3.0.0-alpha.10", // note: version 4 is not supported yet
@@ -204,6 +203,7 @@ lazy val `office-ui-fabric-react` = project
     useYarn := true,
     webpackDevServerPort := 8010,
     stFlavour := Flavour.Slinky,
+    stReactEnableTreeShaking := Selection.All,
     Compile / npmDependencies ++= Seq(
       "office-ui-fabric-react" -> "7.107.1"
     )

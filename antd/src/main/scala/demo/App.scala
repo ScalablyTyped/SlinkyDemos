@@ -36,6 +36,7 @@ object CSS extends js.Any
   val component = FunctionalComponent[Props] { _ =>
     val (isModalVisible, updateIsModalVisible) = Hooks.useState(false)
     val (selectValue, updateSelectValue) = Hooks.useState("lucy")
+    val (multiSelectValue, updateMultiSelectValue) = Hooks.useState(List("a10", "c12"))
 
     val renderIntro = Row(
       Col.span(7),
@@ -138,6 +139,19 @@ object CSS extends js.Any
           Select.Option("lucy")("Lucy"),
           Select.Option("disabled")("Disabled").disabled(true),
           Select.Option("yiminghe")("Yiminghe")
+        )
+    )
+
+    val renderMultiSelect = section(
+      h2("Multiple select"),
+      Select[js.Array[String]]
+        .defaultValue(js.Array(multiSelectValue: _*))
+        .mode(antdStrings.multiple)
+        .onChange((changedValue, _) => updateMultiSelectValue(changedValue.toList))(
+          (10 until 36).toList.map(n => {
+            val s = s"${(n + 87).toChar}${n.toString}"
+            Select.Option(s)(s).withKey(s)
+          })
         )
     )
 
@@ -405,6 +419,7 @@ object CSS extends js.Any
           renderButton,
           renderModal,
           renderSelect,
+          renderMultiSelect,
           renderIcon,
           renderInput,
           renderPassword,

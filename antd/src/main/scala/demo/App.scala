@@ -148,10 +148,25 @@ object CSS extends js.Any
         .defaultValue(js.Array(multiSelectValue: _*))
         .mode(antdStrings.multiple)
         .onChange((changedValue, _) => updateMultiSelectValue(changedValue.toList))(
-          (10 until 36).toList.map(n => {
+          (10 until 36).toList.map { n =>
             val s = s"${(n + 87).toChar}${n.toString}"
             Select.Option(s)(s).withKey(s)
-          })
+          }
+        )
+    )
+
+    val renderGroupSelect = section(
+      h2("Select with grouped options"),
+      Select[String]
+        .defaultValue(selectValue)
+        .onChange((changedValue, _) => updateSelectValue(changedValue))(
+          Select.OptGroup.label("Manager")(
+            Select.Option("jack")("Jack"),
+            Select.Option("lucy")("Lucy")
+          ),
+          Select.OptGroup.label("Engineer")(
+            Select.Option("yiminghe")("Yiminghe")
+          )
         )
     )
 
@@ -420,6 +435,7 @@ object CSS extends js.Any
           renderModal,
           renderSelect,
           renderMultiSelect,
+          renderGroupSelect,
           renderIcon,
           renderInput,
           renderPassword,

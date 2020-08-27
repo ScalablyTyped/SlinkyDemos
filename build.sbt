@@ -248,6 +248,18 @@ lazy val `nivo` = project
     )
   )
 
+lazy val downshift = project
+  .enablePlugins(ScalablyTypedConverterPlugin)
+  .configure(baseSettings, browserProject, reactNpmDeps, bundlerSettings)
+  .settings(
+    useYarn := true,
+    webpackDevServerPort := 8014,
+    stFlavour := Flavour.Slinky,
+    Compile / npmDependencies ++= Seq(
+      "downshift" -> "6.0.5"
+    )
+  )
+
 /** Note: This can't use scalajs-bundler (at least I don't know how),
   *  so we run yarn ourselves with an external package.json.
   */

@@ -3,7 +3,6 @@ package demo
 import org.scalajs.dom
 import slinky.core.FunctionalComponent
 import slinky.web.ReactDOM
-import typings.StBuildingComponent
 import typings.csstype.csstypeStrings.{bold, none, normal}
 import typings.csstype.mod.{DisplayLegacy, NamedColor, OverflowYProperty, PositionProperty}
 import typings.downshift.components.Downshift
@@ -12,20 +11,10 @@ import typings.react.components._
 import typings.react.mod.CSSProperties
 import typings.std.global.alert
 
-import scala.scalajs.js
 import scala.scalajs.js.|
 
 // https://codesandbox.io/s/github/kentcdodds/downshift-examples/tree/master/?module=/src/ordered-examples/01-basic-autocomplete.js&moduleview=1&file=/src/downshift/ordered-examples/00-get-root-props-example.js
 object Demo {
-  // missing in html dsl
-  implicit class SpreadOps[B <: StBuildingComponent[_, _]](private val b: B) {
-    def spread(obj: js.Any): B = {
-      typings.std.global.Object.assign(b.args(1), obj)
-      b
-    }
-  }
-
-  // missing in scala
   def asOpt[T](t: T | Null): Option[T] = Option(t.asInstanceOf[T])
 
   val menuStyles = CSSProperties()
@@ -54,21 +43,20 @@ object Demo {
         .itemToString(item => asOpt(item).fold("")(_.value))
         .children(ctrl =>
           div(
-            label().spread(ctrl.getLabelProps())("Enter a fruit:"),
+            label.unsafeSpread(ctrl.getLabelProps())("Enter a fruit:"),
             div
               .style(comboboxStyles)
-              .spread(
-                ctrl.getRootProps(GetRootPropsOptions("refKey"), GetPropsCommonOptions().setSuppressRefError(true))
+              .unsafeSpread(
+                ctrl.getRootProps(GetRootPropsOptions("refkey"), GetPropsCommonOptions().setSuppressRefError(true))
               )(
-                input().spread(ctrl.getInputProps()),
-                button()
-                  .spread(ctrl.getToggleButtonProps())
+                input.unsafeSpread(ctrl.getInputProps()),
+                button
+                  .unsafeSpread(ctrl.getToggleButtonProps())
                   .`aria-label`("toggle menu")(
                     "toggle menu"
                   )
               ),
-            ul()
-              .spread(ctrl.getMenuProps())
+            ul.unsafeSpread(ctrl.getMenuProps())
               .style(menuStyles)(
                 if (ctrl.isOpen)
                   items
@@ -76,7 +64,7 @@ object Demo {
                     .zipWithIndex
                     .map {
                       case (item, index) =>
-                        li().spread(
+                        li.unsafeSpread(
                           ctrl.getItemProps(
                             GetItemPropsOptions(item)
                               .setKey(item.value)

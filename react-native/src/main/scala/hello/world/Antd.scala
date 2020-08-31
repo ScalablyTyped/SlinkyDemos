@@ -3,7 +3,6 @@ package hello.world
 import slinky.core.FunctionalComponent
 import slinky.core.annotations.react
 import slinky.core.facade.Hooks.useState
-import slinky.core.facade.ReactElement
 import slinky.native.ScrollView
 import typings.antDesignIconsReactNative.antDesignIconsReactNativeStrings.{flag, gift}
 import typings.antDesignIconsReactNative.components.{IconFill, IconOutline}
@@ -13,8 +12,6 @@ import typings.antDesignReactNative.modalPropsTypeMod.Action
 import typings.antDesignReactNative.{antDesignReactNativeStrings => antdStrings}
 import typings.reactNative.mod.{FlexAlignType, ViewStyle}
 import typings.reactNative.reactNativeStrings
-
-import scala.scalajs.js
 
 @react object Antd {
 
@@ -31,7 +28,7 @@ import scala.scalajs.js
           showsHorizontalScrollIndicator = false,
           showsVerticalScrollIndicator = false
         )(
-          AntdList.renderHeader(Text("List header"): ReactElement)(
+          AntdList.renderHeader(Text("List header").build)(
             ListItem
               .arrow(antdStrings.horizontal)
               .onPress(e => updateIsModalVisible(true))("Open modal"),

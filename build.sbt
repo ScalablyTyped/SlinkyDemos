@@ -3,7 +3,11 @@ import java.nio.file.StandardCopyOption.REPLACE_EXISTING
 
 import scala.sys.process.Process
 
-Global / stRemoteCache := RemoteCache.S3Aws(bucket = "scalablytyped-demos", region = "eu-central-1", prefix = Some("st-cache"))
+Global / stRemoteCache := RemoteCache.S3Aws(
+  bucket = "scalablytyped-demos",
+  region = "eu-central-1",
+  prefix = Some("st-cache")
+)
 
 Global / onLoad := {
   println("""*
@@ -48,7 +52,7 @@ lazy val baseSettings: Project => Project =
       scalaJSLinkerConfig := scalaJSLinkerConfig.value.withSourceMap(false),
       /* for slinky */
       libraryDependencies ++= Seq("me.shadaj" %%% "slinky-hot" % "0.6.5"),
-      scalacOptions += "-Ymacro-annotations",
+      scalacOptions += "-Ymacro-annotations"
     )
 
 lazy val `react-mobx` =

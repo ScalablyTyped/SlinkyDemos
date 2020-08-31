@@ -18,7 +18,7 @@ import typings.reactRouter.mod._
         Link(to = m.url + path).style(Styles.subNavItemStyle)(Text(style = Styles.topicStyle)(title))
 
       View(
-        Text(style = Styles.title)("React Router demo": ReactElement),
+        Text(style = Styles.title)("React Router demo"),
         Text(style = Styles.headerStyle)("Topics"),
         View(
           link("Rendering with React", "/rendering"),

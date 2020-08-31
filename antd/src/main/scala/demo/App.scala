@@ -91,7 +91,7 @@ object CSS extends js.Any
               .setTitleReactElement("Name")
               .setDataIndex("name")
               .setKey("name")
-              .setRender((_, tableItem, _) => Tag(tableItem.name): ReactElement),
+              .setRender((_, tableItem, _) => Tag(tableItem.name).build),
             ColumnGroupType[TableItem](
               scala.scalajs.js.Array(
                 ColumnType[TableItem].setTitle("Age").setDataIndex("age").setKey("age"),

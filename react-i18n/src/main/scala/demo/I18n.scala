@@ -16,14 +16,16 @@ object I18n {
   private val enTexts = StringDictionary[js.Any](
     "To get started, edit <1>src/App.js</1> and save to reload." -> "To get started, edit <1>src/App.js</1> and save to reload.",
     "Welcome to React" -> "Welcome to React and react-i18next",
-    "welcome" -> "Hello <br/> <strong>World</strong>"
+    "welcome" -> "Hello <br/> <strong>World</strong>",
+    "12<1>xxx</1>" -> "English"
   )
 
   val de = "de"
   private val deTexts = StringDictionary[js.Any](
     "To get started, edit <1>src/App.js</1> and save to reload." -> "Starte in dem du, <1>src/App.js</1> editierst und speicherst.",
     "Welcome to React" -> "Willkommen bei React und react-i18next",
-    "welcome" -> "Hallo <br/> <strong>Welt</strong>"
+    "welcome" -> "Hallo <br/> <strong>Welt</strong>",
+    "12<1>xxx</1>" -> "German"
   )
 
   def initialize() =

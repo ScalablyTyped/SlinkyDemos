@@ -23,9 +23,9 @@ object App {
         button(onClick := { () => i18n.changeLanguage(I18n.en) })("en")
       ),
       div(className := "App-intro")(
-        Trans()("To get started, edit ", code("src/App.js"), " and save to reload."),
-        Trans.i18nKey("welcome")("trans"),
-        Trans()(index + 1, a("xxx"))
+        div(Trans()("To get started, edit ", code("src/App.js"), " and save to reload.")),
+        div(Trans.i18nKey("welcome")("trans")),
+        div(Trans()((index + 1).toString, a("xxx")))
       ),
       div(style := CSSProperties().setMarginTop(40))(
         "Learn more ",

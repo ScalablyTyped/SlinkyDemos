@@ -15,7 +15,6 @@ object App {
 
   val component = FunctionalComponent[Props] { _ =>
     val js.Tuple3(t, i18n, _) = useTranslation()
-    val index = 11
     div(className := "App")(
       div(className := "App-header")(
         h2(t("Welcome to React")),
@@ -23,9 +22,10 @@ object App {
         button(onClick := { () => i18n.changeLanguage(I18n.en) })("en")
       ),
       div(className := "App-intro")(
-        Trans()("To get started, edit ", code("src/App.js"), " and save to reload."),
-        Trans.i18nKey("welcome")("trans"),
-        Trans()(index + 1, a("xxx"))
+        div(Trans()("To get started, edit ", code("src/App.js"), " and save to reload.")),
+        div(Trans.i18nKey("welcome")("trans")),
+        div(Trans.i18nKey("dog").count(1)),
+        div(Trans.i18nKey("dog").count(2)),
       ),
       div(style := CSSProperties().setMarginTop(40))(
         "Learn more ",

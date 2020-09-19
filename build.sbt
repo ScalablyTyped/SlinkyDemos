@@ -301,6 +301,7 @@ lazy val `react-navigation` = project
       baseDirectory.value
     },
     stFlavour := Flavour.SlinkyNative,
+    stIgnore := List("react-native-reanimated"),
     stStdlib := List("es5"),
     run := {
       (Compile / fastOptJS).value

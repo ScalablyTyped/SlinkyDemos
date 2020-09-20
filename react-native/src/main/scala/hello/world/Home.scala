@@ -3,7 +3,7 @@ package hello.world
 import slinky.core.FunctionalComponent
 import slinky.core.annotations.react
 import slinky.native.{Text, View}
-import typings.expoConstants.exponentConstantsWebMod.default.{expoVersion, statusBarHeight}
+import typings.expoConstants.mod.default.{expoVersion, statusBarHeight}
 import typings.reactNative.mod.{TextStyle, ViewStyle}
 
 @react object Home {

@@ -1,9 +1,15 @@
 package hello.world
 
-import typings.reactNative.mod.TextStyle
+import typings.expoConstants.mod.default.statusBarHeight
+import typings.reactNative.mod.{FlexAlignType, TextStyle, ViewStyle}
 import typings.reactNative.reactNativeStrings
 
 object Styles {
+
+  val container: ViewStyle = ViewStyle()
+    .setFlex(1)
+    .setMarginTop(statusBarHeight)
+
   val headerStyle = TextStyle()
     .setPadding(10)
     .setFontSize(20)
@@ -22,5 +28,12 @@ object Styles {
     .setFontWeight(reactNativeStrings.bold)
     .setTextAlign(reactNativeStrings.center)
     .setColor("red")
+
+  val antdInput = ViewStyle()
+    .setBackgroundColor("white")
+    .setFlex(1)
+    .setFlexDirection(reactNativeStrings.column)
+    .setJustifyContent(reactNativeStrings.center)
+    .setAlignItems(FlexAlignType.center)
 
 }

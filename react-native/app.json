@@ -4,7 +4,6 @@
     "description": "React Native example with react-router and antd",
     "slug": "react-native",
     "privacy": "public",
-    "sdkVersion": "37.0.0",
     "platforms": [
       "ios",
       "android"

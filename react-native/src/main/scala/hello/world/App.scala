@@ -18,9 +18,10 @@ import scala.scalajs.js.|
   object RoutePath {
     object Home extends RoutePath("/", "Home")
     object Antd extends RoutePath("/antd", "Antd")
+    object Webview extends RoutePath("/webview", "Webview")
     object ReactRouter extends RoutePath("/react_router", "React Router")
 
-    val allOrdered: List[RoutePath] = List(Home, Antd, ReactRouter)
+    val allOrdered: List[RoutePath] = List(Home, Antd, Webview, ReactRouter)
   }
 
   type Props = Unit
@@ -52,6 +53,11 @@ import scala.scalajs.js.|
                   RouteProps()
                     .setPath(RoutePath.Antd.path)
                     .setRender(_ => Antd())
+                ),
+                Route(
+                  RouteProps()
+                    .setPath(RoutePath.Webview.path)
+                    .setRender(_ => Webview())
                 ),
                 Route(
                   RouteProps()

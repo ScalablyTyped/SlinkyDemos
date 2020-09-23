@@ -2,17 +2,13 @@ package hello.world
 
 import slinky.core._
 import slinky.core.annotations.react
-import slinky.core.facade.Hooks.useState
-import slinky.core.facade.ReactElement
-import slinky.native.ScrollView
+import slinky.native.{SafeAreaView, ScrollView}
 import typings.antDesignReactNative.anon.PartialLocale
-import typings.antDesignReactNative.antDesignReactNativeStrings.xl
 import typings.antDesignReactNative.components.{List => AntdList, _}
 import typings.bang88ReactNativeDrawerLayout.mod.DrawerLayout
-import typings.reactNative.mod.{NativeTouchEvent, NodeHandle}
 import typings.reactRouter.components.Route
 import typings.reactRouter.mod.RouteProps
-import typings.reactRouterNative.components.{NativeRouter, Redirect}
+import typings.reactRouterNative.components.{BackButton, NativeRouter}
 
 import scala.scalajs.js.|
 
@@ -35,42 +31,35 @@ import scala.scalajs.js.|
   val component = FunctionalComponent[Props] { _ =>
     var ref: Option[DrawerLayout] = None
 
-    val (redirPath, updateRedirPath) = useState(RoutePath.Home.path)
-
-    def navigateTo(route: RoutePath)(e: SyntheticEvent[NodeHandle, NativeTouchEvent]): Unit = {
-      updateRedirPath(route.path)
-      ref.foreach(_.closeDrawer())
-    }
-
-    def checkRedirection(stayPath: String, elem: ReactElement): ReactElement =
-      if (redirPath != stayPath) Redirect(to = redirPath) else elem
-
-    val routeLinks = RoutePath.allOrdered.zipWithIndex.map {
-      case (route, index) => ListItem.onPress(navigateTo(route))(Text(route.title)).withKey(index.toString)
-    }
-
     Provider.locale(PartialLocale().setLocale("enUS"))(
       NativeRouter(
-        Drawer
-          .drawerRef(nullableRef => ref = toOption(nullableRef))
-          .sidebar(ScrollView(WhiteSpace.size(xl), AntdList(routeLinks)))(
-            AntdList.renderHeaderReactElement(WhiteSpace.size(xl))(
-              ListItem.extra(Icon(name = "menu")).onPress(e => ref.foreach(_.openDrawer()))("React Native demo")
-            )
-          ),
-        Route(
-          RouteProps()
-            .setPath(RoutePath.Home.path)
-            .setRender(props => checkRedirection(props.`match`.path, Home()))
-            .setExact(true)
-        ),
-        Route(
-          RouteProps().setPath(RoutePath.Antd.path).setRender(props => checkRedirection(props.`match`.path, Antd()))
-        ),
-        Route(
-          RouteProps()
-            .setPath(RoutePath.ReactRouter.path)
-            .setRender(props => checkRedirection(props.`match`.path, ReactRouter(props.`match`)))
+        BackButton(
+          SafeAreaView(style = Styles.container)(
+            Drawer
+              .drawerRef(nullableRef => ref = toOption(nullableRef))
+              .sidebar(ScrollView(AntdList(MenuList(() => ref.foreach(_.closeDrawer())))))(
+                AntdList(
+                  ListItem.extra(Icon(name = "menu")).onPress(e => ref.foreach(_.openDrawer()))("React Native demo")
+                )
+              )(
+                Route(
+                  RouteProps()
+                    .setPath(RoutePath.Home.path)
+                    .setRender(_ => Home())
+                    .setExact(true)
+                ),
+                Route(
+                  RouteProps()
+                    .setPath(RoutePath.Antd.path)
+                    .setRender(_ => Antd())
+                ),
+                Route(
+                  RouteProps()
+                    .setPath(RoutePath.ReactRouter.path)
+                    .setRender(props => ReactRouter(props.`match`))
+                )
+              )
+          )
         )
       )
     )

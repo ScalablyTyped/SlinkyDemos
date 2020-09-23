@@ -3,15 +3,13 @@ package hello.world
 import slinky.core.FunctionalComponent
 import slinky.core.annotations.react
 import slinky.core.facade.Hooks.useState
-import slinky.native.ScrollView
+import slinky.native.{ScrollView, View}
 import typings.antDesignIconsReactNative.antDesignIconsReactNativeStrings.{flag, gift}
 import typings.antDesignIconsReactNative.components.{IconFill, IconOutline}
 import typings.antDesignReactNative.components.{List => AntdList, _}
 import typings.antDesignReactNative.mod.Toast
 import typings.antDesignReactNative.modalPropsTypeMod.Action
 import typings.antDesignReactNative.{antDesignReactNativeStrings => antdStrings}
-import typings.reactNative.mod.{FlexAlignType, ViewStyle}
-import typings.reactNative.reactNativeStrings
 
 @react object Antd {
 
@@ -38,14 +36,7 @@ import typings.reactNative.reactNativeStrings
                 "Launch success toast"
               )
           ),
-          View.style(
-            ViewStyle()
-              .setBackgroundColor("white")
-              .setFlex(1)
-              .setFlexDirection(reactNativeStrings.column)
-              .setJustifyContent(reactNativeStrings.center)
-              .setAlignItems(FlexAlignType.center)
-          )(
+          View(style = Styles.antdInput)(
             InputItem.placeholder("input text"),
             InputItem
               .placeholder("password")

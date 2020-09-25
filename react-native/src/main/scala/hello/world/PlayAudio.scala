@@ -2,6 +2,7 @@ package hello.world
 
 import slinky.core.FunctionalComponent
 import slinky.core.annotations.react
+import slinky.core.facade.Hooks.useEffect
 import slinky.native.View
 import typings.antDesignReactNative.components._
 import typings.antDesignReactNative.{antDesignReactNativeStrings => antdStrings}
@@ -19,12 +20,17 @@ import scala.concurrent.ExecutionContext.Implicits.global
     val uri: String = "https://upload.wikimedia.org/wikipedia/commons/b/b2/Funky_bassline_F7-Bb7.ogg"
     val soundObject = new Sound
 
-    soundObject
-      .loadAsync(
-        Headers(uri = uri),
-        AVPlaybackStatusToSet().setShouldPlay(false) // optional, but you can set a bunch of stuff here
-      )
-      .toFuture
+    useEffect(
+      () => {
+        soundObject
+          .loadAsync(
+            Headers(uri = uri),
+            AVPlaybackStatusToSet().setShouldPlay(false) // optional, but you can set a bunch of stuff here
+          )
+        () => soundObject.unloadAsync()
+      },
+      Seq()
+    )
 
     View(
       WhiteSpace().size(antdStrings.md),
@@ -32,19 +38,19 @@ import scala.concurrent.ExecutionContext.Implicits.global
         Flex(
           Button(Icon(name = "play-circle"))
             .`type`(antdStrings.primary)
-            .onPress(_ => soundObject.playAsync().toFuture),
+            .onPress(_ => soundObject.playAsync()),
           Text("Play")
         ).direction(antdStrings.column),
         Flex(
           Button(Icon(name = "pause-circle"))
             .`type`(antdStrings.primary)
-            .onPress(_ => soundObject.pauseAsync().toFuture),
+            .onPress(_ => soundObject.pauseAsync()),
           Text("Pause")
         ).direction(antdStrings.column),
         Flex(
           Button(Icon(name = "stop"))
             .`type`(antdStrings.primary)
-            .onPress(_ => soundObject.stopAsync().toFuture),
+            .onPress(_ => soundObject.stopAsync()),
           Text("Stop")
         ).direction(antdStrings.column)
       ).justify(antdStrings.around)

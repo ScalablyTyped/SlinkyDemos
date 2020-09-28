@@ -6,10 +6,12 @@ import slinky.core.facade.Hooks.useState
 import slinky.native.View
 import typings.antDesignReactNative.components._
 import typings.antDesignReactNative.{antDesignReactNativeStrings => antdStrings}
-import typings.expoAv.aVMod.AVPlaybackStatusToSet
+import typings.expoAv.aVMod.{AVPlaybackStatus, AVPlaybackStatusToSet}
 import typings.expoAv.mod.Audio.Sound
-import typings.expoAv.anon.{DidJustFinish, Headers}
+import typings.expoAv.anon.{AndroidImplementation, DidJustFinish, Headers}
 import typings.expoAv.expoAvBooleans.`true`
+
+import scala.scalajs.js
 
 @react object PlayAudio {
 
@@ -21,15 +23,18 @@ import typings.expoAv.expoAvBooleans.`true`
 
     val soundObject = new Sound
 
+    def checkStatus(s: AVPlaybackStatus): Either[AndroidImplementation, DidJustFinish] =
+      if (s.asInstanceOf[js.Dynamic].isLoaded.asInstanceOf[Boolean]) Right(s.asInstanceOf[DidJustFinish])
+      else Left(s.asInstanceOf[AndroidImplementation])
+
     soundObject.setOnPlaybackStatusUpdate { status =>
-      Option(status.asInstanceOf[DidJustFinish]) match {
-        case Some(obj) =>
-          if (obj.isLoaded == `true`)
-            if (obj.didJustFinish) {
-              soundObject.unloadAsync()
-              updateIsPlayable(true)
-            }
-        case None => ()
+      checkStatus(status) match {
+        case Left(_) => ()
+        case Right(value) =>
+          if (value.didJustFinish) {
+            soundObject.unloadAsync()
+            updateIsPlayable(true)
+          }
       }
     }
 
@@ -46,13 +51,13 @@ import typings.expoAv.expoAvBooleans.`true`
           Button(Icon("sound"))
             .disabled(!isPlayable)
             .`type`(antdStrings.primary)
-            .onPress(_ => {
+            .onPress { _ =>
               updateIsPlayable(false)
               loadAndPlay()
-            }),
+            },
           Text("Play")
         ).direction(antdStrings.column)
-      ).justify(antdStrings.around),
+      ).justify(antdStrings.around)
     )
   }
 }

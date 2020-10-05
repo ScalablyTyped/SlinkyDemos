@@ -24,6 +24,7 @@
     "@types/react-router-native": "^5.1.0",
     "csstype": "^2.6.11",
     "expo": "^38.0.0",
+    "expo-av": "~8.2.1",
     "expo-font": "~8.2.1",
     "expo-constants": "~9.1.1",
     "react": "16.11.0",

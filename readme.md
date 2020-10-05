@@ -78,7 +78,7 @@ This is a collection of tiny demo projects to show off how we can use react libr
 `sbt> downshift/start` starts a webpack-dev-server at http://localhost:8014 .
 
 ## React-native 
-[Expo demo you can run on your phone](https://expo.io/@scalablytyped/scalably-typed-react-native)
+[Expo demo you can run on your phone](https://expo.io/@scalablytyped/projects/react-native)
 
 To run this you'll need to follow the 
 [Setting up the development environment](https://reactnative.dev/docs/environment-setup) 

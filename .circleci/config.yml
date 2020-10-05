@@ -32,7 +32,7 @@ jobs:
 
       # ideally we would bundle and run things, but the diversity of the demos makes it a bit difficult.
       # might revisit this later
-      - run: cat /dev/null | sbt fastOptJS
+      - run: cat /dev/null | sbt stPublishCache fastOptJS
 
       - save_cache:
           paths:

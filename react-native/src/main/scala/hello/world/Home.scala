@@ -9,7 +9,7 @@ import typings.reactNative.mod.{TextStyle, ViewStyle}
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSImport
 
-@JSImport("assets/scala-logo.png", JSImport.Default)
+@JSImport("../../assets/scala-logo.png", JSImport.Default)
 @js.native
 object ScalaLogo extends js.Object
 

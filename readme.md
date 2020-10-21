@@ -44,6 +44,7 @@ This is a collection of tiny demo projects to show off how we can use react libr
 
 `sbt> material-ui/start` starts a webpack-dev-server at http://localhost:8008 .
 
+Or, `sbt materialUiDev` starts a webpack-dev-server at http://localhost:8008 recompiling on file changes (hot-reloading). 
   
 ### react-leaflet 
 [Demo](https://scalablytyped.github.io/SlinkyDemos/react-leaflet/)

@@ -55,6 +55,16 @@ lazy val baseSettings: Project => Project =
       scalacOptions += "-Ymacro-annotations"
     )
 
+lazy val hotReloadingSettings: Project => Project =
+  _.enablePlugins(ScalaJSPlugin)
+    .settings(
+      webpackDevServerExtraArgs in fastOptJS := Seq("--inline", "--hot"),
+      stIgnore += "react-proxy",
+      Compile / npmDependencies ++= Seq(
+        "react-proxy" -> "1.1.8"
+      )
+    )
+
 lazy val `react-mobx` =
   project
     .enablePlugins(ScalablyTypedConverterPlugin)
@@ -165,10 +175,14 @@ lazy val `react-router-dom` =
       )
     )
 
+/**
+  * Alias to launch material-ui in dev mode, recompiling on changes
+  */
+addCommandAlias("materialUiDev", ";material-ui/fastOptJS::startWebpackDevServer;~material-ui/fastOptJS")
 lazy val `material-ui` =
   project
     .enablePlugins(ScalablyTypedConverterPlugin)
-    .configure(baseSettings, browserProject, reactNpmDeps, withCssLoading, bundlerSettings)
+    .configure(baseSettings, browserProject, reactNpmDeps, withCssLoading, bundlerSettings, hotReloadingSettings)
     .settings(
       useYarn := true,
       webpackDevServerPort := 8008,
@@ -367,10 +381,6 @@ lazy val withCssLoading: Project => Project =
     )
   )
 
-/**
-  * Implement the `start` and `dist` tasks defined above.
-  * Most of this is really just to copy the index.html file around.
-  */
 lazy val browserProject: Project => Project =
   _.settings(
     start := {

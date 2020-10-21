@@ -10,6 +10,7 @@ import demo.signin.SignIn
 import org.scalajs.dom
 import slinky.core.FunctionalComponent
 import slinky.core.facade.Fragment
+import slinky.hot
 import slinky.web.ReactDOM
 import typings.materialUiCore.components.{List, ListItem, ListItemIcon, ListItemText, ListSubheader, Typography}
 import typings.materialUiCore.createMuiThemeMod.{Theme, ThemeOptions}
@@ -20,6 +21,8 @@ import typings.materialUiIcons.{components => Icon}
 import typings.materialUiStyles.components.ThemeProvider
 import typings.reactRouter.mod.RouteProps
 import typings.reactRouterDom.components.{BrowserRouter, Link, Route}
+
+import scala.scalajs.LinkingInfo
 
 object Demo {
 
@@ -150,6 +153,8 @@ object Demo {
   }
 
   def main(argv: Array[String]): Unit = {
+    if (LinkingInfo.developmentMode)
+      hot.initialize()
     println("starting")
     ReactDOM.render(
       Main(()),

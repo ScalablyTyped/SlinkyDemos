@@ -52,6 +52,7 @@ lazy val baseSettings: Project => Project =
       scalaJSLinkerConfig := scalaJSLinkerConfig.value.withSourceMap(false),
       /* for slinky */
       libraryDependencies ++= Seq("me.shadaj" %%% "slinky-hot" % "0.6.5"),
+      libraryDependencies += "me.shadaj" %%% "slinky-web" % "0.6.5",
       scalacOptions += "-Ymacro-annotations"
     )
 
@@ -174,6 +175,7 @@ lazy val `material-ui` =
       webpackDevServerPort := 8008,
       stFlavour := Flavour.Slinky,
       stReactEnableTreeShaking := Selection.All,
+      stIgnore += "react-proxy",
       Compile / npmDependencies ++= Seq(
         "@material-ui/core" -> "3.9.4", // note: version 4 is not supported yet
         "@material-ui/styles" -> "3.0.0-alpha.10", // note: version 4 is not supported yet
@@ -182,8 +184,10 @@ lazy val `material-ui` =
         "@types/recharts" -> "1.8.10",
         "@types/classnames" -> "2.2.10",
         "react-router-dom" -> "5.1.2",
-        "@types/react-router-dom" -> "5.1.2"
-      )
+        "@types/react-router-dom" -> "5.1.2",
+        "react-proxy" -> "1.1.8"
+      ),
+      webpackDevServerExtraArgs in fastOptJS := Seq("--inline", "--hot")
     )
 
 lazy val `react-leaflet` = project
@@ -321,10 +325,8 @@ lazy val withCssLoading: Project => Project =
     )
   )
 
-/**
-  * Implement the `start` and `dist` tasks defined above.
-  * Most of this is really just to copy the index.html file around.
-  */
+addCommandAlias("dev", ";material-ui/fastOptJS::startWebpackDevServer;~material-ui/fastOptJS")
+
 lazy val browserProject: Project => Project =
   _.settings(
     start := {

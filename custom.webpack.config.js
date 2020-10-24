@@ -3,6 +3,9 @@ var generated = require('./scalajs.webpack.config');
 
 var local = {
     module: {
+        devServer: {
+            historyApiFallback: true
+        },
         rules: [
             {
                 test: /\.css$/,

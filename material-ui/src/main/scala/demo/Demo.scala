@@ -145,6 +145,9 @@ object Demo {
                     Palette()
                   )
                 )
+            ),
+            router.Route(
+              router.Redirect("/")
             )
           )
         )

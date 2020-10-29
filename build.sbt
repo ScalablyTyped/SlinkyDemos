@@ -264,6 +264,18 @@ lazy val downshift = project
     )
   )
 
+lazy val `react-select` = project
+  .enablePlugins(ScalablyTypedConverterPlugin)
+  .configure(baseSettings, bundlerSettings, reactNpmDeps, browserProject, withCssLoading)
+  .settings(
+    useYarn := true,
+    webpackDevServerPort := 8015,
+    stFlavour := Flavour.Slinky,
+    Compile / npmDependencies ++= Seq(
+      "@types/react-select" -> "3.0.22",
+      "react-select" -> "3.1.0",
+    ),
+  )
 /** Note: This can't use scalajs-bundler (at least I don't know how),
   *  so we run yarn ourselves with an external package.json.
   */

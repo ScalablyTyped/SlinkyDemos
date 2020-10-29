@@ -77,6 +77,11 @@ This is a collection of tiny demo projects to show off how we can use react libr
 
 `sbt> downshift/start` starts a webpack-dev-server at http://localhost:8014 .
 
+### react-select 
+[Demo](https://scalablytyped.github.io/SlinkyDemos/react-select/)
+
+`sbt> react-select/start` starts a webpack-dev-server at http://localhost:8015 .
+
 ## React-native 
 [Expo demo you can run on your phone](https://expo.io/@scalablytyped/projects/react-native)
 

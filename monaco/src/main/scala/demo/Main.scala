@@ -8,6 +8,7 @@ import slinky.web.html._
 import typings.monacoEditor.mod.Environment
 import typings.monacoEditor.monacoEditorRequire
 import typings.reactMonacoEditor.components.ReactMonacoEditor
+import typings.std.global.console
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSGlobal
@@ -39,13 +40,23 @@ interface Employee {
       val (state, setState) = Hooks.useState(code)
 
       ReactMonacoEditor
+        .editorDidMount { (editor, monaco) =>
+          // alert user that they typed `a`
+          editor.onKeyUp {
+            case keyEvent if keyEvent.code == "KeyA" => console.warn("You typed a")
+            case _                                   => ()
+          }
+
+          // configure typescript to be strict
+          monaco.languages.typescript.typescriptDefaults.getCompilerOptions.setStrict(true)
+        }
         .width("600")
         .height("800")
         .language("typescript")
         .theme("vs-dark")
         .defaultValue("")
         .value(state)
-        .onChange((newValue, e) => setState(newValue))
+        .onChange((newValue, _) => setState(newValue))
   }
 
   // not sure why we had to name the global this to be able to set `MonacoEnvironment`

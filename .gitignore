@@ -9,3 +9,4 @@ local.properties
 .metals/
 project/metals.sbt
 out/
+.bsp/

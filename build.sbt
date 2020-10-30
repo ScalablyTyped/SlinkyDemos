@@ -266,7 +266,7 @@ lazy val downshift = project
 
 lazy val `react-select` = project
   .enablePlugins(ScalablyTypedConverterPlugin)
-  .configure(baseSettings, bundlerSettings, reactNpmDeps, browserProject, withCssLoading)
+  .configure(baseSettings, bundlerSettings, reactNpmDeps, browserProject)
   .settings(
     useYarn := true,
     webpackDevServerPort := 8015,
@@ -276,6 +276,28 @@ lazy val `react-select` = project
       "react-select" -> "3.1.0",
     ),
   )
+
+lazy val monaco = project
+  .enablePlugins(ScalablyTypedConverterPlugin)
+  .configure(baseSettings, browserProject, reactNpmDeps, bundlerSettings)
+  .settings(
+    useYarn := true,
+    webpackDevServerPort := 8016,
+    stFlavour := Flavour.Slinky,
+    Compile / npmDependencies ++= Seq(
+      "react-monaco-editor" -> "0.40.0"
+    ),
+    /* custom webpack file to include css */
+    webpackConfigFile := Some((baseDirectory).value / "custom.webpack.config.js"),
+    Compile / npmDevDependencies ++= Seq(
+      "webpack-merge" -> "4.2.2",
+      "css-loader" -> "3.4.2",
+      "style-loader" -> "1.1.3",
+      "file-loader" -> "5.1.0",
+      "url-loader" -> "3.0.0"
+    )
+  )
+
 /** Note: This can't use scalajs-bundler (at least I don't know how),
   *  so we run yarn ourselves with an external package.json.
   */
@@ -314,8 +336,6 @@ lazy val reactNpmDeps: Project => Project =
 
 lazy val bundlerSettings: Project => Project =
   _.settings(
-    Compile / fastOptJS / webpackExtraArgs += "--mode=development",
-    Compile / fullOptJS / webpackExtraArgs += "--mode=production",
     Compile / fastOptJS / webpackDevServerExtraArgs += "--mode=development",
     Compile / fullOptJS / webpackDevServerExtraArgs += "--mode=production"
   )

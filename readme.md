@@ -82,6 +82,11 @@ This is a collection of tiny demo projects to show off how we can use react libr
 
 `sbt> react-select/start` starts a webpack-dev-server at http://localhost:8015 .
 
+### react-monaco 
+[Demo](https://scalablytyped.github.io/SlinkyDemos/monaco/)
+
+`sbt> monaco/start` starts a webpack-dev-server at http://localhost:8016 .
+
 ## React-native 
 [Expo demo you can run on your phone](https://expo.io/@scalablytyped/projects/react-native)
 

@@ -200,7 +200,7 @@ lazy val `react-leaflet` = project
     )
   )
 
-lazy val `office-ui-fabric-react` = project
+lazy val fluentui = project
   .enablePlugins(ScalablyTypedConverterPlugin)
   .configure(baseSettings, browserProject, reactNpmDeps, bundlerSettings)
   .settings(
@@ -209,7 +209,7 @@ lazy val `office-ui-fabric-react` = project
     stFlavour := Flavour.Slinky,
     stReactEnableTreeShaking := Selection.All,
     Compile / npmDependencies ++= Seq(
-      "office-ui-fabric-react" -> "7.107.1"
+      "@fluentui/react" -> "7.149.2"
     )
   )
 

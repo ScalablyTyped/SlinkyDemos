@@ -51,10 +51,10 @@ This is a collection of tiny demo projects to show off how we can use react libr
 `sbt> react-leaflet/start` starts a webpack-dev-server at http://localhost:8009 .
 
   
-### office-ui-fabric-react 
-[Demo](https://scalablytyped.github.io/SlinkyDemos/office-ui-fabric-react/)
+### fluentui 
+[Demo](https://scalablytyped.github.io/SlinkyDemos/fluentui/)
 
-`sbt> office-ui-fabric-react/start` starts a webpack-dev-server at http://localhost:8010 .
+`sbt> fluentui/start` starts a webpack-dev-server at http://localhost:8010 .
 
   
 ### react-dnd 

@@ -298,6 +298,20 @@ lazy val monaco = project
     )
   )
 
+lazy val plotly = project
+  .enablePlugins(ScalablyTypedConverterPlugin)
+  .configure(baseSettings, browserProject, reactNpmDeps, bundlerSettings)
+  .settings(
+    useYarn := true,
+    webpackDevServerPort := 8017,
+    stFlavour := Flavour.Slinky,
+    Compile / npmDependencies ++= Seq(
+      "plotly.js" -> "1.57.1",
+      "react-plotly.js" -> "2.5.0",
+      "@types/react-plotly.js" -> "2.2.4",
+    ),
+  )
+
 /** Note: This can't use scalajs-bundler (at least I don't know how),
   *  so we run yarn ourselves with an external package.json.
   */

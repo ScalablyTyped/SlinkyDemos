@@ -89,6 +89,11 @@ Or, `sbt materialUiDev` starts a webpack-dev-server at http://localhost:8008 rec
 
 `sbt> monaco/start` starts a webpack-dev-server at http://localhost:8016 .
 
+### react-plotly 
+[Demo](https://scalablytyped.github.io/SlinkyDemos/plotly/)
+
+`sbt> plotly/start` starts a webpack-dev-server at http://localhost:8017 .
+
 ## React-native 
 [Expo demo you can run on your phone](https://expo.io/@scalablytyped/projects/react-native)
 

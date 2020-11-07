@@ -161,10 +161,17 @@ lazy val antd =
       Compile / npmDependencies ++= Seq("antd" -> "4.5.1")
     )
 
+/**
+  * Alias to launch material-ui in dev mode, recompiling on changes
+  */
+addCommandAlias(
+  "react-router-dom-dev",
+  ";react-router-dom/fastOptJS::startWebpackDevServer;~react-router-dom/fastOptJS"
+)
 lazy val `react-router-dom` =
   project
     .enablePlugins(ScalablyTypedConverterPlugin)
-    .configure(baseSettings, browserProject, reactNpmDeps, bundlerSettings)
+    .configure(baseSettings, browserProject, reactNpmDeps, bundlerSettings, hotReloadingSettings)
     .settings(
       useYarn := true,
       webpackDevServerPort := 8007,

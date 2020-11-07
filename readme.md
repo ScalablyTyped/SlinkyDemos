@@ -38,14 +38,15 @@ This is a collection of tiny demo projects to show off how we can use react libr
 
 `sbt> react-router-dom/start` starts a webpack-dev-server at http://localhost:8007 .
 
-  
+Or, `sbt react-router-dom-dev` starts a webpack-dev-server at http://localhost:8007 recompiling on file changes (hot-reloading). 
+
 ### material-ui 
 [Demo](https://scalablytyped.github.io/SlinkyDemos/material-ui/)
 
 `sbt> material-ui/start` starts a webpack-dev-server at http://localhost:8008 .
 
 Or, `sbt materialUiDev` starts a webpack-dev-server at http://localhost:8008 recompiling on file changes (hot-reloading). 
-  
+
 ### react-leaflet 
 [Demo](https://scalablytyped.github.io/SlinkyDemos/react-leaflet/)
 

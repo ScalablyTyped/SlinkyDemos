@@ -388,6 +388,10 @@ lazy val withCssLoading: Project => Project =
     )
   )
 
+/**
+  * Implement the `start` and `dist` tasks defined above.
+  * Most of this is really just to copy the index.html file around.
+  */
 lazy val browserProject: Project => Project =
   _.settings(
     start := {

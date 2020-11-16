@@ -25,7 +25,7 @@ object App {
         div(Trans()("To get started, edit ", code("src/App.js"), " and save to reload.")),
         div(Trans.i18nKey("welcome")("trans")),
         div(Trans.i18nKey("dog").count(1)),
-        div(Trans.i18nKey("dog").count(2)),
+        div(Trans.i18nKey("dog").count(2))
       ),
       div(style := CSSProperties().setMarginTop(40))(
         "Learn more ",

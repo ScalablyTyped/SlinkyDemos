@@ -38,23 +38,25 @@ This is a collection of tiny demo projects to show off how we can use react libr
 
 `sbt> react-router-dom/start` starts a webpack-dev-server at http://localhost:8007 .
 
-  
+Or, `sbt react-router-dom-dev` starts a webpack-dev-server at http://localhost:8007 recompiling on file changes (hot-reloading). 
+
 ### material-ui 
 [Demo](https://scalablytyped.github.io/SlinkyDemos/material-ui/)
 
 `sbt> material-ui/start` starts a webpack-dev-server at http://localhost:8008 .
 
-  
+Or, `sbt materialUiDev` starts a webpack-dev-server at http://localhost:8008 recompiling on file changes (hot-reloading). 
+
 ### react-leaflet 
 [Demo](https://scalablytyped.github.io/SlinkyDemos/react-leaflet/)
 
 `sbt> react-leaflet/start` starts a webpack-dev-server at http://localhost:8009 .
 
   
-### office-ui-fabric-react 
-[Demo](https://scalablytyped.github.io/SlinkyDemos/office-ui-fabric-react/)
+### fluentui 
+[Demo](https://scalablytyped.github.io/SlinkyDemos/fluentui/)
 
-`sbt> office-ui-fabric-react/start` starts a webpack-dev-server at http://localhost:8010 .
+`sbt> fluentui/start` starts a webpack-dev-server at http://localhost:8010 .
 
   
 ### react-dnd 
@@ -76,6 +78,21 @@ This is a collection of tiny demo projects to show off how we can use react libr
 [Demo](https://scalablytyped.github.io/SlinkyDemos/downshift/)
 
 `sbt> downshift/start` starts a webpack-dev-server at http://localhost:8014 .
+
+### react-select 
+[Demo](https://scalablytyped.github.io/SlinkyDemos/react-select/)
+
+`sbt> react-select/start` starts a webpack-dev-server at http://localhost:8015 .
+
+### react-monaco 
+[Demo](https://scalablytyped.github.io/SlinkyDemos/monaco/)
+
+`sbt> monaco/start` starts a webpack-dev-server at http://localhost:8016 .
+
+### react-plotly 
+[Demo](https://scalablytyped.github.io/SlinkyDemos/plotly/)
+
+`sbt> plotly/start` starts a webpack-dev-server at http://localhost:8017 .
 
 ## React-native 
 [Expo demo you can run on your phone](https://expo.io/@scalablytyped/projects/react-native)

@@ -55,6 +55,16 @@ lazy val baseSettings: Project => Project =
       scalacOptions += "-Ymacro-annotations"
     )
 
+lazy val hotReloadingSettings: Project => Project =
+  _.enablePlugins(ScalaJSPlugin)
+    .settings(
+      webpackDevServerExtraArgs in fastOptJS := Seq("--inline", "--hot"),
+      stIgnore += "react-proxy",
+      Compile / npmDependencies ++= Seq(
+        "react-proxy" -> "1.1.8"
+      )
+    )
+
 lazy val `react-mobx` =
   project
     .enablePlugins(ScalablyTypedConverterPlugin)
@@ -151,10 +161,17 @@ lazy val antd =
       Compile / npmDependencies ++= Seq("antd" -> "4.5.1")
     )
 
+/**
+  * Alias to launch material-ui in dev mode, recompiling on changes
+  */
+addCommandAlias(
+  "react-router-dom-dev",
+  ";react-router-dom/fastOptJS::startWebpackDevServer;~react-router-dom/fastOptJS"
+)
 lazy val `react-router-dom` =
   project
     .enablePlugins(ScalablyTypedConverterPlugin)
-    .configure(baseSettings, browserProject, reactNpmDeps, bundlerSettings)
+    .configure(baseSettings, browserProject, reactNpmDeps, bundlerSettings, hotReloadingSettings)
     .settings(
       useYarn := true,
       webpackDevServerPort := 8007,
@@ -165,10 +182,14 @@ lazy val `react-router-dom` =
       )
     )
 
+/**
+  * Alias to launch material-ui in dev mode, recompiling on changes
+  */
+addCommandAlias("materialUiDev", ";material-ui/fastOptJS::startWebpackDevServer;~material-ui/fastOptJS")
 lazy val `material-ui` =
   project
     .enablePlugins(ScalablyTypedConverterPlugin)
-    .configure(baseSettings, browserProject, reactNpmDeps, withCssLoading, bundlerSettings)
+    .configure(baseSettings, browserProject, reactNpmDeps, withCssLoading, bundlerSettings, hotReloadingSettings)
     .settings(
       useYarn := true,
       webpackDevServerPort := 8008,
@@ -200,7 +221,7 @@ lazy val `react-leaflet` = project
     )
   )
 
-lazy val `office-ui-fabric-react` = project
+lazy val fluentui = project
   .enablePlugins(ScalablyTypedConverterPlugin)
   .configure(baseSettings, browserProject, reactNpmDeps, bundlerSettings)
   .settings(
@@ -209,7 +230,7 @@ lazy val `office-ui-fabric-react` = project
     stFlavour := Flavour.Slinky,
     stReactEnableTreeShaking := Selection.All,
     Compile / npmDependencies ++= Seq(
-      "office-ui-fabric-react" -> "7.107.1"
+      "@fluentui/react" -> "7.149.2"
     )
   )
 
@@ -264,6 +285,54 @@ lazy val downshift = project
     )
   )
 
+lazy val `react-select` = project
+  .enablePlugins(ScalablyTypedConverterPlugin)
+  .configure(baseSettings, bundlerSettings, reactNpmDeps, browserProject)
+  .settings(
+    useYarn := true,
+    webpackDevServerPort := 8015,
+    stFlavour := Flavour.Slinky,
+    Compile / npmDependencies ++= Seq(
+      "@types/react-select" -> "3.0.22",
+      "react-select" -> "3.1.0",
+    ),
+  )
+
+lazy val monaco = project
+  .enablePlugins(ScalablyTypedConverterPlugin)
+  .configure(baseSettings, browserProject, reactNpmDeps, bundlerSettings)
+  .settings(
+    useYarn := true,
+    webpackDevServerPort := 8016,
+    stFlavour := Flavour.Slinky,
+    Compile / npmDependencies ++= Seq(
+      "react-monaco-editor" -> "0.40.0"
+    ),
+    /* custom webpack file to include css */
+    webpackConfigFile := Some((baseDirectory).value / "custom.webpack.config.js"),
+    Compile / npmDevDependencies ++= Seq(
+      "webpack-merge" -> "4.2.2",
+      "css-loader" -> "3.4.2",
+      "style-loader" -> "1.1.3",
+      "file-loader" -> "5.1.0",
+      "url-loader" -> "3.0.0"
+    )
+  )
+
+lazy val plotly = project
+  .enablePlugins(ScalablyTypedConverterPlugin)
+  .configure(baseSettings, browserProject, reactNpmDeps, bundlerSettings)
+  .settings(
+    useYarn := true,
+    webpackDevServerPort := 8017,
+    stFlavour := Flavour.Slinky,
+    Compile / npmDependencies ++= Seq(
+      "plotly.js" -> "1.57.1",
+      "react-plotly.js" -> "2.5.0",
+      "@types/react-plotly.js" -> "2.2.4",
+    ),
+  )
+
 /** Note: This can't use scalajs-bundler (at least I don't know how),
   *  so we run yarn ourselves with an external package.json.
   */
@@ -302,8 +371,6 @@ lazy val reactNpmDeps: Project => Project =
 
 lazy val bundlerSettings: Project => Project =
   _.settings(
-    Compile / fastOptJS / webpackExtraArgs += "--mode=development",
-    Compile / fullOptJS / webpackExtraArgs += "--mode=production",
     Compile / fastOptJS / webpackDevServerExtraArgs += "--mode=development",
     Compile / fullOptJS / webpackDevServerExtraArgs += "--mode=production"
   )

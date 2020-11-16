@@ -12,16 +12,16 @@ import typings.reactRouter.mod._
   case class Props(onClose: () => Unit)
 
   val component = FunctionalComponent[Props] { props =>
-
     val history = useHistory()
 
     RoutePath.allOrdered.zipWithIndex.map {
-      case (route, index) => ListItem(Text(route.title))
-        .onPress(_ => {
-          props.onClose()
-          history.push(route.path)
-        })
-        .withKey(index.toString)
+      case (route, index) =>
+        ListItem(Text(route.title))
+          .onPress { _ =>
+            props.onClose()
+            history.push(route.path)
+          }
+          .withKey(index.toString)
     }
   }
 }

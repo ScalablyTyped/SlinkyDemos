@@ -1832,6 +1832,12 @@ ipaddr.js@1.9.1, ipaddr.js@^1.9.0:
   version "1.9.1"
   resolved "https://registry.yarnpkg.com/ipaddr.js/-/ipaddr.js-1.9.1.tgz#bff38543eeb8984825079ff3a2a8e6cbd46781b3"
 
+is-accessor-descriptor@^0.1.6:
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/is-accessor-descriptor/-/is-accessor-descriptor-0.1.6.tgz#a9e12cb3ae8d876727eeef3843f8a0897b5c98d6"
+  dependencies:
+    kind-of "^3.0.2"
+
 is-accessor-descriptor@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/is-accessor-descriptor/-/is-accessor-descriptor-1.0.0.tgz#169c2f6d3df1f992618072365c9b0ea1f6878656"
@@ -1872,6 +1878,12 @@ is-core-module@^2.0.0:
   dependencies:
     has "^1.0.3"
 
+is-data-descriptor@^0.1.4:
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/is-data-descriptor/-/is-data-descriptor-0.1.4.tgz#0b5ee648388e2c860282e793f1856fec3f301b56"
+  dependencies:
+    kind-of "^3.0.2"
+
 is-data-descriptor@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/is-data-descriptor/-/is-data-descriptor-1.0.0.tgz#d84876321d0e7add03990406abbbbd36ba9268c7"
@@ -1881,6 +1893,14 @@ is-data-descriptor@^1.0.0:
 is-date-object@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/is-date-object/-/is-date-object-1.0.2.tgz#bda736f2cd8fd06d32844e7743bfa7494c3bfd7e"
+
+is-descriptor@^0.1.0:
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/is-descriptor/-/is-descriptor-0.1.6.tgz#366d8240dde487ca51823b1ab9f07a10a78251ca"
+  dependencies:
+    is-accessor-descriptor "^0.1.6"
+    is-data-descriptor "^0.1.4"
+    kind-of "^5.0.0"
 
 is-descriptor@^1.0.0, is-descriptor@^1.0.2:
   version "1.0.2"
@@ -2049,6 +2069,10 @@ kind-of@^4.0.0:
   resolved "https://registry.yarnpkg.com/kind-of/-/kind-of-4.0.0.tgz#20813df3d712928b207378691a45066fae72dd57"
   dependencies:
     is-buffer "^1.1.5"
+
+kind-of@^5.0.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/kind-of/-/kind-of-5.1.0.tgz#729c91e2d857b7a419a1f9aa65685c4c33f5845d"
 
 kind-of@^6.0.0, kind-of@^6.0.2:
   version "6.0.3"

@@ -349,6 +349,7 @@ lazy val `react-native` = project
     },
     stFlavour := Flavour.SlinkyNative,
     stStdlib := List("es5"),
+    stIgnore := List("url"),
     run := {
       (Compile / fastOptJS).value
       Process("expo start", baseDirectory.value).!

@@ -3,6 +3,7 @@ package demo
 import slinky.core.FunctionalComponent
 import slinky.core.annotations.react
 import typings.antd.antdStrings
+import typings.antd.components.Form.{Form => FormItem}
 import typings.antd.components._
 import typings.antd.formFormMod.useForm
 import typings.antd.gridColMod.ColProps
@@ -16,20 +17,22 @@ import scala.scalajs.js
 object CoordinatedDemo {
   case class Props(noteTitle: String)
 
+  class Values(val gender: String, val note: String) extends js.Object
+
   val component = FunctionalComponent[Props] { props =>
-    val form: FormInstance[_] = useForm().head
-    Form
+    val form: FormInstance[Values] = useForm[Values]().head
+    Form[Values]()
       .form(form)
       .labelCol(ColProps().setSpan(5))
       .wrapperCol(ColProps().setSpan(12))
-      .onFinish(store => console.log("Received values of form: ", store))(
-        FormItem
+      .onFinish(store => console.log(s"Received values of form. gender: ${store.gender}, note: ${store.note}", store))(
+        FormItem[Values]()
           .label(props.noteTitle)
           .name("note")
           .rulesVarargs(AggregationRule().setRequired(true).setMessage("Please input your note!"))(
             Input()
           ),
-        FormItem
+        FormItem[Values]()
           .label("Gender")
           .name("gender")
           .rulesVarargs(AggregationRule().setRequired(true).setMessage("Please select your gender!'"))(
@@ -40,14 +43,14 @@ object CoordinatedDemo {
                   js.Array(
                     FieldData("gender").setValue(value),
                     FieldData("note").setValue(s"Hi, ${if (value == "male") "man" else "lady"}!")
-                  ),
+                  )
                 )
               }(
                 Select.Option(value = "male")("Male"),
                 Select.Option(value = "female")("Female")
               )
           ),
-        FormItem.wrapperCol(ColProps().setSpan(12).setOffset(5))(
+        FormItem[Values]().wrapperCol(ColProps().setSpan(12).setOffset(5))(
           Button.`type`(antdStrings.primary).htmlType(antdStrings.submit)("Submit")
         )
       )

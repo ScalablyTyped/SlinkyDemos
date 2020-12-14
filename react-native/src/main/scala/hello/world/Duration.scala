@@ -2,12 +2,11 @@ package hello.world
 
 import slinky.core.FunctionalComponent
 import slinky.core.annotations.react
-import slinky.core.facade.Hooks.useState
 import slinky.native.{Text, View}
 import typings.antDesignReactNative.components._
 import typings.antDesignReactNative.{antDesignReactNativeStrings => antdStrings}
 import typings.expoLocalization.mod.locale
-import typings.moment.mod.{^ => moment}
+import typings.moment.{mod => moment}
 import typings.reactNative.mod.{TextStyle, ViewStyle}
 
 import scala.scalajs.js
@@ -38,11 +37,11 @@ object it extends js.Object
       WhiteSpace().size(antdStrings.md),
       Text(s"Expo current locale: $locale"),
       WhiteSpace().size(antdStrings.md),
-      Text(s"moment.js current locale: ${moment().locale()}"),
-      Text(s"moment.js duration en_US: ${moment().locale("en_US").fromNow()}"),
-      Text(s"moment.js duration es_ES: ${moment().locale("es_ES").fromNow()}"),
-      Text(s"moment.js duration fr_FR: ${moment().locale("fr_FR").fromNow()}"),
-      Text(s"moment.js duration it_IT: ${moment().locale("it_IT").fromNow()}"),
+      Text(s"moment.js current locale: ${moment.apply().locale()}"),
+      Text(s"moment.js duration en_US: ${moment.apply().locale("en_US").fromNow()}"),
+      Text(s"moment.js duration es_ES: ${moment.apply().locale("es_ES").fromNow()}"),
+      Text(s"moment.js duration fr_FR: ${moment.apply().locale("fr_FR").fromNow()}"),
+      Text(s"moment.js duration it_IT: ${moment.apply().locale("it_IT").fromNow()}"),
     )
   }
 }

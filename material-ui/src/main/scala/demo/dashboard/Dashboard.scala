@@ -6,7 +6,7 @@ import slinky.core.FunctionalComponent
 import slinky.core.annotations.react
 import slinky.core.facade.Hooks
 import slinky.web.html._
-import typings.classnames.{mod => classNames}
+import typings.classnames.mod.^.{default => classNames}
 import typings.csstype.csstypeStrings._
 import typings.csstype.mod.OverflowXProperty
 import typings.materialUiCore.anon.{PartialClassNameMapDrawer, Partialdurationnumberstri}

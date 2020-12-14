@@ -3,7 +3,7 @@ package demo
 import slinky.core._
 import slinky.core.annotations.react
 import slinky.core.facade.Hooks._
-import slinky.core.facade.{Hooks, ReactElement}
+import slinky.core.facade.ReactElement
 import slinky.web.html._
 import typings.antDesignIcons.components.AntdIcon
 import typings.antDesignIconsSvg.downOutlinedMod.{default => DownOutlinedIcon}
@@ -15,10 +15,12 @@ import typings.antDesignIconsSvg.shopOutlinedMod.{default => ShopOutlinedIcon}
 import typings.antDesignIconsSvg.userOutlinedMod.{default => UserOutlinedIcon}
 import typings.antd.antdStrings
 import typings.antd.components.{List => AntList, _}
+import typings.antd.components.Form.{Form => FormItem}
 import typings.antd.notificationMod.{ArgsProps, IconType, default => Notification}
 import typings.antd.tableInterfaceMod.{ColumnGroupType, ColumnType}
+import typings.moment.mod.Moment
 import typings.moment.mod.unitOfTime.DurationConstructor
-import typings.moment.mod.{Moment, ^ => moment}
+import typings.moment.{mod => moment}
 import typings.rcPicker.interfaceMod.{EventValue, RangeValue}
 import typings.rcPicker.rangePickerMod.RangeShowTimeObject
 import typings.rcSelect.interfaceMod.OptionData
@@ -44,7 +46,7 @@ object CSS extends js.Any
     val (selectValue, updateSelectValue) = useState("lucy")
     val (selectTreeValues, updateSelectTreeValues) = useState(js.Array("0-0"))
     val (rangePickerValues, updateRangePickerValues) = useState[RangeValue[Moment]] {
-      val endMoment = moment()
+      val endMoment = moment.apply()
       val startMoment = endMoment.subtract(DurationConstructor.hours, 2)
       // need type descriptions to help Scala infer that there can be `| Null` at two levels here
       js.Tuple2(startMoment: EventValue[Moment], endMoment: EventValue[Moment])
@@ -283,16 +285,14 @@ object CSS extends js.Any
         .value(text)
         .filterOption(true) // Filter options by input
         .defaultActiveFirstOption(true) // Make first option active - enter to select
-        .options(
-          js.Array(
-            OptionData("Alphabet"),
-            OptionData("Baguette").set(
-              "label",
-              span(AntdIcon(ShopOutlinedIcon), " Baguette")
-            ), // Set label as a ReactElement for customised display
-            OptionData("Bicycle"),
-            OptionData("Croissant")
-          )
+        .optionsVarargs(
+          OptionData("Alphabet"),
+          OptionData("Baguette").set(
+            "label",
+            span(AntdIcon(ShopOutlinedIcon), " Baguette")
+          ), // Set label as a ReactElement for customised display
+          OptionData("Bicycle"),
+          OptionData("Croissant")
         )
         .onChange { case (text, _) => setText(text) }
     }
@@ -448,11 +448,11 @@ object CSS extends js.Any
           updateRangePickerValues(values)
         },
       div(b("Note that moment.js date times are ready to be localized")),
-      div(s"moment.js current locale: ${moment().locale()}"),
-      div(s"moment.js duration en_US: ${moment().locale("en_US").fromNow()}"),
-      div(s"moment.js duration es_ES: ${moment().locale("es_ES").fromNow()}"),
-      div(s"moment.js duration fr_FR: ${moment().locale("fr_FR").fromNow()}"),
-      div(s"moment.js duration it_IT: ${moment().locale("it_IT").fromNow()}")
+      div(s"moment.js current locale: ${moment.apply().locale()}"),
+      div(s"moment.js duration en_US: ${moment.apply().locale("en_US").fromNow()}"),
+      div(s"moment.js duration es_ES: ${moment.apply().locale("es_ES").fromNow()}"),
+      div(s"moment.js duration fr_FR: ${moment.apply().locale("fr_FR").fromNow()}"),
+      div(s"moment.js duration it_IT: ${moment.apply().locale("it_IT").fromNow()}")
     )
 
     val renderTreeSelect = section(

@@ -4,9 +4,9 @@ import demo.StyleBuilder
 import org.scalablytyped.runtime.StringDictionary
 import slinky.core.FunctionalComponent
 import slinky.core.annotations.react
-import slinky.core.facade.{Fragment, ReactElement}
+import slinky.core.facade.ReactElement
 import slinky.web.html.{aria, role, span}
-import typings.classnames.{mod => classNames}
+import typings.classnames.mod.^.{default => classNames}
 import typings.csstype.csstypeStrings.absolute
 import typings.materialUiCore.colorManipulatorMod.darken
 import typings.materialUiCore.colorsMod.{blue, pink}

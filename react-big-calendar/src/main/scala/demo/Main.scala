@@ -1,8 +1,8 @@
 package demo
 
-import org.scalajs.dom.{console, document}
+import org.scalajs.dom.document
 import slinky.web.ReactDOM
-import typings.moment.mod.{^ => Moment}
+import typings.moment.{mod => Moment}
 import typings.moment.momentStrings
 import typings.reactBigCalendar.mod.{momentLocalizer, View}
 import typings.reactBigCalendar.components.Calendar
@@ -20,11 +20,11 @@ object Main {
 
   BigCalendarCss // touch to load css
 
-  val Localizer = momentLocalizer(Moment)
+  val Localizer = momentLocalizer(Moment.^)
 
   val someEvent = new Event(
     start = new js.Date,
-    end = Moment(new js.Date).add(1, momentStrings.day).toDate(),
+    end = Moment.apply(new js.Date).add(1, momentStrings.day).toDate(),
     title = "My amazing event"
   )
 

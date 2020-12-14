@@ -6,7 +6,7 @@ import slinky.core.FunctionalComponent
 import slinky.core.annotations.react
 import slinky.core.facade.Fragment
 import slinky.web.html._
-import typings.classnames.{mod => classNames}
+import typings.classnames.mod.^.{default => classNames}
 import typings.csstype.csstypeStrings.{auto, column, flex, relative}
 import typings.materialUiCore.components._
 import typings.materialUiCore.createMuiThemeMod.Theme

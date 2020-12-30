@@ -198,16 +198,16 @@ object CSS extends js.Any
 
     val renderForm = section(
       h2("Form"),
-      Form.onFinish { store =>
+      Form.onFinish { store: Seq[_] =>
         console.log("Form submitted", store)
       }(
-        FormItem(
+        FormItem()(
           Input.addonBefore(AntdIcon(MailTwoToneIcon)).`type`(antdStrings.email).placeholder("input email")
         ),
-        FormItem(
+        FormItem()(
           Password.addonBefore(AntdIcon(LockTwoToneIcon)).`type`(antdStrings.password).placeholder("input password")
         ),
-        FormItem(Button.htmlType(antdStrings.submit).`type`(antdStrings.primary))("Log in")
+        FormItem()(Button.htmlType(antdStrings.submit).`type`(antdStrings.primary))("Log in")
       )
     )
 

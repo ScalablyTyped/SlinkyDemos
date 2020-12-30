@@ -158,7 +158,7 @@ lazy val antd =
       useYarn := true,
       webpackDevServerPort := 8006,
       stFlavour := Flavour.Slinky,
-      Compile / npmDependencies ++= Seq("antd" -> "4.5.1")
+      Compile / npmDependencies ++= Seq("antd" -> "4.9.4")
     )
 
 /**

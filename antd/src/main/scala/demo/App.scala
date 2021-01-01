@@ -17,12 +17,16 @@ import typings.antd.antdStrings
 import typings.antd.components.{List => AntList, _}
 import typings.antd.notificationMod.{ArgsProps, IconType, default => Notification}
 import typings.antd.tableInterfaceMod.{ColumnGroupType, ColumnType}
+import typings.moment.mod.Moment
+import typings.rcPicker.interfaceMod.{EventValue, RangeValue}
+import typings.rcPicker.rangePickerMod.RangeShowTimeObject
 import typings.rcSelect.interfaceMod.OptionData
 import typings.react.mod.CSSProperties
 import typings.std.global.console
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSImport
+import scala.scalajs.js.|
 
 @JSImport("antd/dist/antd.css", JSImport.Default)
 @js.native
@@ -422,6 +426,30 @@ object CSS extends js.Any
         Tabs.TabPane.tab("Tab 3").withKey("tab3")("Content 3")
       )
     )
+
+    val renderRangePicker = section(
+      h2("Range Picker"), {
+        //      val startMoment: Moment = ???
+        //      val endMoment: Moment = ???
+        //
+        //      val startEventValue: EventValue[Moment] = startMoment
+        //      val endEventValue: EventValue[Moment] = endMoment
+        //
+        //      val currentValue: RangeValue[Moment] = js.Tuple2(startEventValue, endEventValue)
+
+        val format: Boolean | RangeShowTimeObject[Moment] =
+          RangeShowTimeObject[Moment].setFormat("HH:mm").asInstanceOf[Boolean | RangeShowTimeObject[Moment]]
+        DatePicker.PickerBaseProps.RangePicker
+          .RangePickerDateProps()
+          .showTime(format)
+          .format("YYYY/MM/DD HH:mm")
+          .onChange { (rv: RangeValue[Moment], se: js.Tuple2[String, String]) =>
+            console.log(rv.toString)
+          }
+        //        .value(currentValue)
+      }
+    )
+
     div(className := "App")(
       renderIntro,
       Row(
@@ -460,7 +488,8 @@ object CSS extends js.Any
           renderStatistic,
           renderTooltip,
           renderTimeline,
-          renderTabs
+          renderTabs,
+          renderRangePicker
         ),
         renderFooter,
         Col.span(2)

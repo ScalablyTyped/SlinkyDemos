@@ -198,7 +198,7 @@ object CSS extends js.Any
 
     val renderForm = section(
       h2("Form"),
-      Form.onFinish { store: Seq[_] =>
+      Form[Seq[_]].onFinish { store =>
         console.log("Form submitted", store)
       }(
         FormItem()(

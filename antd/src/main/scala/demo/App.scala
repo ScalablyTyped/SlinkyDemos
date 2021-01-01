@@ -17,7 +17,8 @@ import typings.antd.antdStrings
 import typings.antd.components.{List => AntList, _}
 import typings.antd.notificationMod.{ArgsProps, IconType, default => Notification}
 import typings.antd.tableInterfaceMod.{ColumnGroupType, ColumnType}
-import typings.moment.mod.Moment
+import typings.moment.mod.unitOfTime.DurationConstructor
+import typings.moment.mod.{Moment, ^ => moment}
 import typings.rcPicker.interfaceMod.{EventValue, RangeValue}
 import typings.rcPicker.rangePickerMod.RangeShowTimeObject
 import typings.rcSelect.interfaceMod.OptionData
@@ -26,7 +27,6 @@ import typings.std.global.console
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSImport
-import scala.scalajs.js.|
 
 @JSImport("antd/dist/antd.css", JSImport.Default)
 @js.native
@@ -429,24 +429,23 @@ object CSS extends js.Any
 
     val renderRangePicker = section(
       h2("Range Picker"), {
-        //      val startMoment: Moment = ???
-        //      val endMoment: Moment = ???
-        //
-        //      val startEventValue: EventValue[Moment] = startMoment
-        //      val endEventValue: EventValue[Moment] = endMoment
-        //
-        //      val currentValue: RangeValue[Moment] = js.Tuple2(startEventValue, endEventValue)
+        val (currentValue, setValue) =
+          useState[RangeValue[Moment]] {
+            val endMoment = moment()
+            val startMoment = endMoment.subtract(DurationConstructor.hours, 2)
+            // need type descriptions to help Scala infer that there can be `| Null` at two levels here
+            js.Tuple2(startMoment: EventValue[Moment], endMoment: EventValue[Moment])
+          }
 
-        val format: Boolean | RangeShowTimeObject[Moment] =
-          RangeShowTimeObject[Moment].setFormat("HH:mm").asInstanceOf[Boolean | RangeShowTimeObject[Moment]]
         DatePicker.PickerBaseProps.RangePicker
           .RangePickerDateProps()
-          .showTime(format)
+          .showTime(RangeShowTimeObject[Moment].setFormat("HH:mm"))
           .format("YYYY/MM/DD HH:mm")
-          .onChange { (rv: RangeValue[Moment], se: js.Tuple2[String, String]) =>
-            console.log(rv.toString)
+          .value(currentValue)
+          .onChange { (values: RangeValue[Moment], formatString: js.Tuple2[String, String]) =>
+            console.log(formatString)
+            setValue(values)
           }
-        //        .value(currentValue)
       }
     )
 

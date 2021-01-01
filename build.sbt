@@ -255,9 +255,9 @@ lazy val `react-i18n` = project
     webpackDevServerPort := 8012,
     stFlavour := Flavour.Slinky,
     Compile / npmDependencies ++= Seq(
-      "i18next" -> "19.5.2",
-      "i18next-browser-languagedetector" -> "5.0.0",
-      "react-i18next" -> "11.7.0"
+      "i18next" -> "19.8.4",
+      "i18next-browser-languagedetector" -> "6.0.1",
+      "react-i18next" -> "11.8.5"
     )
   )
 

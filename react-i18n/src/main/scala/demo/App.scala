@@ -1,8 +1,10 @@
 package demo
 
+import org.scalablytyped.runtime.StringDictionary
 import slinky.core.FunctionalComponent
 import slinky.web.html._
 import slinky.core.annotations.react
+import typings.i18next.mod.{InterpolationOptions, TOptionsBase}
 import typings.react.mod.CSSProperties
 import typings.reactI18next.mod.useTranslation
 import typings.reactI18next.components.Trans
@@ -24,8 +26,15 @@ object App {
       div(className := "App-intro")(
         div(Trans()("To get started, edit ", code("src/App.js"), " and save to reload.")),
         div(Trans.i18nKey("welcome")("trans")),
-        div(Trans.i18nKey("dog").count(1)),
-        div(Trans.i18nKey("dog").count(2))
+        div(t("dog", TOptionsBase().setCount(1))),
+        div(t("dog", TOptionsBase().setCount(2))),
+        div(t("friend", TOptionsBase().setContext("male"))),
+        div(t("friend", TOptionsBase().setContext("female"))),
+        // interpolation not working
+        div(t("The author is", "John")),
+        // alternatives that fail as well
+//        div(t("The author is", TOptionsBase().setDefaultValue("John"))),
+//        div(t("The author is", TOptionsBase().setInterpolation(InterpolationOptions().setDefaultVariables(StringDictionary("author" -> "John")))))
       ),
       div(style := CSSProperties().setMarginTop(40))(
         "Learn more ",

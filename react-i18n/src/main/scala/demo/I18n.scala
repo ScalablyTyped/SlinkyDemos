@@ -18,7 +18,11 @@ object I18n {
     "Welcome to React" -> "Welcome to React and react-i18next",
     "welcome" -> "Hello <br/> <strong>World</strong>",
     "dog" -> "dog",
-    "dog_plural" -> "dogs"
+    "dog_plural" -> "dogs",
+    "The author is" -> "The author is {{author}}",
+    "friend" -> "A friend",
+    "friend_male" -> "A boyfriend",
+    "friend_female"-> "A girlfriend"
   )
 
   val de = "de"
@@ -27,7 +31,11 @@ object I18n {
     "Welcome to React" -> "Willkommen bei React und react-i18next",
     "welcome" -> "Hallo <br/> <strong>Welt</strong>",
     "dog" -> "Hund",
-    "dog_plural" -> "Hunde"
+    "dog_plural" -> "Hunde",
+    "The author is" -> "Der Autor ist {{author}}",
+    "friend" -> "Ein Freund",
+    "friend_male" -> "Ein Freund",
+    "friend_female" -> "Eine Freundin"
   )
 
   def initialize() =

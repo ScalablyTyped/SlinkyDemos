@@ -13,15 +13,19 @@ import typings.antDesignIconsSvg.lockTwoToneMod.{default => LockTwoToneIcon}
 import typings.antDesignIconsSvg.mailTwoToneMod.{default => MailTwoToneIcon}
 import typings.antDesignIconsSvg.shopOutlinedMod.{default => ShopOutlinedIcon}
 import typings.antDesignIconsSvg.userOutlinedMod.{default => UserOutlinedIcon}
+import typings.antd.anon.`1`
 import typings.antd.antdStrings
 import typings.antd.components.{List => AntList, _}
 import typings.antd.notificationMod.{ArgsProps, IconType, default => Notification}
 import typings.antd.tableInterfaceMod.{ColumnGroupType, ColumnType}
+import typings.antd.treeSelectMod.TreeSelectProps
 import typings.moment.mod.unitOfTime.DurationConstructor
 import typings.moment.mod.{Moment, ^ => moment}
 import typings.rcPicker.interfaceMod.{EventValue, RangeValue}
 import typings.rcPicker.rangePickerMod.RangeShowTimeObject
 import typings.rcSelect.interfaceMod.OptionData
+import typings.rcTreeSelect.interfaceMod.DataNode
+import typings.rcTreeSelect.strategyUtilMod
 import typings.react.mod.CSSProperties
 import typings.std.global.console
 
@@ -38,9 +42,16 @@ object CSS extends js.Any
   private val css = CSS
 
   val component = FunctionalComponent[Props] { _ =>
-    val (isModalVisible, updateIsModalVisible) = Hooks.useState(false)
-    val (selectValue, updateSelectValue) = Hooks.useState("lucy")
-    val (multiSelectValue, updateMultiSelectValue) = Hooks.useState(List("a10", "c12"))
+    val (isModalVisible, updateIsModalVisible) = useState(false)
+    val (selectValue, updateSelectValue) = useState("lucy")
+    val (selectTreeValues, updateSelectTreeValues) = useState(js.Array("0-0"))
+    val (rangePickerValues, updateRangePickerValues) = useState[RangeValue[Moment]] {
+      val endMoment = moment()
+      val startMoment = endMoment.subtract(DurationConstructor.hours, 2)
+      // need type descriptions to help Scala infer that there can be `| Null` at two levels here
+      js.Tuple2(startMoment: EventValue[Moment], endMoment: EventValue[Moment])
+    }
+    val (multiSelectValue, updateMultiSelectValue) = useState(List("a10", "c12"))
 
     val renderIntro = Row(
       Col.span(7),
@@ -428,24 +439,46 @@ object CSS extends js.Any
     )
 
     val renderRangePicker = section(
-      h2("Range Picker"), {
-        val (currentValue, setValue) =
-          useState[RangeValue[Moment]] {
-            val endMoment = moment()
-            val startMoment = endMoment.subtract(DurationConstructor.hours, 2)
-            // need type descriptions to help Scala infer that there can be `| Null` at two levels here
-            js.Tuple2(startMoment: EventValue[Moment], endMoment: EventValue[Moment])
-          }
+      h2("Range Picker"),
+      DatePicker.PickerBaseProps.RangePicker
+        .RangePickerDateProps()
+        .showTime(RangeShowTimeObject[Moment].setFormat("HH:mm"))
+        .format("YYYY/MM/DD HH:mm")
+        .value(rangePickerValues)
+        .onChange { (values: RangeValue[Moment], formatString: js.Tuple2[String, String]) =>
+          console.log(formatString)
+          updateRangePickerValues(values)
+        }
+    )
 
-        DatePicker.PickerBaseProps.RangePicker
-          .RangePickerDateProps()
-          .showTime(RangeShowTimeObject[Moment].setFormat("HH:mm"))
-          .format("YYYY/MM/DD HH:mm")
-          .value(currentValue)
-          .onChange { (values: RangeValue[Moment], formatString: js.Tuple2[String, String]) =>
-            console.log(formatString)
-            setValue(values)
-          }
+    val renderTreeSelect = section(
+      h2("Multiple and checkable Tree Select"), {
+        def createDataNode(title: String, value: String) =
+          DataNode().setTitle(title).setValue(value).setKey(value)
+
+        val data: js.Array[DataNode] = js.Array(
+          createDataNode("Node1", "0-0")
+            .setChildren(js.Array(createDataNode("Child Node1", "0-0-0"))),
+          createDataNode("Node2", "0-1")
+            .setChildren(
+              js.Array(
+                createDataNode("Child Node3", "0-1-0"),
+                createDataNode("Child Node4", "0-1-1"),
+                createDataNode("Child Node5", "0-1-2")
+              )
+            )
+        )
+
+        val props = TreeSelectProps[js.Array[String]]()
+          .setValue(selectTreeValues)
+          .setOnChange((values: js.Array[String], _, _) => updateSelectTreeValues(values))
+          .setTreeData(data)
+          .setPlaceholder("Please select")
+          .setTreeCheckable(true)
+          .setShowCheckedStrategy(strategyUtilMod.SHOW_PARENT)
+          .setStyle(CSSProperties().setWidth("100%"))
+
+        TreeSelect.withProps[js.Array[String]](props.asInstanceOf[TreeSelectProps[js.Array[String]] with `1`])
       }
     )
 
@@ -463,6 +496,7 @@ object CSS extends js.Any
           renderSelect,
           renderMultiSelect,
           renderGroupSelect,
+          renderTreeSelect,
           renderIcon,
           renderInput,
           renderPassword,
@@ -480,6 +514,7 @@ object CSS extends js.Any
           renderCarousel,
           renderCard,
           renderCalendar,
+          renderRangePicker,
           renderDescriptions,
           renderEmpty,
           renderList,
@@ -487,8 +522,7 @@ object CSS extends js.Any
           renderStatistic,
           renderTooltip,
           renderTimeline,
-          renderTabs,
-          renderRangePicker
+          renderTabs
         ),
         renderFooter,
         Col.span(2)

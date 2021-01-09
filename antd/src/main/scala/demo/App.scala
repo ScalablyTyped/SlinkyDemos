@@ -22,6 +22,8 @@ import typings.moment.mod.{Moment, ^ => moment}
 import typings.rcPicker.interfaceMod.{EventValue, RangeValue}
 import typings.rcPicker.rangePickerMod.RangeShowTimeObject
 import typings.rcSelect.interfaceMod.OptionData
+import typings.rcTreeSelect.interfaceMod.DataNode
+import typings.rcTreeSelect.strategyUtilMod
 import typings.react.mod.CSSProperties
 import typings.std.global.console
 
@@ -38,9 +40,16 @@ object CSS extends js.Any
   private val css = CSS
 
   val component = FunctionalComponent[Props] { _ =>
-    val (isModalVisible, updateIsModalVisible) = Hooks.useState(false)
-    val (selectValue, updateSelectValue) = Hooks.useState("lucy")
-    val (multiSelectValue, updateMultiSelectValue) = Hooks.useState(List("a10", "c12"))
+    val (isModalVisible, updateIsModalVisible) = useState(false)
+    val (selectValue, updateSelectValue) = useState("lucy")
+    val (selectTreeValues, updateSelectTreeValues) = useState(js.Array("0-0"))
+    val (rangePickerValues, updateRangePickerValues) = useState[RangeValue[Moment]] {
+      val endMoment = moment()
+      val startMoment = endMoment.subtract(DurationConstructor.hours, 2)
+      // need type descriptions to help Scala infer that there can be `| Null` at two levels here
+      js.Tuple2(startMoment: EventValue[Moment], endMoment: EventValue[Moment])
+    }
+    val (multiSelectValue, updateMultiSelectValue) = useState(List("a10", "c12"))
 
     val renderIntro = Row(
       Col.span(7),
@@ -428,24 +437,42 @@ object CSS extends js.Any
     )
 
     val renderRangePicker = section(
-      h2("Range Picker"), {
-        val (currentValue, setValue) =
-          useState[RangeValue[Moment]] {
-            val endMoment = moment()
-            val startMoment = endMoment.subtract(DurationConstructor.hours, 2)
-            // need type descriptions to help Scala infer that there can be `| Null` at two levels here
-            js.Tuple2(startMoment: EventValue[Moment], endMoment: EventValue[Moment])
-          }
+      h2("Range Picker"),
+      DatePicker.PickerBaseProps.RangePicker
+        .RangePickerDateProps()
+        .showTime(RangeShowTimeObject[Moment].setFormat("HH:mm"))
+        .format("YYYY/MM/DD HH:mm")
+        .value(rangePickerValues)
+        .onChange { (values: RangeValue[Moment], formatString: js.Tuple2[String, String]) =>
+          console.log(formatString)
+          updateRangePickerValues(values)
+        }
+    )
 
-        DatePicker.PickerBaseProps.RangePicker
-          .RangePickerDateProps()
-          .showTime(RangeShowTimeObject[Moment].setFormat("HH:mm"))
-          .format("YYYY/MM/DD HH:mm")
-          .value(currentValue)
-          .onChange { (values: RangeValue[Moment], formatString: js.Tuple2[String, String]) =>
-            console.log(formatString)
-            setValue(values)
-          }
+    val renderTreeSelect = section(
+      h2("Multiple and checkable Tree Select"), {
+        def node(title: String, value: String) =
+          DataNode().setTitle(title).setValue(value).setKey(value)
+
+        val data: js.Array[DataNode] = js.Array(
+          node("Node1", "0-0").setChildrenVarargs(
+            node("Child Node1", "0-0-0")
+          ),
+          node("Node2", "0-1").setChildrenVarargs(
+            node("Child Node3", "0-1-0"),
+            node("Child Node4", "0-1-1"),
+            node("Child Node5", "0-1-2")
+          )
+        )
+
+        TreeSelect[js.Array[String]]
+          .value(selectTreeValues)
+          .onChange((values, _, _) => updateSelectTreeValues(values))
+          .treeData(data)
+          .placeholder("Please select")
+          .treeCheckable(true)
+          .showCheckedStrategy(strategyUtilMod.SHOW_PARENT)
+          .style(CSSProperties().setWidth("100%"))
       }
     )
 
@@ -463,6 +490,7 @@ object CSS extends js.Any
           renderSelect,
           renderMultiSelect,
           renderGroupSelect,
+          renderTreeSelect,
           renderIcon,
           renderInput,
           renderPassword,
@@ -480,6 +508,7 @@ object CSS extends js.Any
           renderCarousel,
           renderCard,
           renderCalendar,
+          renderRangePicker,
           renderDescriptions,
           renderEmpty,
           renderList,
@@ -487,8 +516,7 @@ object CSS extends js.Any
           renderStatistic,
           renderTooltip,
           renderTimeline,
-          renderTabs,
-          renderRangePicker
+          renderTabs
         ),
         renderFooter,
         Col.span(2)

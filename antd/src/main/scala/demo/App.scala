@@ -13,12 +13,10 @@ import typings.antDesignIconsSvg.lockTwoToneMod.{default => LockTwoToneIcon}
 import typings.antDesignIconsSvg.mailTwoToneMod.{default => MailTwoToneIcon}
 import typings.antDesignIconsSvg.shopOutlinedMod.{default => ShopOutlinedIcon}
 import typings.antDesignIconsSvg.userOutlinedMod.{default => UserOutlinedIcon}
-import typings.antd.anon.`1`
 import typings.antd.antdStrings
 import typings.antd.components.{List => AntList, _}
 import typings.antd.notificationMod.{ArgsProps, IconType, default => Notification}
 import typings.antd.tableInterfaceMod.{ColumnGroupType, ColumnType}
-import typings.antd.treeSelectMod.TreeSelectProps
 import typings.moment.mod.unitOfTime.DurationConstructor
 import typings.moment.mod.{Moment, ^ => moment}
 import typings.rcPicker.interfaceMod.{EventValue, RangeValue}
@@ -453,32 +451,28 @@ object CSS extends js.Any
 
     val renderTreeSelect = section(
       h2("Multiple and checkable Tree Select"), {
-        def createDataNode(title: String, value: String) =
+        def node(title: String, value: String) =
           DataNode().setTitle(title).setValue(value).setKey(value)
 
         val data: js.Array[DataNode] = js.Array(
-          createDataNode("Node1", "0-0")
-            .setChildren(js.Array(createDataNode("Child Node1", "0-0-0"))),
-          createDataNode("Node2", "0-1")
-            .setChildren(
-              js.Array(
-                createDataNode("Child Node3", "0-1-0"),
-                createDataNode("Child Node4", "0-1-1"),
-                createDataNode("Child Node5", "0-1-2")
-              )
-            )
+          node("Node1", "0-0").setChildrenVarargs(
+            node("Child Node1", "0-0-0")
+          ),
+          node("Node2", "0-1").setChildrenVarargs(
+            node("Child Node3", "0-1-0"),
+            node("Child Node4", "0-1-1"),
+            node("Child Node5", "0-1-2")
+          )
         )
 
-        val props = TreeSelectProps[js.Array[String]]()
-          .setValue(selectTreeValues)
-          .setOnChange((values: js.Array[String], _, _) => updateSelectTreeValues(values))
-          .setTreeData(data)
-          .setPlaceholder("Please select")
-          .setTreeCheckable(true)
-          .setShowCheckedStrategy(strategyUtilMod.SHOW_PARENT)
-          .setStyle(CSSProperties().setWidth("100%"))
-
-        TreeSelect.withProps[js.Array[String]](props.asInstanceOf[TreeSelectProps[js.Array[String]] with `1`])
+        TreeSelect[js.Array[String]]
+          .value(selectTreeValues)
+          .onChange((values, _, _) => updateSelectTreeValues(values))
+          .treeData(data)
+          .placeholder("Please select")
+          .treeCheckable(true)
+          .showCheckedStrategy(strategyUtilMod.SHOW_PARENT)
+          .style(CSSProperties().setWidth("100%"))
       }
     )
 

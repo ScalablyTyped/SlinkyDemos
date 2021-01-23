@@ -446,7 +446,13 @@ object CSS extends js.Any
         .onChange { (values: RangeValue[Moment], formatString: js.Tuple2[String, String]) =>
           console.log(formatString)
           updateRangePickerValues(values)
-        }
+        },
+      div(b("Note that moment.js date times are ready to be localized")),
+      div(s"moment.js current locale: ${moment().locale()}"),
+      div(s"moment.js duration en_US: ${moment().locale("en_US").fromNow()}"),
+      div(s"moment.js duration es_ES: ${moment().locale("es_ES").fromNow()}"),
+      div(s"moment.js duration fr_FR: ${moment().locale("fr_FR").fromNow()}"),
+      div(s"moment.js duration it_IT: ${moment().locale("it_IT").fromNow()}")
     )
 
     val renderTreeSelect = section(

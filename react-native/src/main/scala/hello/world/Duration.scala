@@ -8,9 +8,22 @@ import typings.antDesignReactNative.components._
 import typings.antDesignReactNative.{antDesignReactNativeStrings => antdStrings}
 import typings.expoLocalization.mod.locale
 import typings.moment.mod.{^ => moment}
-import typings.dayjs.mod.{^ => dayjs}
-import java.time.Instant
+import typings.reactNative.mod.{TextStyle, ViewStyle}
+
 import scala.scalajs.js
+import scala.scalajs.js.annotation.JSImport
+
+@JSImport("moment/locale/es", JSImport.Namespace)
+@js.native
+object es extends js.Object
+
+@JSImport("moment/locale/fr", JSImport.Namespace)
+@js.native
+object fr extends js.Object
+
+@JSImport("moment/locale/it", JSImport.Namespace)
+@js.native
+object it extends js.Object
 
 @react object Duration {
 
@@ -18,11 +31,10 @@ import scala.scalajs.js
 
   val component = FunctionalComponent[Props] { _ =>
 
-    // should set day.js locale
-   dayjs().locale("es")
+    val locales = (es, fr, it)
 
-    View(
-      Text("Duration"),
+    View(style = ViewStyle().setMargin(20))(
+      Text(style = TextStyle().setFontSize(16))("Localized duration"),
       WhiteSpace().size(antdStrings.md),
       Text(s"Expo current locale: $locale"),
       WhiteSpace().size(antdStrings.md),
@@ -31,8 +43,6 @@ import scala.scalajs.js
       Text(s"moment.js duration es_ES: ${moment().locale("es_ES").fromNow()}"),
       Text(s"moment.js duration fr_FR: ${moment().locale("fr_FR").fromNow()}"),
       Text(s"moment.js duration it_IT: ${moment().locale("it_IT").fromNow()}"),
-      WhiteSpace().size(antdStrings.md),
-      Text(s"day.js current locale: ${dayjs().locale()}")
     )
   }
 }

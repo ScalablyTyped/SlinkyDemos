@@ -35,8 +35,7 @@
     "react-native-webview": "10.8.2",
     "typescript": "~3.9.5",
     "url": "~0.11.0",
-    "moment": "2.29.1",
-    "dayjs": "1.10.4"
+    "moment": "2.29.1"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",

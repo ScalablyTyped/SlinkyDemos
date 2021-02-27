@@ -333,6 +333,21 @@ lazy val plotly = project
     ),
   )
 
+lazy val cytoscape = project
+  .enablePlugins(ScalablyTypedConverterPlugin)
+  .configure(baseSettings, browserProject, reactNpmDeps, bundlerSettings)
+  .settings(
+    useYarn := true,
+    webpackDevServerPort := 8018,
+    stFlavour := Flavour.Slinky,
+    Compile / npmDependencies ++= Seq(
+      "cytoscape" -> "3.18.1",
+      "react-cytoscapejs" -> "1.2.1",
+      "@types/cytoscape" -> "3.14.12",
+      "@types/react-cytoscapejs" -> "1.2.0",
+    ),
+  )
+
 /** Note: This can't use scalajs-bundler (at least I don't know how),
   *  so we run yarn ourselves with an external package.json.
   */

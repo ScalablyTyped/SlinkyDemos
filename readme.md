@@ -94,6 +94,11 @@ Or, `sbt materialUiDev` starts a webpack-dev-server at http://localhost:8008 rec
 
 `sbt> plotly/start` starts a webpack-dev-server at http://localhost:8017 .
 
+### react-cytoscapejs 
+[Demo](https://scalablytyped.github.io/SlinkyDemos/cytoscape/)
+
+`sbt> cytoscape/start` starts a webpack-dev-server at http://localhost:8018 .
+
 ## React-native 
 [Expo demo you can run on your phone](https://expo.io/@scalablytyped/projects/react-native)
 

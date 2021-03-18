@@ -9,11 +9,10 @@ import typings.nivoColors.mod.{ColorSchemeId, OrdinalColorsInstruction, SchemeCo
 import typings.nivoCore.mod.Box
 import typings.nivoLegends.anon.PartialitemTextColorstrin
 import typings.nivoLegends.mod._
-import typings.nivoLegends.nivoLegendsStrings
 import typings.nivoLine.components.Line
 import typings.nivoLine.mod.Serie
 import typings.nivoScales.mod.{LinearScale, Scale}
-import typings.nivoScales.nivoScalesStrings.{auto, linear, point}
+import typings.nivoScales.nivoScalesStrings.auto
 
 import scala.scalajs.js
 
@@ -31,8 +30,8 @@ object App {
     case Props(data) =>
       Line(data, height = 1000, width = 1500)
         .margin(Box().setTop(50).setRight(110).setBottom(50).setLeft(60))
-        .xScale(Scale.PointScale(point))
-        .yScale(LinearScale(linear).setMin(auto).setMax(auto).setStacked(true).setReverse(false))
+        .xScale(Scale.PointScale())
+        .yScale(LinearScale().setMin(auto).setMax(auto).setStacked(true).setReverse(false))
         .axisTopNull
         .axisRightNull
         .axisBottom(
@@ -78,13 +77,8 @@ object App {
             .setSymbolSize(12)
             .setSymbolShape(LegendSymbolShape.circle)
             .setSymbolBorderColor("rgba(0, 0, 0, .5)")
-            .setEffects(
-              js.Array(
-                LegendEffect(
-                  nivoLegendsStrings.hover,
-                  PartialitemTextColorstrin().setItemBackground("rgba(0, 0, 0, .03)").setItemOpacity(1)
-                )
-              )
+            .setEffectsVarargs(
+              LegendEffect(PartialitemTextColorstrin().setItemBackground("rgba(0, 0, 0, .03)").setItemOpacity(1))
             )
         )
   }

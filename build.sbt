@@ -364,7 +364,6 @@ lazy val `react-native` = project
     },
     stFlavour := Flavour.SlinkyNative,
     stStdlib := List("es5"),
-    stTypescriptVersion := "4.0.0",
     stIgnore := List("url", "@expo/config-plugins"),
     run := {
       (Compile / fastOptJS).value

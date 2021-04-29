@@ -371,6 +371,20 @@ lazy val `react-native` = project
     }
   )
 
+lazy val gojs = project
+  .enablePlugins(ScalablyTypedConverterPlugin)
+  .configure(baseSettings, browserProject, reactNpmDeps, bundlerSettings)
+  .settings(
+    useYarn := true,
+    webpackDevServerPort := 8010,
+    stFlavour := Flavour.Slinky,
+    stReactEnableTreeShaking := Selection.All,
+    Compile / npmDependencies ++= Seq(
+      "gojs" -> "2.1.38",
+      "gojs-react" -> "1.0.10",
+    )
+  )
+
 // specify versions for all of reacts dependencies to compile less since we have many demos here
 lazy val reactNpmDeps: Project => Project =
   _.settings(

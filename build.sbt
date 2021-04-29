@@ -378,7 +378,6 @@ lazy val gojs = project
     useYarn := true,
     webpackDevServerPort := 8010,
     stFlavour := Flavour.Slinky,
-    stReactEnableTreeShaking := Selection.All,
     Compile / npmDependencies ++= Seq(
       "gojs" -> "2.1.38",
       "gojs-react" -> "1.0.10",

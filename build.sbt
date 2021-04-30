@@ -348,6 +348,19 @@ lazy val cytoscape = project
     ),
   )
 
+lazy val gojs = project
+  .enablePlugins(ScalablyTypedConverterPlugin)
+  .configure(baseSettings, browserProject, reactNpmDeps, bundlerSettings)
+  .settings(
+    useYarn := true,
+    webpackDevServerPort := 8019,
+    stFlavour := Flavour.Slinky,
+    Compile / npmDependencies ++= Seq(
+      "gojs" -> "2.1.38",
+      "gojs-react" -> "1.0.10",
+    )
+  )
+
 /** Note: This can't use scalajs-bundler (at least I don't know how),
   *  so we run yarn ourselves with an external package.json.
   */

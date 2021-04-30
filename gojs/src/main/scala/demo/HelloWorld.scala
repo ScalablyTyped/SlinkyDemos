@@ -18,6 +18,7 @@ object HelloWorld {
   def tweakedStringify: js.Function3[ /* val */ js.Any, /* srcData */ js.Any, /* model */ js.Any, _] =
     (`val`, srcData, model) => go.Point.stringify(`val`.asInstanceOf[go.Point])
 
+  class ArchetypeData(val text: js.UndefOr[String], val color: js.UndefOr[String]) extends go.ObjectData
   class Data(val key: String, val text: String, val color: String, val loc: String) extends go.ObjectData
   class LinkData(val key: Int, val from: Int, val to: Int) extends go.ObjectData
 
@@ -41,7 +42,7 @@ object HelloWorld {
   def diagram(): go.Diagram = {
     val diagram = new go.Diagram()
     diagram.undoManager.isEnabled = true // must be set to allow for model change listening
-    // todo: don't know how to set this "clickCreatingTool.archetypeNodeData" -> StringDictionary("text" -> "new node", "color" -> "lightblue"),
+    diagram.toolManager.clickCreatingTool.archetypeNodeData = new ArchetypeData("new node", "lightblue")
     diagram.model = {
       val model = new go.GraphLinksModel()
       model.linkKeyProperty = "key"

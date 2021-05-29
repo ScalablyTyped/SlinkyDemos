@@ -103,7 +103,7 @@ object CSS extends js.Any
           )
           .columnsVarargs(
             ColumnType[TableItem]()
-              .setTitleReactElement("Name")
+              .setTitle("Name")
               .setDataIndex("name")
               .setKey("name")
               .setRender((_, tableItem, _) => Tag(tableItem.name).build),
@@ -118,8 +118,7 @@ object CSS extends js.Any
 
     val renderAlert = section(
       h2("Alert"),
-      Alert
-        .message("Success Tips")
+      Alert("Success Tips")
         .description("Detailed description and advice about successful copywriting.")
         .`type`(antdStrings.success)
         .showIcon(true)
@@ -203,8 +202,7 @@ object CSS extends js.Any
       Spin
         .size(antdStrings.large)
         .spinning(true)(
-          Alert
-            .message("Alert message title")
+          Alert(message = "Alert message title")
             .description("Further details about the context of this alert.")
             .`type`(antdStrings.info)
             .showIcon(true)
@@ -233,8 +231,7 @@ object CSS extends js.Any
       h2("Notification"),
       Button.onClick(_ =>
         Notification.open(
-          ArgsProps()
-            .setMessage("Notification Title")
+          ArgsProps(message = "Notification Title")
             .setDescription(
               "This is the content of the notification. This is the content of the notification. This is the content of the notification."
             )
@@ -246,8 +243,7 @@ object CSS extends js.Any
     def menu: ReactElement =
       Menu.onClick(mi =>
         Notification.open(
-          ArgsProps()
-            .setMessage("Selected menu item")
+          ArgsProps(message = "Selected menu item")
             .setDescription(
               s"Menu Item with key '${mi.key}' was selected"
             )
@@ -318,19 +314,18 @@ object CSS extends js.Any
 
     val renderComment = section(
       h2("Comment"),
-      Comment
+      Comment("Comment")
         .author("Author")
         .avatar(Avatar.size(antdStrings.large).icon(AntdIcon(UserOutlinedIcon)))
-        .content("Comment")
         .actionsVarargs(Button("Like"))
     )
 
     val renderCollapse = section(
       h2("Collapse"),
       Collapse(
-        Collapse.Panel.header("Panel1")("Collapsable Content"),
-        Collapse.Panel.header("Panel2")("Collapsable Content"),
-        Collapse.Panel.header("Panel3")("Collapsable Content")
+        Collapse.Panel(header = "Panel1")("Collapsable Content"),
+        Collapse.Panel(header = "Panel2")("Collapsable Content"),
+        Collapse.Panel(header = "Panel3")("Collapsable Content")
       )
     )
 
@@ -415,7 +410,7 @@ object CSS extends js.Any
 
     val renderTooltip = section(
       h2("Tooltip"),
-      Tooltip.TooltipPropsWithOverlayRefAttributes.titleReactElement("Tooltip")(span("Hover me"))
+      Tooltip.TooltipPropsWithTitleRefAttributes(title = ("Tooltip": ReactElement))(span("Hover me"))
     )
 
     val renderTimeline = section(

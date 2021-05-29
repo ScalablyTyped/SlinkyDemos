@@ -13,9 +13,9 @@ object HelloWorld {
   type Props = Unit
 
   // javascript is interesting. I think this just works in typescript because the compiler just gives up on checking anything in the presence of `any`
-  def tweakedParse: js.Function2[ /* val */ js.Any, /* targetObj */ js.Any, _] =
+  def tweakedParse: js.Function2[ /* val */ js.Any, /* targetObj */ js.Any, js.Any] =
     (`val`, targetObj) => go.Point.parse(`val`.asInstanceOf[String])
-  def tweakedStringify: js.Function3[ /* val */ js.Any, /* srcData */ js.Any, /* model */ js.Any, _] =
+  def tweakedStringify: js.Function3[ /* val */ js.Any, /* srcData */ js.Any, /* model */ js.Any, js.Any] =
     (`val`, srcData, model) => go.Point.stringify(`val`.asInstanceOf[go.Point])
 
   class ArchetypeData(val text: js.UndefOr[String], val color: js.UndefOr[String]) extends go.ObjectData

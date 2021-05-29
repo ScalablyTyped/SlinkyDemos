@@ -58,7 +58,7 @@ lazy val baseSettings: Project => Project =
 lazy val hotReloadingSettings: Project => Project =
   _.enablePlugins(ScalaJSPlugin)
     .settings(
-      webpackDevServerExtraArgs in fastOptJS := Seq("--inline", "--hot"),
+      fastOptJS / webpackDevServerExtraArgs := Seq("--inline", "--hot"),
       stIgnore += "react-proxy",
       Compile / npmDependencies ++= Seq(
         "react-proxy" -> "1.1.8"

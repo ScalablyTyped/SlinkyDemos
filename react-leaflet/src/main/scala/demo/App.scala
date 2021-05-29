@@ -15,13 +15,13 @@ import scala.scalajs.js
   val component = FunctionalComponent[Props] { _ =>
     val position: LatLngExpression = js.Tuple2(51.505, -0.09)
 
-    Map(MapProps().setCenter(position).setZoom(13))(
-      TileLayer(
+    Map[MapProps, js.Any](MapProps(children = null).setCenter(position).setZoom(13))(
+      TileLayer[TileLayerProps, js.Any](
         TileLayerProps(url = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png")
           .setAttribution("&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors")
       ),
-      Marker(MarkerProps(position = position))(
-        Popup(PopupProps())("A pretty CSS3 popup.\nEasily customizable.")
+      Marker[MarkerProps, js.Any](MarkerProps(position = position))(
+        Popup[PopupProps, js.Any](PopupProps(children = null))("A pretty CSS3 popup.\nEasily customizable.")
       )
     )
   }

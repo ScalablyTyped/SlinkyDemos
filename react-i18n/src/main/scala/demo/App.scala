@@ -1,5 +1,6 @@
 package demo
 
+import org.scalajs.dom.Element
 import slinky.core.FunctionalComponent
 import slinky.web.html._
 import slinky.core.annotations.react
@@ -23,8 +24,8 @@ object App {
         button(onClick := { () => i18n.changeLanguage(I18n.en) })("en")
       ),
       div(className := "App-intro")(
-        div(Trans()("To get started, edit ", code("src/App.js"), " and save to reload.")),
-        div(Trans.i18nKey("welcome")("trans")),
+        div(Trans[Element]()("To get started, edit ", code("src/App.js"), " and save to reload.")),
+        div(Trans[Element]().i18nKey("welcome")("trans")),
         div(t("dog", TOptionsBase().setCount(1))),
         div(t("dog", TOptionsBase().setCount(2))),
         div(t("friend", TOptionsBase().setContext("male"))),

@@ -377,7 +377,7 @@ lazy val `react-native` = project
     },
     stFlavour := Flavour.SlinkyNative,
     stStdlib := List("es5"),
-    stIgnore := List("url"),
+    stIgnore := List("url", "@expo/config-plugins"),
     run := {
       (Compile / fastOptJS).value
       Process("expo start", baseDirectory.value).!

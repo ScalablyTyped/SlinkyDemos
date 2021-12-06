@@ -131,7 +131,9 @@ lazy val `storybook-react` = project
     scalaJSLinkerConfig := scalaJSLinkerConfig.value.withModuleKind(ModuleKind.CommonJSModule),
     /* ScalablyTypedConverterExternalNpmPlugin requires that we define how to install node dependencies and where they are */
     externalNpm := {
-      Process("yarn", baseDirectory.value).!
+      if (scala.util.Properties.isWin) Process("yarn", baseDirectory.value).run()
+      else Process("bash -ci 'yarn'", baseDirectory.value).run()
+
       baseDirectory.value
     },
     stFlavour := Flavour.Slinky,
@@ -140,12 +142,14 @@ lazy val `storybook-react` = project
       */
     start := {
       (Compile / fastOptJS).value
-      Process("yarn storybook", baseDirectory.value).!
+      if (scala.util.Properties.isWin) Process("yarn storybook", baseDirectory.value).run()
+      else Process("bash -ci 'yarn storybook'", baseDirectory.value).run()
     },
     dist := {
       val distFolder = (ThisBuild / baseDirectory).value / "docs" / moduleName.value
       (Compile / fullOptJS).value
-      Process("yarn dist", baseDirectory.value).!
+      if (scala.util.Properties.isWin) Process("yarn dist", baseDirectory.value).run()
+      else Process("bash -ci 'yarn dist'", baseDirectory.value).run()
       distFolder
     }
   )
@@ -372,7 +376,8 @@ lazy val `react-native` = project
     scalaJSUseMainModuleInitializer := false,
     /* ScalablyTypedConverterExternalNpmPlugin requires that we define how to install node dependencies and where they are */
     externalNpm := {
-      Process("yarn", baseDirectory.value).!
+      if (scala.util.Properties.isWin) Process("yarn", baseDirectory.value).run()
+      else Process("bash -ci 'yarn'", baseDirectory.value).run()
       baseDirectory.value
     },
     stFlavour := Flavour.SlinkyNative,

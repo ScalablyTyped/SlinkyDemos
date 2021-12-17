@@ -54,7 +54,7 @@ object App {
             .setLegendOffset(-40)
             .setLegendPosition(middle)
         )
-        .colors(SchemeColorInstruction(ColorSchemeId.nivo): OrdinalColorsInstruction[js.Any])
+        .colors(SchemeColorInstruction(ColorSchemeId.nivo))
         .pointSize(10)
         .pointColor(StringDictionary("theme" -> "background"))
         .pointBorderWidth(2)

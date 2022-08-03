@@ -162,7 +162,9 @@ lazy val antd =
       useYarn := true,
       webpackDevServerPort := 8006,
       stFlavour := Flavour.Slinky,
-      Compile / npmDependencies ++= Seq("antd" -> "4.9.4")
+      // Workaround for https://github.com/ScalablyTyped/Converter/issues/467
+      stIgnore += "rc-tree",
+      Compile / npmDependencies ++= Seq("antd" -> "4.22.3")
     )
 
 /**

@@ -3,11 +3,11 @@ import java.nio.file.StandardCopyOption.REPLACE_EXISTING
 
 import scala.sys.process.Process
 
-//Global / stRemoteCache := RemoteCache.S3Aws(
-//  bucket = "scalablytyped-demos",
-//  region = "eu-central-1",
-//  prefix = Some("st-cache")
-//)
+Global / stRemoteCache := RemoteCache.S3Aws(
+  bucket = "scalablytyped-demos",
+  region = "eu-central-1",
+  prefix = Some("st-cache")
+)
 
 Global / onLoad := {
   println(

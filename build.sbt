@@ -122,7 +122,7 @@ lazy val `semantic-ui-react-kitchensink` = project
   )
 
 /** Note: This can't use scalajs-bundler (at least I don't know how),
-  *  so we run yarn ourselves with an external package.json.
+  * so we run yarn ourselves with an external package.json.
   */
 lazy val `storybook-react` = project
   .enablePlugins(ScalablyTypedConverterExternalNpmPlugin)
@@ -162,8 +162,77 @@ lazy val antd =
       useYarn := true,
       webpackDevServerPort := 8006,
       stFlavour := Flavour.Slinky,
-      Compile / npmDependencies ++= Seq("antd" -> "4.9.4")
+      // Workaround for https://github.com/ScalablyTyped/Converter/issues/467
+      stIgnore += "rc-tree",
+      Compile / npmDependencies ++= Seq("antd" -> "4.22.3"),
+      Compile / npmInstallDependencies := Def.task {
+        val dir = (Compile / npmInstallDependencies).value
+        // Workarounds for https://github.com/ScalablyTyped/Converter/issues/468
+        fixAntdAutoComplete(dir)
+        fixAntdSelect(dir)
+        dir
+      }.value
     )
+
+lazy val fixAntdAutoComplete = (dir: File) => {
+  val autoComplete = dir / "node_modules" / "antd" / "lib" / "auto-complete" / "index.d.ts"
+  val input = IO.read(autoComplete)
+  val output = input
+    .replace(
+      """declare const RefAutoComplete: (<ValueType = any, OptionType extends BaseOptionType | DefaultOptionType = DefaultOptionType>(props: AutoCompleteProps<ValueType, OptionType> & {
+        |    children?: React.ReactNode;
+        |} & {
+        |    ref?: React.Ref<BaseSelectRef> | undefined;
+        |}) => React.ReactElement) & {
+        |    Option: import("rc-select/lib/Option").OptionFC;
+        |};
+        |export default RefAutoComplete;
+        |""".stripMargin,
+      """declare const RefAutoComplete: (<ValueType = any>(props: AutoCompleteProps<ValueType, BaseOptionType> & {
+        |    children?: React.ReactNode;
+        |} & {
+        |    ref?: React.Ref<BaseSelectRef> | undefined;
+        |}) => React.ReactElement);
+        |declare type AutoCompleteWithOption = typeof RefAutoComplete & {
+        |    Option: import("rc-select/lib/Option").OptionFC;
+        |};
+        |declare const AutoComplete: AutoCompleteWithOption;
+        |export default AutoComplete;
+        |""".stripMargin
+    )
+  IO.write(autoComplete, output)
+}
+
+lazy val fixAntdSelect = (dir: File) => {
+  val select = dir / "node_modules" / "antd" / "lib" / "select" / "index.d.ts"
+  val input = IO.read(select)
+  val output = input
+    .replace(
+      """declare const Select: (<ValueType = any, OptionType extends BaseOptionType | DefaultOptionType = DefaultOptionType>(props: SelectProps<ValueType, OptionType> & {
+        |    children?: React.ReactNode;
+        |} & {
+        |    ref?: React.Ref<BaseSelectRef> | undefined;
+        |}) => React.ReactElement) & {
+        |    SECRET_COMBOBOX_MODE_DO_NOT_USE: string;
+        |    Option: typeof Option;
+        |    OptGroup: typeof OptGroup;
+        |};""".stripMargin,
+      """declare const SelectRef: (<ValueType = any>(props: SelectProps<ValueType, BaseOptionType> & {
+        |    children?: React.ReactNode;
+        |} & {
+        |    ref?: React.Ref<BaseSelectRef> | undefined;
+        |}) => React.ReactElement);
+        |declare type InternalSelectType = typeof SelectRef;
+        |interface SelectInterface extends InternalSelectType {
+        |    SECRET_COMBOBOX_MODE_DO_NOT_USE: string;
+        |    Option: typeof Option;
+        |    OptGroup: typeof OptGroup;
+        |}
+        |declare const Select: SelectInterface;
+        |""".stripMargin
+    )
+  IO.write(select, output)
+}
 
 /**
   * Alias to launch material-ui in dev mode, recompiling on changes
@@ -298,8 +367,8 @@ lazy val `react-select` = project
     stFlavour := Flavour.Slinky,
     Compile / npmDependencies ++= Seq(
       "@types/react-select" -> "3.0.22",
-      "react-select" -> "3.1.0",
-    ),
+      "react-select" -> "3.1.0"
+    )
   )
 
 lazy val monaco = project
@@ -313,7 +382,7 @@ lazy val monaco = project
       "react-monaco-editor" -> "0.40.0"
     ),
     /* custom webpack file to include css */
-    webpackConfigFile := Some((baseDirectory).value / "custom.webpack.config.js"),
+    webpackConfigFile := Some(baseDirectory.value / "custom.webpack.config.js"),
     Compile / npmDevDependencies ++= Seq(
       "webpack-merge" -> "4.2.2",
       "css-loader" -> "3.4.2",
@@ -333,8 +402,8 @@ lazy val plotly = project
     Compile / npmDependencies ++= Seq(
       "plotly.js" -> "1.57.1",
       "react-plotly.js" -> "2.5.0",
-      "@types/react-plotly.js" -> "2.2.4",
-    ),
+      "@types/react-plotly.js" -> "2.2.4"
+    )
   )
 
 lazy val cytoscape = project
@@ -348,8 +417,8 @@ lazy val cytoscape = project
       "cytoscape" -> "3.18.1",
       "react-cytoscapejs" -> "1.2.1",
       "@types/cytoscape" -> "3.14.12",
-      "@types/react-cytoscapejs" -> "1.2.0",
-    ),
+      "@types/react-cytoscapejs" -> "1.2.0"
+    )
   )
 
 lazy val gojs = project
@@ -361,12 +430,12 @@ lazy val gojs = project
     stFlavour := Flavour.Slinky,
     Compile / npmDependencies ++= Seq(
       "gojs" -> "2.1.38",
-      "gojs-react" -> "1.0.10",
+      "gojs-react" -> "1.0.10"
     )
   )
 
 /** Note: This can't use scalajs-bundler (at least I don't know how),
-  *  so we run yarn ourselves with an external package.json.
+  * so we run yarn ourselves with an external package.json.
   */
 lazy val `react-native` = project
   .enablePlugins(ScalablyTypedConverterExternalNpmPlugin)

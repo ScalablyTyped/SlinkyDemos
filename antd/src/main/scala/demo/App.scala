@@ -15,11 +15,10 @@ import typings.antDesignIconsSvg.lockTwoToneMod.{default => LockTwoToneIcon}
 import typings.antDesignIconsSvg.mailTwoToneMod.{default => MailTwoToneIcon}
 import typings.antDesignIconsSvg.shopOutlinedMod.{default => ShopOutlinedIcon}
 import typings.antDesignIconsSvg.userOutlinedMod.{default => UserOutlinedIcon}
-import typings.antd.antdStrings
-import typings.antd.components.{List => AntList, _}
 import typings.antd.components.Form.{Form => FormItem}
+import typings.antd.components.{List => AntList, _}
 import typings.antd.generatePickerMod.RangePickerDateProps
-import typings.antd.mod
+import typings.antd.{antdStrings, mod}
 import typings.antd.notificationMod.{ArgsProps, IconType, default => Notification}
 import typings.antd.tableInterfaceMod.{ColumnGroupType, ColumnType}
 import typings.antd.tooltipMod.{TooltipProps, TooltipPropsWithTitle}
@@ -288,10 +287,12 @@ object CSS extends js.Any
         .defaultActiveFirstOption(true) // Make first option active - enter to select
         .optionsVarargs(
           selectMod.DefaultOptionType("Alphabet"),
-          selectMod.DefaultOptionType("Baguette").set(
-            "label",
-            span(AntdIcon(ShopOutlinedIcon), " Baguette")
-          ), // Set label as a ReactElement for customised display
+          selectMod
+            .DefaultOptionType("Baguette")
+            .set(
+              "label",
+              span(AntdIcon(ShopOutlinedIcon), " Baguette")
+            ), // Set label as a ReactElement for customised display
           selectMod.DefaultOptionType("Bicycle"),
           selectMod.DefaultOptionType("Croissant")
         )
@@ -415,7 +416,9 @@ object CSS extends js.Any
 
     val renderTooltip = section(
       h2("Tooltip"),
-      Tooltip(TooltipPropsWithTitle("Tooltip": ReactElement).asInstanceOf[TooltipProps with RefAttributes[Any]])(span("Hover me"))
+      Tooltip(TooltipPropsWithTitle("Tooltip": ReactElement).asInstanceOf[TooltipProps with RefAttributes[Any]])(
+        span("Hover me")
+      )
     )
 
     val renderTimeline = section(
@@ -441,15 +444,15 @@ object CSS extends js.Any
 
     val renderRangePicker = section(
       h2("Range Picker"),
-
-      RangePicker(RangePickerDateProps[Moment]()
-        .setShowTime(RangeShowTimeObject[Moment].setFormat("HH:mm"))
-        .setFormat("YYYY/MM/DD HH:mm")
-        .setValue(rangePickerValues)
-        .setOnChange { (values: RangeValue[Moment], formatString: js.Tuple2[String, String]) =>
-          console.log(formatString)
-          updateRangePickerValues(values)
-        }
+      RangePicker(
+        RangePickerDateProps[Moment]()
+          .setShowTime(RangeShowTimeObject[Moment].setFormat("HH:mm"))
+          .setFormat("YYYY/MM/DD HH:mm")
+          .setValue(rangePickerValues)
+          .setOnChange { (values: RangeValue[Moment], formatString: js.Tuple2[String, String]) =>
+            console.log(formatString)
+            updateRangePickerValues(values)
+          }
       ),
       div(b("Note that moment.js date times are ready to be localized")),
       div(s"moment.js current locale: ${moment.apply().locale()}"),

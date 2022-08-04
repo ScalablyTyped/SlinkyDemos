@@ -4,7 +4,9 @@ import slinky.core._
 import slinky.core.annotations.react
 import slinky.core.facade.Hooks._
 import slinky.core.facade.ReactElement
+import slinky.web.html.*.tag
 import slinky.web.html._
+import typings.StBuildingComponent.Default
 import typings.antDesignIcons.components.AntdIcon
 import typings.antDesignIconsSvg.downOutlinedMod.{default => DownOutlinedIcon}
 import typings.antDesignIconsSvg.downloadOutlinedMod.{default => DownloadOutlinedIcon}
@@ -434,10 +436,13 @@ object CSS extends js.Any
       )
     )
 
+    def RangePicker[DateType](props: RangePickerDateProps[DateType]) =
+      new Default[tag.type, mod.DatePicker.RangePicker](js.Array(mod.DatePicker.RangePicker, props))
+
     val renderRangePicker = section(
       h2("Range Picker"),
-      mod.DatePicker.RangePicker.create(
-        RangePickerDateProps[Moment]()
+
+      RangePicker(RangePickerDateProps[Moment]()
         .setShowTime(RangeShowTimeObject[Moment].setFormat("HH:mm"))
         .setFormat("YYYY/MM/DD HH:mm")
         .setValue(rangePickerValues)

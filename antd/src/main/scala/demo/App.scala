@@ -16,17 +16,19 @@ import typings.antDesignIconsSvg.userOutlinedMod.{default => UserOutlinedIcon}
 import typings.antd.antdStrings
 import typings.antd.components.{List => AntList, _}
 import typings.antd.components.Form.{Form => FormItem}
+import typings.antd.generatePickerMod.RangePickerDateProps
+import typings.antd.mod
 import typings.antd.notificationMod.{ArgsProps, IconType, default => Notification}
 import typings.antd.tableInterfaceMod.{ColumnGroupType, ColumnType}
+import typings.antd.tooltipMod.{TooltipProps, TooltipPropsWithTitle}
 import typings.moment.mod.Moment
 import typings.moment.mod.unitOfTime.DurationConstructor
 import typings.moment.{mod => moment}
 import typings.rcPicker.interfaceMod.{EventValue, RangeValue}
 import typings.rcPicker.rangePickerMod.RangeShowTimeObject
-import typings.rcSelect.interfaceMod.OptionData
-import typings.rcTreeSelect.interfaceMod.DataNode
-import typings.rcTreeSelect.strategyUtilMod
-import typings.react.mod.CSSProperties
+import typings.rcSelect.selectMod
+import typings.rcTreeSelect.{strategyUtilMod, treeSelectMod}
+import typings.react.mod.{CSSProperties, RefAttributes}
 import typings.std.global.console
 
 import scala.scalajs.js
@@ -103,14 +105,14 @@ object CSS extends js.Any
           )
           .columnsVarargs(
             ColumnType[TableItem]()
-              .setTitle("Name")
+              .setTitle("Name": ReactElement)
               .setDataIndex("name")
               .setKey("name")
               .setRender((_, tableItem, _) => Tag(tableItem.name).build),
             ColumnGroupType[TableItem](
               scala.scalajs.js.Array(
-                ColumnType[TableItem].setTitle("Age").setDataIndex("age").setKey("age"),
-                ColumnType[TableItem].setTitle("Address").setDataIndex("address").setKey("address")
+                ColumnType[TableItem].setTitle("Age": ReactElement).setDataIndex("age").setKey("age"),
+                ColumnType[TableItem].setTitle("Address": ReactElement).setDataIndex("address").setKey("address")
               )
             ).setTitleReactElement("Age & Address")
           )
@@ -174,11 +176,11 @@ object CSS extends js.Any
       Select[String]
         .defaultValue(selectValue)
         .onChange((changedValue, _) => updateSelectValue(changedValue))(
-          Select.OptGroup.label("Manager")(
+          Select.OptGroup("Manager")(
             Select.Option("jack")("Jack"),
             Select.Option("lucy")("Lucy")
           ),
-          Select.OptGroup.label("Engineer")(
+          Select.OptGroup("Engineer")(
             Select.Option("yiminghe")("Yiminghe")
           )
         )
@@ -202,7 +204,8 @@ object CSS extends js.Any
       Spin
         .size(antdStrings.large)
         .spinning(true)(
-          Alert(message = "Alert message title")
+          Alert
+            .message("Alert message title")
             .description("Further details about the context of this alert.")
             .`type`(antdStrings.info)
             .showIcon(true)
@@ -282,13 +285,13 @@ object CSS extends js.Any
         .filterOption(true) // Filter options by input
         .defaultActiveFirstOption(true) // Make first option active - enter to select
         .optionsVarargs(
-          OptionData("Alphabet"),
-          OptionData("Baguette").set(
+          selectMod.DefaultOptionType("Alphabet"),
+          selectMod.DefaultOptionType("Baguette").set(
             "label",
             span(AntdIcon(ShopOutlinedIcon), " Baguette")
           ), // Set label as a ReactElement for customised display
-          OptionData("Bicycle"),
-          OptionData("Croissant")
+          selectMod.DefaultOptionType("Bicycle"),
+          selectMod.DefaultOptionType("Croissant")
         )
         .onChange { case (text, _) => setText(text) }
     }
@@ -410,7 +413,7 @@ object CSS extends js.Any
 
     val renderTooltip = section(
       h2("Tooltip"),
-      Tooltip.TooltipPropsWithTitleRefAttributes(title = ("Tooltip": ReactElement))(span("Hover me"))
+      Tooltip(TooltipPropsWithTitle("Tooltip": ReactElement).asInstanceOf[TooltipProps with RefAttributes[Any]])(span("Hover me"))
     )
 
     val renderTimeline = section(
@@ -433,15 +436,16 @@ object CSS extends js.Any
 
     val renderRangePicker = section(
       h2("Range Picker"),
-      DatePicker.PickerBaseProps.RangePicker
-        .RangePickerDateProps()
-        .showTime(RangeShowTimeObject[Moment].setFormat("HH:mm"))
-        .format("YYYY/MM/DD HH:mm")
-        .value(rangePickerValues)
-        .onChange { (values: RangeValue[Moment], formatString: js.Tuple2[String, String]) =>
+      mod.DatePicker.RangePicker.create(
+        RangePickerDateProps[Moment]()
+        .setShowTime(RangeShowTimeObject[Moment].setFormat("HH:mm"))
+        .setFormat("YYYY/MM/DD HH:mm")
+        .setValue(rangePickerValues)
+        .setOnChange { (values: RangeValue[Moment], formatString: js.Tuple2[String, String]) =>
           console.log(formatString)
           updateRangePickerValues(values)
-        },
+        }
+      ),
       div(b("Note that moment.js date times are ready to be localized")),
       div(s"moment.js current locale: ${moment.apply().locale()}"),
       div(s"moment.js duration en_US: ${moment.apply().locale("en_US").fromNow()}"),
@@ -453,9 +457,9 @@ object CSS extends js.Any
     val renderTreeSelect = section(
       h2("Multiple and checkable Tree Select"), {
         def node(title: String, value: String) =
-          DataNode().setTitle(title).setValue(value).setKey(value)
+          treeSelectMod.DefaultOptionType().setTitle(title).setValue(value).setKey(value)
 
-        val data: js.Array[DataNode] = js.Array(
+        val data: js.Array[treeSelectMod.DefaultOptionType] = js.Array(
           node("Node1", "0-0").setChildrenVarargs(
             node("Child Node1", "0-0-0")
           ),
@@ -466,7 +470,7 @@ object CSS extends js.Any
           )
         )
 
-        TreeSelect[js.Array[String]]
+        TreeSelect[js.Array[String], treeSelectMod.DefaultOptionType]()
           .value(selectTreeValues)
           .onChange((values, _, _) => updateSelectTreeValues(values))
           .treeData(data)

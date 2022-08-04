@@ -46,8 +46,8 @@ object CoordinatedDemo {
                   )
                 )
               }(
-                Select.Option(value = "male")("Male"),
-                Select.Option(value = "female")("Female")
+                Select.Option.value("male")("Male"),
+                Select.Option.value("female")("Female")
               )
           ),
         FormItem[Values]().wrapperCol(ColProps().setSpan(12).setOffset(5))(

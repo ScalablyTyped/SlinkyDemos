@@ -181,21 +181,70 @@ lazy val fixAntdAutoComplete = (dir: File) => {
   val input = IO.read(autoComplete)
   val output = input
     .replace(
-      "declare const Select: (<ValueType = any, OptionType extends BaseOptionType | DefaultOptionType = DefaultOptionType>(props: SelectProps<ValueType, OptionType> & {",
-      "declare const Select: (<ValueType = any>(props: SelectProps<ValueType> & {",
+      """declare const RefAutoComplete: (<ValueType = any, OptionType extends BaseOptionType | DefaultOptionType = DefaultOptionType>(props: AutoCompleteProps<ValueType, OptionType> & {
+        |    children?: React.ReactNode;
+        |} & {
+        |    ref?: React.Ref<BaseSelectRef> | undefined;
+        |}) => React.ReactElement) & {
+        |    Option: import("rc-select/lib/Option").OptionFC;
+        |};
+        |export default RefAutoComplete;
+        |""".stripMargin,
+      """declare const RefAutoComplete: (<ValueType = any>(props: AutoCompleteProps<ValueType, BaseOptionType> & {
+        |    children?: React.ReactNode;
+        |} & {
+        |    ref?: React.Ref<BaseSelectRef> | undefined;
+        |}) => React.ReactElement);
+        |declare type AutoCompleteWithOption = typeof RefAutoComplete & {
+        |    Option: import("rc-select/lib/Option").OptionFC;
+        |};
+        |declare const AutoComplete: AutoCompleteWithOption;
+        |export default AutoComplete;
+        |""".stripMargin
     )
   IO.write(autoComplete, output)
 }
 
 lazy val fixAntdSelect = (dir: File) => {
-  val autoComplete = dir / "node_modules" / "antd" / "lib" / "select" / "index.d.ts"
-  val input = IO.read(autoComplete)
+  val select = dir / "node_modules" / "antd" / "lib" / "select" / "index.d.ts"
+  val input = IO.read(select)
   val output = input
     .replace(
-      "declare const RefAutoComplete: (<ValueType = any, OptionType extends BaseOptionType | DefaultOptionType = DefaultOptionType>(props: AutoCompleteProps<ValueType, OptionType> & {",
-      "declare const RefAutoComplete: (<ValueType = any>(props: AutoCompleteProps<ValueType> & {"
+      """declare const Select: (<ValueType = any, OptionType extends BaseOptionType | DefaultOptionType = DefaultOptionType>(props: SelectProps<ValueType, OptionType> & {
+        |    children?: React.ReactNode;
+        |} & {
+        |    ref?: React.Ref<BaseSelectRef> | undefined;
+        |}) => React.ReactElement) & {
+        |    SECRET_COMBOBOX_MODE_DO_NOT_USE: string;
+        |    Option: typeof Option;
+        |    OptGroup: typeof OptGroup;
+        |};""".stripMargin,
+      """declare const SelectRef: (<ValueType = any>(props: SelectProps<ValueType, BaseOptionType> & {
+        |    children?: React.ReactNode;
+        |} & {
+        |    ref?: React.Ref<BaseSelectRef> | undefined;
+        |}) => React.ReactElement);
+        |declare type InternalSelectType = typeof SelectRef;
+        |interface SelectInterface extends InternalSelectType {
+        |    SECRET_COMBOBOX_MODE_DO_NOT_USE: string;
+        |    Option: typeof Option;
+        |    OptGroup: typeof OptGroup;
+        |}
+        |declare const Select: SelectInterface;
+        |""".stripMargin
     )
-  IO.write(autoComplete, output)
+  IO.write(select, output)
+}
+
+lazy val fixAntdTooltip = (dir: File) => {
+  val tooltip = dir / "node_modules" / "antd" / "lib" / "tooltip" / "index.d.ts"
+  val input = IO.read(tooltip)
+  val output = input
+    .replace(
+      "export declare type TooltipProps = TooltipPropsWithTitle | TooltipPropsWithOverlay;",
+      "export declare type TooltipProps = TooltipPropsWithOverlay;"
+    )
+  IO.write(tooltip, output)
 }
 
 /**

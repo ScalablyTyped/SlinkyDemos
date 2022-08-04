@@ -234,17 +234,6 @@ lazy val fixAntdSelect = (dir: File) => {
   IO.write(select, output)
 }
 
-lazy val fixAntdTooltip = (dir: File) => {
-  val tooltip = dir / "node_modules" / "antd" / "lib" / "tooltip" / "index.d.ts"
-  val input = IO.read(tooltip)
-  val output = input
-    .replace(
-      "export declare type TooltipProps = TooltipPropsWithTitle | TooltipPropsWithOverlay;",
-      "export declare type TooltipProps = TooltipPropsWithOverlay;"
-    )
-  IO.write(tooltip, output)
-}
-
 /**
   * Alias to launch material-ui in dev mode, recompiling on changes
   */

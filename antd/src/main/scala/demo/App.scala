@@ -439,6 +439,7 @@ object CSS extends js.Any
       )
     )
 
+    // Workaround for https://github.com/ScalablyTyped/Converter/issues/470
     def RangePicker[DateType](props: RangePickerDateProps[DateType]) =
       new Default[tag.type, mod.DatePicker.RangePicker](js.Array(mod.DatePicker.RangePicker, props))
 

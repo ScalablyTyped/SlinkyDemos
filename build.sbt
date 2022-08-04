@@ -165,9 +165,9 @@ lazy val antd =
       // Workaround for https://github.com/ScalablyTyped/Converter/issues/467
       stIgnore += "rc-tree",
       Compile / npmDependencies ++= Seq("antd" -> "4.22.3"),
-      //Compile / npmDependencies ++= Seq("antd" -> "4.9.4"),
       Compile / npmInstallDependencies := Def.task {
         val dir = (Compile / npmInstallDependencies).value
+        // Workarounds for https://github.com/ScalablyTyped/Converter/issues/468
         fixAntdAutoComplete(dir)
         fixAntdSelect(dir)
         dir

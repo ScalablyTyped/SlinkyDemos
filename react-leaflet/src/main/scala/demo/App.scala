@@ -17,7 +17,7 @@ import scala.scalajs.js
 
     Map[MapProps, js.Any](MapProps(children = null).setCenter(position).setZoom(13))(
       TileLayer[TileLayerProps, js.Any](
-        TileLayerProps(url = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png")
+        TileLayerProps(url = "https://tile.openstreetmap.org/{z}/{x}/{y}.png")
           .setAttribution("&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors")
       ),
       Marker[MarkerProps, js.Any](MarkerProps(position = position))(

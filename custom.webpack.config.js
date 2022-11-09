@@ -1,4 +1,4 @@
-var merge = require('webpack-merge');
+var merge = require('webpack-merge').merge;
 var generated = require('./scalajs.webpack.config');
 
 var local = {
@@ -18,6 +18,12 @@ var local = {
             {
                 test: /\.(eot)$/,
                 use: 'url-loader'
+            },
+            {
+                test: /\.(js|mjs)$/,
+                resolve: {
+                    fullySpecified: false
+                }
             }
         ]
     }

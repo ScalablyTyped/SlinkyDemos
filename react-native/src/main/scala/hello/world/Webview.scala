@@ -4,7 +4,7 @@ import slinky.core.FunctionalComponent
 import slinky.core.annotations.react
 import typings.reactNative.mod.ViewStyle
 import typings.reactNativeWebview.components.WebView
-import typings.reactNativeWebview.webViewTypesMod.WebViewSourceUri
+import typings.reactNativeWebview.libWebViewTypesMod.WebViewSourceUri
 
 @react object Webview {
 

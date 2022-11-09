@@ -13,8 +13,8 @@ import slinky.core.facade.Fragment
 import slinky.hot
 import slinky.web.ReactDOM
 import typings.materialUiCore.components.{List, ListItem, ListItemIcon, ListItemText, ListSubheader, Typography}
-import typings.materialUiCore.createMuiThemeMod.{Theme, ThemeOptions}
-import typings.materialUiCore.createTypographyMod.TypographyOptions
+import typings.materialUiCore.stylesCreateMuiThemeMod.{Theme, ThemeOptions}
+import typings.materialUiCore.stylesCreateTypographyMod.TypographyOptions
 import typings.materialUiCore.stylesMod.createMuiTheme
 import typings.materialUiCore.typographyTypographyMod.Style
 import typings.materialUiIcons.{components => Icon}

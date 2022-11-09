@@ -6,16 +6,17 @@ import slinky.core.annotations.react
 import slinky.web.html._
 import typings.csstype.csstypeStrings.auto
 import typings.materialUiCore.components._
-import typings.materialUiCore.createMuiThemeMod.Theme
+import typings.materialUiCore.stylesCreateMuiThemeMod.Theme
 import typings.materialUiCore.materialUiCoreStrings.right
-import typings.materialUiStyles.withStylesMod.CSSProperties
+import typings.materialUiStyles.makeStylesMod.StylesHook
+import typings.materialUiStyles.withStylesMod.{CSSProperties, Styles}
 
 import scala.scalajs.js
 
 // https://github.com/mui-org/material-ui/blob/v3.x/docs/src/pages/getting-started/page-layout-examples/dashboard/SimpleTable.js
 @react object SimpleTable {
 
-  lazy val styles =
+  lazy val styles: StylesHook[Styles[Theme, js.Object, String]] =
     StyleBuilder[Theme, js.Object]
       .add("root", CSSProperties().setWidth("100%").setOverflowX(auto))
       .add("table", CSSProperties().setMinWidth(700))

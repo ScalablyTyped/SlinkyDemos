@@ -6,7 +6,7 @@ import slinky.core.annotations.react
 import slinky.web.html._
 import typings.csstype.csstypeStrings._
 import typings.materialUiCore.components._
-import typings.materialUiCore.createMuiThemeMod.Theme
+import typings.materialUiCore.stylesCreateMuiThemeMod.Theme
 import typings.materialUiCore.materialUiCoreStrings.{contained, normal, primary, submit}
 import typings.materialUiCore.typographyTypographyMod.Style
 import typings.materialUiIcons.{components => Icons}

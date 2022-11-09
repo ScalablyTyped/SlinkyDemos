@@ -6,7 +6,7 @@ import slinky.core.facade.Hooks.useState
 import slinky.native.View
 import typings.antDesignReactNative.components._
 import typings.antDesignReactNative.{antDesignReactNativeStrings => antdStrings}
-import typings.expoAv.aVMod.{AVPlaybackStatus, AVPlaybackStatusToSet}
+import typings.expoAv.buildAVMod.{AVPlaybackStatus, AVPlaybackStatusToSet}
 import typings.expoAv.mod.Audio.Sound
 import typings.expoAv.anon.{AndroidImplementation, DidJustFinish, Headers}
 import typings.expoAv.expoAvBooleans.`true`

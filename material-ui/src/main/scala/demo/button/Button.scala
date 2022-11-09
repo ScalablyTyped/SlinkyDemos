@@ -8,8 +8,8 @@ import slinky.core.facade.Hooks
 import slinky.web.ReactDOM
 import slinky.web.html._
 import typings.csstype.mod.{ColorProperty, NamedColor}
-import typings.materialUiCore.createMuiThemeMod.{Theme, ThemeOptions}
-import typings.materialUiCore.spacingMod.SpacingOptions
+import typings.materialUiCore.stylesCreateMuiThemeMod.{Theme, ThemeOptions}
+import typings.materialUiCore.stylesSpacingMod.SpacingOptions
 import typings.materialUiCore.{stylesMod, components => Mui}
 import typings.materialUiStyles.components.ThemeProvider
 import typings.std.global.window
@@ -86,7 +86,7 @@ object StyledButtonDemo {
 
   val component: FunctionalComponent[Props] = FunctionalComponent[Props] { _ =>
     val usingWithStyles = {
-      import typings.materialUiCore.withStylesMod.{CSSProperties, WithStylesOptions}
+      import typings.materialUiCore.stylesWithStylesMod.{CSSProperties, WithStylesOptions}
 
       val styleInjector =
         stylesMod.withStyles(

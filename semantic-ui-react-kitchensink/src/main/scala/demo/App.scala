@@ -5,7 +5,7 @@ import slinky.core.annotations.react
 import slinky.core.facade.Hooks._
 import slinky.web.html._
 import typings.react.reactStrings.submit
-import typings.semanticUiReact.genericMod.{SemanticICONS, SemanticSIZES, SemanticWIDTHSSTRING}
+import typings.semanticUiReact.distCommonjsGenericMod.{SemanticICONS, SemanticSIZES, SemanticWIDTHSSTRING}
 import typings.semanticUiReact.semanticUiReactStrings.left
 import typings.semanticUiReact.{components => Sui}
 

@@ -6,7 +6,7 @@ import slinky.core.facade.Hooks
 import slinky.web.ReactDOM
 import slinky.web.html._
 import typings.reactSelect.components.ReactSelect
-import typings.reactSelect.typesMod.ValueType
+import typings.reactSelect.srcTypesMod.ValueType
 
 import scala.scalajs.js
 

@@ -1,9 +1,9 @@
 package demo.customization
 
 import slinky.core.facade.ReactElement
-import typings.materialUiCore.createMuiThemeMod.{Theme, ThemeOptions}
-import typings.materialUiCore.createPaletteMod.PaletteOptions
-import typings.materialUiCore.createTypographyMod.TypographyOptions
+import typings.materialUiCore.stylesCreateMuiThemeMod.{Theme, ThemeOptions}
+import typings.materialUiCore.stylesCreatePaletteMod.PaletteOptions
+import typings.materialUiCore.stylesCreateTypographyMod.TypographyOptions
 import typings.materialUiCore.mod.PaletteType
 import typings.materialUiCore.stylesMod.createMuiTheme
 import typings.materialUiStyles.components.ThemeProvider

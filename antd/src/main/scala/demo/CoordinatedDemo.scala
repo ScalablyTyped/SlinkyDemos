@@ -5,10 +5,10 @@ import slinky.core.annotations.react
 import typings.antd.antdStrings
 import typings.antd.components.Form.{Form => FormItem}
 import typings.antd.components._
-import typings.antd.formFormMod.useForm
-import typings.antd.gridColMod.ColProps
-import typings.antd.useFormMod.FormInstance
-import typings.rcFieldForm.interfaceMod.{AggregationRule, FieldData}
+import typings.antd.libFormFormMod.useForm
+import typings.antd.libGridColMod.ColProps
+import typings.antd.libFormHooksUseFormMod.FormInstance
+import typings.rcFieldForm.esInterfaceMod.{AggregationRule, FieldData}
 import typings.std.global.console
 
 import scala.scalajs.js

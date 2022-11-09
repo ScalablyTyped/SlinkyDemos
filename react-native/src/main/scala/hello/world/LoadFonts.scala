@@ -5,7 +5,7 @@ import slinky.core.facade.Hooks.{useEffect, useState}
 import slinky.core.FunctionalComponent
 import slinky.native.Text
 import typings.expo.components.AppLoading
-import typings.expoFont.fontTypesMod.FontSource
+import typings.expoFont.buildFontDottypesMod.FontSource
 import typings.expoFont.{mod => Font}
 
 import scala.concurrent.ExecutionContext.Implicits.global

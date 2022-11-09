@@ -2,8 +2,8 @@ package demo.login
 
 import demo.StyleBuilder
 import typings.csstype.csstypeStrings._
-import typings.materialUiCore.createMuiThemeMod.Theme
-import typings.materialUiCore.spacingMod.Spacing
+import typings.materialUiCore.stylesCreateMuiThemeMod.Theme
+import typings.materialUiCore.stylesSpacingMod.Spacing
 import typings.materialUiStyles.makeStylesMod.StylesHook
 import typings.materialUiStyles.withStylesMod.{CSSProperties, Styles}
 

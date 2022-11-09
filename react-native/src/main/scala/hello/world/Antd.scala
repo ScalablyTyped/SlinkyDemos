@@ -8,7 +8,7 @@ import typings.antDesignIconsReactNative.antDesignIconsReactNativeStrings.{flag,
 import typings.antDesignIconsReactNative.components.{IconFill, IconOutline}
 import typings.antDesignReactNative.components.{List => AntdList, _}
 import typings.antDesignReactNative.mod.Toast
-import typings.antDesignReactNative.modalPropsTypeMod.Action
+import typings.antDesignReactNative.libModalPropsTypeMod.Action
 import typings.antDesignReactNative.{antDesignReactNativeStrings => antdStrings}
 
 @react object Antd {

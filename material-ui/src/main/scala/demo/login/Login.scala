@@ -15,7 +15,7 @@ import typings.materialUiCore.materialUiCoreStrings.contained
 import typings.materialUiCore.materialUiCoreStrings.secondary
 import typings.materialUiCore.typographyTypographyMod.Style
 import typings.classnames.mod.^.{default => classNames}
-import typings.std.{HTMLInputElement}
+import typings.std.HTMLInputElement
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSImport

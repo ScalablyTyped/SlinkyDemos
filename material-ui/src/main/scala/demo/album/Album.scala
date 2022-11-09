@@ -9,14 +9,14 @@ import slinky.web.html._
 import typings.classnames.mod.^.{default => classNames}
 import typings.csstype.csstypeStrings.{auto, column, flex, relative}
 import typings.materialUiCore.components._
-import typings.materialUiCore.createMuiThemeMod.Theme
-import typings.materialUiCore.materialUiCoreNumbers._
+import typings.materialUiCore.stylesCreateMuiThemeMod.Theme
+import typings.materialUiCore.materialUiCoreInts._
 import typings.materialUiCore.mod.PropTypes.Color
 import typings.materialUiCore.typographyTypographyMod.Style
 import typings.materialUiCore.{materialUiCoreStrings => strings}
 import typings.materialUiIcons.{components => Icons}
 import typings.materialUiStyles.makeStylesMod.StylesHook
-import typings.materialUiStyles.withStylesMod.{CSSProperties, Styles}
+import typings.materialUiStyles.withStylesMod.{CSSProperties, ClassKeyOfStyles, ClassNameMap, Styles}
 
 import scala.scalajs.js
 

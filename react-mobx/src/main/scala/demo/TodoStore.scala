@@ -1,7 +1,7 @@
 package demo
 
-import typings.mobx.computedvalueMod.IComputedValue
-import typings.mobx.observablevalueMod.IObservableValue
+import typings.mobx.libCoreComputedvalueMod.IComputedValue
+import typings.mobx.libTypesObservablevalueMod.IObservableValue
 import typings.mobx.{mod => MobX}
 
 import scala.scalajs.js

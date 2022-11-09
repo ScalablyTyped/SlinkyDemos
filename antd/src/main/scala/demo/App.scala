@@ -6,26 +6,26 @@ import slinky.core.facade.Hooks._
 import slinky.core.facade.ReactElement
 import slinky.web.html._
 import typings.antDesignIcons.components.AntdIcon
-import typings.antDesignIconsSvg.downOutlinedMod.{default => DownOutlinedIcon}
-import typings.antDesignIconsSvg.downloadOutlinedMod.{default => DownloadOutlinedIcon}
-import typings.antDesignIconsSvg.homeOutlinedMod.{default => HomeOutlinedIcon}
-import typings.antDesignIconsSvg.lockTwoToneMod.{default => LockTwoToneIcon}
-import typings.antDesignIconsSvg.mailTwoToneMod.{default => MailTwoToneIcon}
-import typings.antDesignIconsSvg.shopOutlinedMod.{default => ShopOutlinedIcon}
-import typings.antDesignIconsSvg.userOutlinedMod.{default => UserOutlinedIcon}
+import typings.antDesignIconsSvg.esAsnDownloadOutlinedMod.{default => DownOutlinedIcon}
+import typings.antDesignIconsSvg.esAsnDownloadOutlinedMod.{default => DownloadOutlinedIcon}
+import typings.antDesignIconsSvg.esAsnHomeOutlinedMod.{default => HomeOutlinedIcon}
+import typings.antDesignIconsSvg.esAsnLockTwoToneMod.{default => LockTwoToneIcon}
+import typings.antDesignIconsSvg.esAsnMailTwoToneMod.{default => MailTwoToneIcon}
+import typings.antDesignIconsSvg.esAsnShopOutlinedMod.{default => ShopOutlinedIcon}
+import typings.antDesignIconsSvg.esAsnUserOutlinedMod.{default => UserOutlinedIcon}
 import typings.antd.antdStrings
 import typings.antd.components.{List => AntList, _}
 import typings.antd.components.Form.{Form => FormItem}
-import typings.antd.notificationMod.{ArgsProps, IconType, default => Notification}
-import typings.antd.tableInterfaceMod.{ColumnGroupType, ColumnType}
+import typings.antd.libNotificationMod.{ArgsProps, IconType, default => Notification}
+import typings.antd.libTableInterfaceMod.{ColumnGroupType, ColumnType}
 import typings.moment.mod.Moment
 import typings.moment.mod.unitOfTime.DurationConstructor
 import typings.moment.{mod => moment}
-import typings.rcPicker.interfaceMod.{EventValue, RangeValue}
-import typings.rcPicker.rangePickerMod.RangeShowTimeObject
-import typings.rcSelect.interfaceMod.OptionData
-import typings.rcTreeSelect.interfaceMod.DataNode
-import typings.rcTreeSelect.strategyUtilMod
+import typings.rcPicker.esInterfaceMod.{EventValue, RangeValue}
+import typings.rcPicker.esRangePickerMod.RangeShowTimeObject
+import typings.rcSelect.libInterfaceMod.OptionData
+import typings.rcTreeSelect.esInterfaceMod.DataNode
+import typings.rcTreeSelect.esUtilsStrategyUtilMod
 import typings.react.mod.CSSProperties
 import typings.std.global.console
 
@@ -86,7 +86,7 @@ object CSS extends js.Any
       section(
         h2("Tag"),
         Tag("Tag 1"),
-        Tag.color(antdStrings.red)("red"),
+        Tag.set("color", "red"),
         Tag.CheckableTag(true)("Checkable")
       )
 
@@ -472,7 +472,7 @@ object CSS extends js.Any
           .treeData(data)
           .placeholder("Please select")
           .treeCheckable(true)
-          .showCheckedStrategy(strategyUtilMod.SHOW_PARENT)
+          .showCheckedStrategy(esUtilsStrategyUtilMod.SHOW_PARENT)
           .style(CSSProperties().setWidth("100%"))
       }
     )

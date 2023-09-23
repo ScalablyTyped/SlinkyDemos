@@ -45,7 +45,7 @@ object Dustbin {
         useDrop(
           DropTargetHookSpec[js.Object, DropResult, Collected](ItemTypes.BOX)
             .setDrop((_, _) => new DropResult("Dustbin"))
-            .setCollect(monitor => Collected(monitor.isOver, monitor.canDrop))
+            .setCollect(monitor => Collected(monitor.isOver(), monitor.canDrop()))
         )
 
       val isActive = canDrop && isOver
@@ -89,7 +89,7 @@ object Box {
                 alert(s"You dropped ${item.name} into ${dropResult.asInstanceOf[Dustbin.DropResult].name}!")
               }
             }
-            .setCollect(monitor => monitor.isDragging)
+            .setCollect(monitor => monitor.isDragging())
         )
 
       val opacity = if (isDragging) "0.4" else "1"

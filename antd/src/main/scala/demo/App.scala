@@ -95,7 +95,7 @@ object CSS extends js.Any
     def renderTable =
       section(
         h2("Table"),
-        Table[TableItem]
+        Table[TableItem]()
           .bordered(true)
           .dataSourceVarargs(
             new TableItem(1, "Mike", 32, "10 Downing St."),
@@ -109,8 +109,8 @@ object CSS extends js.Any
               .setRender((_, tableItem, _) => Tag(tableItem.name).build),
             ColumnGroupType[TableItem](
               scala.scalajs.js.Array(
-                ColumnType[TableItem].setTitle("Age").setDataIndex("age").setKey("age"),
-                ColumnType[TableItem].setTitle("Address").setDataIndex("address").setKey("address")
+                ColumnType[TableItem]().setTitle("Age").setDataIndex("age").setKey("age"),
+                ColumnType[TableItem]().setTitle("Address").setDataIndex("address").setKey("address")
               )
             ).setTitleReactElement("Age & Address")
           )
@@ -146,7 +146,7 @@ object CSS extends js.Any
 
     val renderSelect = section(
       h2("Select"),
-      Select[String]
+      Select[String]()
         .defaultValue(selectValue)
         .onChange((changedValue, _) => updateSelectValue(changedValue))(
           Select.Option("jack")("Jack"),
@@ -158,7 +158,7 @@ object CSS extends js.Any
 
     val renderMultiSelect = section(
       h2("Multiple select"),
-      Select[js.Array[String]]
+      Select[js.Array[String]]()
         .defaultValue(js.Array(multiSelectValue: _*))
         .mode(antdStrings.multiple)
         .onChange((changedValue, _) => updateMultiSelectValue(changedValue.toList))(
@@ -171,7 +171,7 @@ object CSS extends js.Any
 
     val renderGroupSelect = section(
       h2("Select with grouped options"),
-      Select[String]
+      Select[String]()
         .defaultValue(selectValue)
         .onChange((changedValue, _) => updateSelectValue(changedValue))(
           Select.OptGroup.label("Manager")(
@@ -211,7 +211,7 @@ object CSS extends js.Any
 
     val renderForm = section(
       h2("Form"),
-      Form[Seq[_]].onFinish { store =>
+      Form[Seq[_]]().onFinish { store =>
         console.log("Form submitted", store)
       }(
         FormItem()(
@@ -435,7 +435,7 @@ object CSS extends js.Any
       h2("Range Picker"),
       DatePicker.PickerBaseProps.RangePicker
         .RangePickerDateProps()
-        .showTime(RangeShowTimeObject[Moment].setFormat("HH:mm"))
+        .showTime(RangeShowTimeObject[Moment]().setFormat("HH:mm"))
         .format("YYYY/MM/DD HH:mm")
         .value(rangePickerValues)
         .onChange { (values: RangeValue[Moment], formatString: js.Tuple2[String, String]) =>
@@ -466,7 +466,7 @@ object CSS extends js.Any
           )
         )
 
-        TreeSelect[js.Array[String]]
+        TreeSelect[js.Array[String]]()
           .value(selectTreeValues)
           .onChange((values, _, _) => updateSelectTreeValues(values))
           .treeData(data)

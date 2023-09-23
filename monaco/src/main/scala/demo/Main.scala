@@ -48,7 +48,7 @@ interface Employee {
           }
 
           // configure typescript to be strict
-          monaco.languages.typescript.typescriptDefaults.getCompilerOptions.setStrict(true)
+          monaco.languages.typescript.typescriptDefaults.getCompilerOptions().setStrict(true)
         }
         .width("600")
         .height("800")

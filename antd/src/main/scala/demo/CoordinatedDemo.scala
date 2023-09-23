@@ -36,7 +36,7 @@ object CoordinatedDemo {
           .label("Gender")
           .name("gender")
           .rulesVarargs(AggregationRule().setRequired(true).setMessage("Please select your gender!'"))(
-            Select[String]
+            Select[String]()
               .placeholder("Select a option and change input text above")
               .onChange { (value, _) =>
                 form.setFields(
